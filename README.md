@@ -1,8 +1,6 @@
+# Monmouth Landing Page
 
-
-# Next.js 13 + Tailwind CSS + Shadcn + v0 Starter
-
-This project is a starter template for a static website utilizing various modern web development technologies. The main motivation behind this project is to learn and gain hands-on experience with these technologies.
+This is the landing page for Monmouth, built with modern web technologies to provide a fast, responsive, and maintainable website experience.
 
 ## Technologies Used
 
@@ -13,7 +11,7 @@ This project is a starter template for a static website utilizing various modern
 - [Bun](https://bun.dev/) as the npm installer and builder
 - [Vercel](https://vercel.com/) as the deployer
 
-## Installation
+## Development Setup
 
 To install the dependencies, run:
 
@@ -21,26 +19,17 @@ To install the dependencies, run:
 bun install
 ```
 
-## Development
-
 To start the development server, run:
 
 ```bash
 bun run dev
 ```
 
-## Install shadcn / v0 AI components
+## Installing Additional Components
+
+To add new UI components:
 
 ```bash
 bunx shadcn-ui@latest add table
 bunx v0 add GkNjwEC
 ```
-
-## Authentication
-
-Actually this project has a mock authentication system. You can login with any username and password in `app/api/data/users.json` file.
-
-## TODO
-- [ ] Add a real authentication system with a database or a third-party service
-- [ ] Manage sessions with cookies
-- [ ] Add a full example of a CRUD app
