@@ -31,21 +31,21 @@ export default function Hero() {
 
           <div className="flex flex-col justify-center">
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-              <span className="block text-[#FF66CC] dark:text-purple-400">Intelligence at scale.</span>
+              <span className="block text-[#FF66CC] dark:text-[#FF66CC]">Intelligence at scale.</span>
               <span className="block">Welcome to Monmouth.</span>
             </h1>
-            <p className="mb-8 text-xl text-muted-foreground">
+            <p className="mb-8 text-xl text-muted-foreground dark:text-white">
             Monmouth delivers unparalleled EVM compatibility, combining cutting-edge performance, genuine decentralization, robust security, and exceptional throughput.
             </p>
-            <p className="mb-8 text-lg text-muted-foreground">Embrace a new era of blockchain innovation.</p>
+            <p className="mb-8 text-lg text-muted-foreground dark:text-white">Embrace a new era of blockchain innovation.</p>
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="rounded-full bg-[#82d173] hover:bg-[#82d173]/80">
+              <Button size="lg" className="rounded-full bg-[#82d173] hover:bg-[#82d173]/80 dark:text-white">
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Start building
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full">
+              <Button variant="outline" size="lg" className="rounded-full dark:border-[#FF66CC]">
                 How it works
               </Button>
             </div>

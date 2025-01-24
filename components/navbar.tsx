@@ -5,17 +5,32 @@ import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Cross2Icon } from "@radix-ui/react-icons"
+import { useTheme } from "next-themes"
+import { Moon, Sun } from "lucide-react"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { theme, setTheme } = useTheme()
 
   return (
     <>
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl mx-auto">
         <div className="flex items-center justify-between px-6 py-3 bg-background/80 backdrop-blur-md rounded-full border border-gray-200 shadow-sm">
-          <Button variant="outline" className="rounded-full">
-            Start building
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" className="rounded-full dark:border-white">
+              Start building
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </div>
 
           <div className="absolute left-1/2 -translate-x-1/2">
             <svg width="120" height="32" viewBox="0 0 120 32" fill="none">
