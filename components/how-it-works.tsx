@@ -10,20 +10,17 @@ export default function HowItWorks() {
           <Badge className="w-fit mx-auto border border-[#ff66cc] text-[#ff66cc] bg-transparent">How It Works</Badge>
           <div className="flex gap-2 flex-col items-center">
             <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-center">
-              Redesigning the <span className="text-[#82d173]">EVM</span>
+              Redefining <span className="text-[#82d173]">Blockchain Execution</span>
             </h2>
           </div>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center">
-            Monad is a redesign of both the consensus and execution systems of Ethereum that preserves compatibility for
-            EVM smart contracts and Ethereum's RPC API.
+            Monmouth isn't another TPS-driven L2. We've built a true AI-native blockchain infrastructure with memory-optimized storage and execution extensions that enable AI agents to operate directly at the chain level.
           </p>
 
           <div className="space-y-4 max-w-2xl mx-auto mt-12 mb-12 p-6 rounded-lg border bg-background/50 backdrop-blur">
-            <h3 className="text-2xl font-bold">Optimistic Parallel Execution</h3>
+            <h3 className="text-2xl font-bold">Execution Extensions (ExEx)</h3>
             <p className="text-muted-foreground">
-              Monad employs optimistic parallel execution, executing transactions in parallel before previous ones are
-              completed. Results are committed in the original order and checked against the current state to ensure
-              accuracy.
+              Monmouth's ExEx modules are built in Rust and integrated at the binary level, allowing AI agents to execute directly at the chain level with near-instantaneous state access and reaction times—eliminating JSON-RPC or external communication overhead.
             </p>
             <Button variant="outline">
               Learn about the technology
@@ -34,24 +31,23 @@ export default function HowItWorks() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
               <Database className="h-12 w-12 text-[#82d173] mb-4" />
-              <h3 className="text-xl font-bold mb-2">State access with MonadDB</h3>
+              <h3 className="text-xl font-bold mb-2">Memory-Optimized Storage</h3>
               <p className="text-muted-foreground">
-                A custom database for storing blockchain state, using Patricia Trie data structure, both on-disk and
-                in-memory— reducing hardware requirements.
+                Inspired by QMDB's append-only state model, our storage architecture is optimized for ephemeral AI state management with minimal write amplification and efficient SSD/NVMe utilization.
               </p>
             </div>
             <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
               <Clock className="h-12 w-12 text-[#82d173] mb-4" />
-              <h3 className="text-xl font-bold mb-2">Asynchronous Execution</h3>
+              <h3 className="text-xl font-bold mb-2">Sub-250ms Finality</h3>
               <p className="text-muted-foreground">
-                Execution is decoupled from consensus, allowing single-shard blockchain to scale to millions of users.
+                Monmouth's memory-optimized consensus ensures block finality in under 250ms, enabling real-time AI decision-making and responsiveness that traditional blockchains cannot match.
               </p>
             </div>
             <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
               <Layout className="h-12 w-12 text-[#82d173] mb-4" />
-              <h3 className="text-xl font-bold mb-2">Single-slot Finality</h3>
+              <h3 className="text-xl font-bold mb-2">Memory-Persistent Contracts</h3>
               <p className="text-muted-foreground">
-                A high-performance POS consensus mechanism with 1s block times on MonadDB.
+                Unlike traditional stateless contracts, Monmouth introduces persistent execution layers that maintain memory and vector embeddings, allowing AI to learn and adapt over time.
               </p>
             </div>
           </div>

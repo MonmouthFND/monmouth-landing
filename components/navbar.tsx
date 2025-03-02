@@ -36,7 +36,7 @@ export default function Navbar() {
             <svg width="120" height="32" viewBox="0 0 120 32" fill="none">
               <path d="M60 8L68 16L60 24L52 16L60 8Z" fill="#FF66CC" />
               {/* <text x="75" y="22" className="text-xl font-bold">
-                MONAD
+                MONMOUTH
               </text> */}
             </svg>
           </div>
@@ -73,7 +73,7 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
             <svg width="120" height="32" viewBox="0 0 120 32" fill="none">
               <path d="M60 8L68 16L60 24L52 16L60 8Z" fill="#FF66CC" />
               {/* <text x="75" y="22" className="text-xl font-bold">
-                MONAD
+                MONMOUTH
               </text> */}
             </svg>
           </div>
@@ -88,48 +88,27 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
           <div>
             <h2 className="text-lg font-medium mb-6">Navigation</h2>
             <nav className="space-y-4">
-              <a href="#" className="block text-3xl font-semibold hover:text-purple-500">
+              <a href="#" className="block text-3xl font-semibold hover:text-[#82d173]">
                 Home
               </a>
-              <a href="#" className="block text-3xl font-semibold hover:text-purple-500">
+              <a href="#" className="block text-3xl font-semibold hover:text-[#82d173]">
                 Technology
               </a>
-              <a href="#" className="block text-3xl font-semibold hover:text-purple-500">
+              <a href="#" className="block text-3xl font-semibold hover:text-[#82d173]">
                 Documentation
               </a>
             </nav>
 
             <div className="mt-12">
-              <h3 className="font-medium mb-4">Monad Builder Programs</h3>
-              <nav className="space-y-2">
-                <a href="#" className="block hover:text-purple-500">
-                  Monad Madness
-                </a>
-                <a href="#" className="block hover:text-purple-500">
-                  Mach: Monad Accelerator
-                </a>
-                <a href="#" className="block hover:text-purple-500">
-                  Builder Interest Form
-                </a>
-              </nav>
-            </div>
-
-            <div className="mt-12">
               <h3 className="font-medium mb-4">Resources</h3>
               <nav className="space-y-2">
-                <a href="#" className="block hover:text-purple-500">
-                  Careers
-                </a>
-                <a href="#" className="block hover:text-purple-500">
+                <a href="#" className="block hover:text-[#82d173]">
                   Blog
                 </a>
-                <a href="#" className="block hover:text-purple-500">
+                <a href="#" className="block hover:text-[#82d173]">
                   Newsletter
                 </a>
-                <a href="#" className="block hover:text-purple-500">
-                  Brand & Media Kit
-                </a>
-                <a href="#" className="block hover:text-purple-500">
+                <a href="#" className="block hover:text-[#82d173]">
                   Privacy Policy
                 </a>
               </nav>

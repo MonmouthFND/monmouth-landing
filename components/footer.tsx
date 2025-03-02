@@ -47,23 +47,6 @@ export default function Footer() {
               <span className="sr-only">Telegram</span>
             </Link>
           </div>
-
-          {/* Builder Programs Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Monmouth Builder Programs</h3>
-            <p className="text-sm text-muted-foreground">Are you a builder? Check out our initiatives.</p>
-            <nav className="space-y-2">
-              <Link href="#" className="block text-sm hover:underline">
-                Monmouth Madness
-              </Link>
-              <Link href="#" className="block text-sm hover:underline">
-                Mach: Monmouth Accelerator
-              </Link>
-              <Link href="#" className="block text-sm hover:underline">
-                Builder Interest Form
-              </Link>
-            </nav>
-          </div>
         </div>
 
         {/* Right Column */}
@@ -90,9 +73,6 @@ export default function Footer() {
               <Link href="#" className="block text-sm hover:underline">
                 Technology
               </Link>
-              <Link href="#" className="block text-sm hover:underline">
-                Careers
-              </Link>
             </nav>
             <nav className="space-y-2">
               <Link href="#" className="block text-sm hover:underline">
@@ -100,12 +80,6 @@ export default function Footer() {
               </Link>
               <Link href="#" className="block text-sm hover:underline">
                 Newsletter
-              </Link>
-              <Link href="#" className="block text-sm hover:underline">
-                WTF is TPS?
-              </Link>
-              <Link href="#" className="block text-sm hover:underline">
-                Branding & Media Kit
               </Link>
               <Link href="#" className="block text-sm hover:underline">
                 Privacy Policy
