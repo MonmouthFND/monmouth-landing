@@ -6,9 +6,9 @@ import { ThemeProvider } from "@/app/providers"
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Next.js Shadcn + v0 Starter Template',
+	title: 'Monmouth | Neural Infrastructure for Web3',
 	description:
-		'Next.js Starter Template with Tailwind CSS, Shadcn Components, v0 Components (Alpha), Bun as npm installer and builder, Vercel as deployer.',
+		'Monmouth delivers unparalleled EVM compatibility with AI-native blockchain infrastructure, combining cutting-edge performance, genuine decentralization, robust security, and exceptional throughput.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
