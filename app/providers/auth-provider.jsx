@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useContext } from "react";
+import React, { createContext, useEffect, useState, useContext, useCallback } from "react";
 import { getMe } from "../services/me";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +10,7 @@ const useAuth = () => {
   const [error, setError] = useState(null);
   const { push } = useRouter();
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     const { data, error } = await getMe();
     if (error) {
       push("/");
@@ -19,11 +19,11 @@ const useAuth = () => {
     }
     setUser(data);
     setLoading(false);
-  };
+  }, [push]);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   return { user, loading, error };
 };

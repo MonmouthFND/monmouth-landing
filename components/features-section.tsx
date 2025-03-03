@@ -5,6 +5,7 @@ import {
   GlobeIcon,
   InputIcon,
 } from "@radix-ui/react-icons";
+import Image from "next/image";
 
 import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +17,13 @@ const features = [
     description: "Built from the ground up for AI agent interactions with embedded RAG infrastructure.",
     href: "/",
     cta: "Learn more",
-    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    background: <Image 
+      src="/path/to/your/image.png" 
+      alt="Descriptive text about the image" 
+      width={500}
+      height={300}
+      className="absolute -right-20 -top-20 opacity-60"
+    />,
     className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
   },
   {
@@ -25,7 +32,13 @@ const features = [
     description: "High-performance Layer 2 implementation with blazing speed and reliability.",
     href: "/",
     cta: "Learn more",
-    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    background: <Image 
+      src="/path/to/your/image.png" 
+      alt="Descriptive text about the image" 
+      width={500}
+      height={300}
+      className="absolute -right-20 -top-20 opacity-60"
+    />,
     className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
   },
   {
@@ -34,7 +47,13 @@ const features = [
     description: "Revolutionary execution extension system embedding AI reasoning into the blockchain.",
     href: "/",
     cta: "Learn more",
-    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    background: <Image 
+      src="/path/to/your/image.png" 
+      alt="Descriptive text about the image" 
+      width={500}
+      height={300}
+      className="absolute -right-20 -top-20 opacity-60"
+    />,
     className: "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
   },
   {
@@ -43,7 +62,13 @@ const features = [
     description: "Comprehensive tools and templates for building AI-enhanced DApps.",
     href: "/",
     cta: "Learn more",
-    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    background: <Image 
+      src="/path/to/your/image.png" 
+      alt="Descriptive text about the image" 
+      width={500}
+      height={300}
+      className="absolute -right-20 -top-20 opacity-60"
+    />,
     className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
   },
   {
@@ -52,7 +77,13 @@ const features = [
     description: "Deploy customized chains with embedded AI infrastructure for your specific needs.",
     href: "/",
     cta: "Learn more",
-    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    background: <Image 
+      src="/path/to/your/image.png" 
+      alt="Descriptive text about the image" 
+      width={500}
+      height={300}
+      className="absolute -right-20 -top-20 opacity-60"
+    />,
     className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
   },
 ];

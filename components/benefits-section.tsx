@@ -38,7 +38,7 @@ export default function BenefitsSection() {
               <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
                 <h3 className="text-xl font-bold mb-4">Enterprise-Grade Reliability</h3>
                 <p className="text-muted-foreground">
-                  Built by infrastructure experts who scaled Verizon's edge computing, Monmouth brings industrial-grade AI performance and enterprise-level reliability to decentralized finance and autonomous apps.
+                  Built by infrastructure experts who scaled Verizon&apos;s edge computing, Monmouth brings industrial-grade AI performance and enterprise-level reliability to decentralized finance and autonomous apps.
                 </p>
               </div>
             </div>

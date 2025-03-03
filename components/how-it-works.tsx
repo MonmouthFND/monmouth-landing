@@ -14,13 +14,13 @@ export default function HowItWorks() {
             </h2>
           </div>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center">
-            Monmouth isn't another TPS-driven L2. We've built a true AI-native blockchain infrastructure with memory-optimized storage and execution extensions that enable AI agents to operate directly at the chain level.
+            Monmouth&apos;s neural infrastructure isn&apos;t just another L1—it&apos;s purpose-built for AI agents to operate autonomously with intelligence, memory, and real-time decision-making capabilities.
           </p>
 
           <div className="space-y-4 max-w-2xl mx-auto mt-12 mb-12 p-6 rounded-lg border bg-background/50 backdrop-blur">
             <h3 className="text-2xl font-bold">Execution Extensions (ExEx)</h3>
             <p className="text-muted-foreground">
-              Monmouth's ExEx modules are built in Rust and integrated at the binary level, allowing AI agents to execute directly at the chain level with near-instantaneous state access and reaction times—eliminating JSON-RPC or external communication overhead.
+              Monmouth&apos;s ExEx modules are built in Rust and integrated at the binary level, allowing AI agents to execute directly at the chain level with near-instantaneous state access and reaction times—eliminating JSON-RPC or external communication overhead.
             </p>
             <Button variant="outline">
               Learn about the technology
@@ -33,14 +33,14 @@ export default function HowItWorks() {
               <Database className="h-12 w-12 text-[#82d173] mb-4" />
               <h3 className="text-xl font-bold mb-2">Memory-Optimized Storage</h3>
               <p className="text-muted-foreground">
-                Inspired by QMDB's append-only state model, our storage architecture is optimized for ephemeral AI state management with minimal write amplification and efficient SSD/NVMe utilization.
+                Inspired by QMDB&apos;s append-only state model, our storage architecture is optimized for ephemeral AI state management with minimal write amplification and efficient SSD/NVMe utilization.
               </p>
             </div>
             <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
               <Clock className="h-12 w-12 text-[#82d173] mb-4" />
               <h3 className="text-xl font-bold mb-2">Sub-250ms Finality</h3>
               <p className="text-muted-foreground">
-                Monmouth's memory-optimized consensus ensures block finality in under 250ms, enabling real-time AI decision-making and responsiveness that traditional blockchains cannot match.
+                Monmouth&apos;s memory-optimized consensus ensures block finality in under 250ms, enabling real-time AI decision-making and responsiveness that traditional blockchains cannot match.
               </p>
             </div>
             <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
@@ -51,6 +51,10 @@ export default function HowItWorks() {
               </p>
             </div>
           </div>
+
+          <p className="text-muted-foreground">
+            Monmouth&apos;s neural infrastructure enables AI agents to run directly on-chain with persistent memory and state.
+          </p>
         </div>
       </div>
     </section>
