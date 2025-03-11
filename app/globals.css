@@ -70,7 +70,16 @@
   * {
     @apply border-border;
   }
+  html, body {
+    @apply h-full overflow-hidden;
+    overscroll-behavior: none;
+  }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Ensure components fill their section containers properly */
+section > * {
+  @apply w-full;
 }

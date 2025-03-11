@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 
 export default function HowItWorks() {
   return (
-    <section className="w-full py-24">
+    <section className="w-full py-24 mt-10">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col gap-4 space-y-4">
           <Badge className="w-fit mx-auto border border-[#ff66cc] text-[#ff66cc] bg-transparent">How It Works</Badge>
