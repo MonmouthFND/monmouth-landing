@@ -35,9 +35,8 @@ export default function Hero() {
               <span className="block">Welcome to Monmouth.</span>
             </h1>
             <p className="mb-8 text-xl text-muted-foreground dark:text-white text-center">
-            Monmouth delivers unparalleled EVM compatibility, combining cutting-edge performance, genuine decentralization, robust security, and exceptional throughput.
-            </p>
-            <p className="mb-8 text-lg text-muted-foreground dark:text-white text-center">Embrace a new era of blockchain innovation.</p>
+            “Monmouth is the first AI-native blockchain infrastructure, enabling real-time execution for AI agents with seamless EVM and SVM compatibility, decentralized security, and lightning-fast performance.”            </p>
+            <p className="mb-8 text-lg text-muted-foreground dark:text-white text-center">Step into the next evolution of intelligent blockchain computing.</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="rounded-full bg-[#82d173] hover:bg-[#82d173]/80 dark:text-white">
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">

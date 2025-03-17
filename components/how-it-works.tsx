@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 
 export default function HowItWorks() {
   return (
-    <section className="w-full py-24 mt-10">
+    <section className="w-full py-24 mt-8">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col gap-4 space-y-4">
           <Badge className="w-fit mx-auto border border-[#ff66cc] text-[#ff66cc] bg-transparent">How It Works</Badge>
@@ -20,8 +20,7 @@ export default function HowItWorks() {
           <div className="space-y-4 max-w-2xl mx-auto mt-12 mb-12 p-6 rounded-lg border bg-background/50 backdrop-blur">
             <h3 className="text-2xl font-bold">Execution Extensions (ExEx)</h3>
             <p className="text-muted-foreground">
-              Monmouth&apos;s ExEx modules are built in Rust and integrated at the binary level, allowing AI agents to execute directly at the chain level with near-instantaneous state access and reaction times—eliminating JSON-RPC or external communication overhead.
-            </p>
+            Monmouth&apos;s ExEx modules enable AI-native execution at the blockchain&apos;s core—integrated at the binary level for sub-250ms execution, eliminating JSON-RPC overhead while enabling persistent, memory-aware AI agents to operate on-chain.            </p>
             <Button variant="outline">
               Learn about the technology
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -47,12 +46,11 @@ export default function HowItWorks() {
               <Layout className="h-12 w-12 text-[#82d173] mb-4" />
               <h3 className="text-xl font-bold mb-2">Memory-Persistent Contracts</h3>
               <p className="text-muted-foreground">
-                Unlike traditional stateless contracts, Monmouth introduces persistent execution layers that maintain memory and vector embeddings, allowing AI to learn and adapt over time.
-              </p>
+              Monmouth redefines smart contracts with stateful execution—integrating memory persistence and vector embeddings to enable AI agents that recall, learn, and evolve with every transaction.</p>
             </div>
           </div>
 
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-center">
             Monmouth&apos;s neural infrastructure enables AI agents to run directly on-chain with persistent memory and state.
           </p>
         </div>

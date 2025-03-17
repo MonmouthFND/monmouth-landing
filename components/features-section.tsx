@@ -59,7 +59,7 @@ const features = [
   {
     Icon: CalendarIcon,
     name: "Developer-First SDK",
-    description: "Comprehensive tools and templates for building AI-enhanced DApps.",
+    description: "A fully modular SDK designed for AI-enhanced smart contracts, enabling developers to embed RAG-powered agents into decentralized applications.",
     href: "/",
     cta: "Learn more",
     background: <Image 

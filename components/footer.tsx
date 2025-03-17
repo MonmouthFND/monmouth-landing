@@ -5,10 +5,10 @@ import { Twitter, Linkedin, MessageSquare, Send } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="w-full py-12 bg-background border-t">
-      <div className="container px-4 md:px-6 mb-16">
+    <footer className="w-full py-8 bg-background border-t">
+      <div className="container px-4 md:px-6 mb-8">
         <div className="flex flex-col items-center text-center">
-          <Button size="lg" className="rounded-full bg-[#82d173] hover:bg-[#82d173]/80 text-5xl py-16 px-24 h-auto">
+          <Button size="lg" className="rounded-full bg-[#82d173] hover:bg-[#82d173]/80 text-5xl py-12 px-24 h-auto">
             <svg className="mr-6 h-12 w-12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -17,7 +17,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="container grid gap-8 px-4 md:px-6 lg:grid-cols-2 lg:gap-12">
+      <div className="container grid gap-4 px-4 md:px-6 lg:grid-cols-2 lg:gap-8">
         {/* Left Column */}
         <div className="space-y-8">
           {/* Logo */}

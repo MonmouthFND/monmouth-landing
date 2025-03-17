@@ -14,15 +14,13 @@ export default function BenefitsSection() {
             </h2>
           </div>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center">
-            While others merely add AI as a feature, Monmouth is building the first true neural infrastructure layer—blockchain native and AI-first, enabling real-time AI decision-making with sub-250ms finality.
-          </p>
+          Monmouth isn&apos;t just adding AI on top of blockchain — it&apos;s rethinking blockchain for AI. Our neural infrastructure enables real-time AI execution with sub-250ms finality, setting the foundation for autonomous on-chain intelligence.          </p>
 
           <div className="grid md:grid-cols-2 gap-8 mt-12">
             <div className="space-y-4 p-6 rounded-lg border bg-background/50 backdrop-blur">
               <h3 className="text-2xl font-bold">Built for AI, not just transactions.</h3>
               <p className="text-muted-foreground">
-                Monmouth offers true AI-native blockchain infrastructure, capable of full neural workloads directly at block-time, powering embedded AI agents with real-time inference, autonomous operation, and intelligent consensus.
-              </p>
+              Monmouth provides the first AI-native blockchain infrastructure, enabling real-time execution of neural workloads, on-chain inference, and memory-persistent AI contracts — all without off-chain dependencies.              </p>
               <Button variant="outline" className="mt-4">
                 Learn about the technology
                 <ArrowRight className="ml-2 h-4 w-4" />

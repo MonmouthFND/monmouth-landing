@@ -2,7 +2,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from "@/app/providers"
-import { AOSInit } from '@/components/aos-init';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					enableSystem
 					disableTransitionOnChange
 				>
-					<AOSInit />
 					{children}
 				</ThemeProvider>
 			</body>
