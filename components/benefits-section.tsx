@@ -1,46 +1,77 @@
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
+import { IconBrain, IconServer, IconShield } from "@tabler/icons-react"
 import { ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+
+const Skeleton = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
+)
+
+const benefitsItems = [
+  {
+    title: "Built for AI, not just transactions.",
+    description: (
+      <div>
+        <p>Monmouth provides the first AI-native blockchain infrastructure, enabling real-time execution of neural workloads, on-chain inference, and memory-persistent AI contracts — all without off-chain dependencies.</p>
+        <a
+          href="#"
+          className="inline-flex items-center mt-4 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+        >
+          Learn about the technology
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </a>
+      </div>
+    ),
+    header: <Skeleton />,
+    icon: <IconBrain className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "md:col-span-3 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
+  },
+  {
+    title: "Neural Execution",
+    description:
+      "AI agents run directly on-chain, leveraging stateful intelligence with memory-persistent smart contracts that allow AI to recall and adapt, unlike traditional stateless contracts.",
+    header: <Skeleton />,
+    icon: <IconServer className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "md:col-span-2 border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
+  },
+  {
+    title: "Enterprise-Grade Reliability",
+    description:
+      "Built by infrastructure experts who scaled Verizon's edge computing, Monmouth brings industrial-grade AI performance and enterprise-level reliability to decentralized finance and autonomous apps.",
+    header: <Skeleton />,
+    icon: <IconShield className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "md:col-span-1 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
+  },
+]
 
 export default function BenefitsSection() {
   return (
-    <section className="w-full py-24">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col gap-4 space-y-4">
-          <Badge className="w-fit mx-auto border border-[#ff66cc] text-[#ff66cc] bg-transparent">Benefits</Badge>
-          <div className="flex gap-2 flex-col items-center">
-            <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-center">
+    <section className="w-full py-10 my-4 mt-20">
+      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+        <div className="flex flex-col gap-2 space-y-2">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-pink-100 text-[#FF66CC] font-medium text-sm mb-2 w-fit mx-auto">
+            Benefits
+          </div>
+          <div className="flex gap-1.5 flex-col items-center">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tighter max-w-xl font-medium text-center mb-2">
               Neural <span className="text-[#82d173]">Infrastructure</span> for Web3
             </h2>
           </div>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center">
-          Monmouth isn&apos;t just adding AI on top of blockchain — it&apos;s rethinking blockchain for AI. Our neural infrastructure enables real-time AI execution with sub-250ms finality, setting the foundation for autonomous on-chain intelligence.          </p>
+          <p className="text-sm md:text-base text-muted-foreground dark:text-zinc-50 max-w-2xl mx-auto text-center mb-3">
+            Monmouth isn&apos;t just adding AI on top of blockchain — it&apos;s <em className="font-bold italic">rethinking blockchain for AI</em>. Our neural infrastructure enables <em className="font-bold italic">real-time AI execution</em> with sub-250ms finality, setting the foundation for autonomous on-chain intelligence.
+          </p>
 
-          <div className="grid md:grid-cols-2 gap-8 mt-12">
-            <div className="space-y-4 p-6 rounded-lg border bg-background/50 backdrop-blur">
-              <h3 className="text-2xl font-bold">Built for AI, not just transactions.</h3>
-              <p className="text-muted-foreground">
-              Monmouth provides the first AI-native blockchain infrastructure, enabling real-time execution of neural workloads, on-chain inference, and memory-persistent AI contracts — all without off-chain dependencies.              </p>
-              <Button variant="outline" className="mt-4">
-                Learn about the technology
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-            <div className="grid gap-8">
-              <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
-                <h3 className="text-xl font-bold mb-4">Neural Execution</h3>
-                <p className="text-muted-foreground">
-                  AI agents run directly on-chain, leveraging stateful intelligence with memory-persistent smart contracts that allow AI to recall and adapt, unlike traditional stateless contracts.
-                </p>
-              </div>
-              <div className="p-6 rounded-lg border bg-background/50 backdrop-blur">
-                <h3 className="text-xl font-bold mb-4">Enterprise-Grade Reliability</h3>
-                <p className="text-muted-foreground">
-                  Built by infrastructure experts who scaled Verizon&apos;s edge computing, Monmouth brings industrial-grade AI performance and enterprise-level reliability to decentralized finance and autonomous apps.
-                </p>
-              </div>
-            </div>
-          </div>
+          <BentoGrid className="w-full mt-6 mb-6 max-w-full">
+            {benefitsItems.map((item, i) => (
+              <BentoGridItem
+                key={i}
+                title={item.title}
+                description={item.description}
+                header={item.header}
+                icon={item.icon}
+                className={item.className || ""}
+              />
+            ))}
+          </BentoGrid>
         </div>
       </div>
     </section>

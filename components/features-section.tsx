@@ -1,107 +1,83 @@
 import {
-  BellIcon,
-  CalendarIcon,
-  FileTextIcon,
-  GlobeIcon,
-  InputIcon,
-} from "@radix-ui/react-icons";
-import Image from "next/image";
+  IconArrowWaveRightUp,
+  IconClipboardCopy,
+  IconFileBroken,
+  IconSignature,
+  IconTableColumn,
+} from "@tabler/icons-react";
 
-import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Badge } from "@/components/ui/badge";
 
-const features = [
+const Skeleton = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
+)
+
+const items = [
   {
-    Icon: FileTextIcon,
-    name: "AI-Native Architecture",
+    title: "AI-Native Architecture",
     description: "Built from the ground up for AI agent interactions with embedded RAG infrastructure.",
-    href: "/",
-    cta: "Learn more",
-    background: <Image 
-      src="/path/to/your/image.png" 
-      alt="Descriptive text about the image" 
-      width={500}
-      height={300}
-      className="absolute -right-20 -top-20 opacity-60"
-    />,
-    className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
+    header: <Skeleton />,
+    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },
   {
-    Icon: InputIcon,
-    name: "Rust-Powered Performance",
+    title: "Rust-Powered Performance",
     description: "High-performance Layer 2 implementation with blazing speed and reliability.",
-    href: "/",
-    cta: "Learn more",
-    background: <Image 
-      src="/path/to/your/image.png" 
-      alt="Descriptive text about the image" 
-      width={500}
-      height={300}
-      className="absolute -right-20 -top-20 opacity-60"
-    />,
-    className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
+    header: <Skeleton />,
+    icon: <IconFileBroken className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
   },
   {
-    Icon: GlobeIcon,
-    name: "ExEx System",
+    title: "ExEx System",
     description: "Revolutionary execution extension system embedding AI reasoning into the blockchain.",
-    href: "/",
-    cta: "Learn more",
-    background: <Image 
-      src="/path/to/your/image.png" 
-      alt="Descriptive text about the image" 
-      width={500}
-      height={300}
-      className="absolute -right-20 -top-20 opacity-60"
-    />,
-    className: "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
+    header: <Skeleton />,
+    icon: <IconSignature className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },
   {
-    Icon: CalendarIcon,
-    name: "Developer-First SDK",
-    description: "A fully modular SDK designed for AI-enhanced smart contracts, enabling developers to embed RAG-powered agents into decentralized applications.",
-    href: "/",
-    cta: "Learn more",
-    background: <Image 
-      src="/path/to/your/image.png" 
-      alt="Descriptive text about the image" 
-      width={500}
-      height={300}
-      className="absolute -right-20 -top-20 opacity-60"
-    />,
-    className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
+    title: "Developer-First SDK",
+    description:
+      "A fully modular SDK designed for AI-enhanced smart contracts, enabling developers to embed RAG-powered agents into decentralized applications.",
+    header: <Skeleton />,
+    icon: <IconTableColumn className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "md:col-span-2 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
   },
   {
-    Icon: BellIcon,
-    name: "Layer 3 Framework",
+    title: "Layer 3 Framework",
     description: "Deploy customized chains with embedded AI infrastructure for your specific needs.",
-    href: "/",
-    cta: "Learn more",
-    background: <Image 
-      src="/path/to/your/image.png" 
-      alt="Descriptive text about the image" 
-      width={500}
-      height={300}
-      className="absolute -right-20 -top-20 opacity-60"
-    />,
-    className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
+    header: <Skeleton />,
+    icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },
-];
+]
 
 export default function FeaturesSection() {
   return (
-    <section className="w-full py-24">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col gap-4 space-y-4">
-          <Badge className="w-fit mx-auto border border-[#ff66cc] text-[#ff66cc] bg-transparent">Features</Badge>
-          <div className="flex gap-2 flex-col items-center">
-              <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-center">
+    <section className="w-full py-10 my-4 mt-20">
+      <div className="container px-4 md:px-6 max-w-6xl mx-auto">
+        <div className="flex flex-col gap-2 space-y-2">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-pink-100 text-[#FF66CC] font-medium text-sm mb-2 w-fit mx-auto">
+            Features
+          </div>
+          <div className="flex gap-1.5 flex-col items-center">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tighter max-w-xl font-medium text-center mb-2">
               The first <span className="text-[#82d173]">AI-native</span> Layer 2 platform for Ethereum
               </h2>
           </div>
-          <BentoGrid className="lg:grid-rows-3">
-            {features.map((feature) => (
-              <BentoCard key={feature.name} {...feature} />
+          <p className="text-sm md:text-base text-muted-foreground dark:text-zinc-50 max-w-2xl mx-auto text-center mb-3">
+            Designed from the ground up for AI agent interactions, Monmouth combines <em className="font-bold italic">blazing performance</em> with <em className="font-bold italic">embedded neural capabilities</em>.
+          </p>
+          <BentoGrid className="w-full mt-6 mb-6 max-w-full">
+            {items.map((item, i) => (
+              <BentoGridItem
+                key={i}
+                title={item.title}
+                description={item.description}
+                header={item.header}
+                icon={item.icon}
+                className={item.className}
+              />
             ))}
           </BentoGrid>
         </div>

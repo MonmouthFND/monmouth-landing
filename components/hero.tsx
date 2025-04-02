@@ -44,7 +44,7 @@ export default function Hero() {
                 </svg>
                 Start building
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full dark:border-[#FF66CC]">
+              <Button variant="outline" size="lg" className="rounded-full dark:border-[#FF66CC] hover:bg-pink-100 hover:text-[#FF66CC]">
                 How it works
               </Button>
             </div>
