@@ -35,8 +35,11 @@ export default function Hero() {
               <span className="block">Welcome to Monmouth.</span>
             </h1>
             <p className="mb-8 text-xl text-muted-foreground dark:text-white text-center">
-            “Monmouth is the first AI-native blockchain infrastructure, enabling real-time execution for AI agents with seamless EVM and SVM compatibility, decentralized security, and lightning-fast performance.”            </p>
-            <p className="mb-8 text-lg text-muted-foreground dark:text-white text-center">Step into the next evolution of intelligent blockchain computing.</p>
+              Monmouth is the <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">first AI-native blockchain infrastructure</em>, enabling <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">real-time execution</em> for AI agents with <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">seamless EVM and SVM compatibility</em>, decentralized security, and <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">lightning-fast performance</em>.
+            </p>
+            <p className="mb-8 text-lg text-muted-foreground dark:text-white text-center">
+              Step into the <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">next evolution</em> of intelligent blockchain computing.
+            </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="rounded-full bg-[#82d173] hover:bg-[#82d173]/80 dark:text-white">
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -44,7 +47,7 @@ export default function Hero() {
                 </svg>
                 Start building
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full dark:border-[#FF66CC] hover:bg-pink-100 hover:text-[#FF66CC]">
+              <Button variant="outline" size="lg" className="rounded-full text-[#1034A6] hover:text-[#FF66CC] dark:text-zinc-50 hover:border-[#FF66CC] dark:border-[#FF66CC] hover:bg-pink-100 dark:hover:text-[#FF66CC]">
                 How it works
               </Button>
             </div>

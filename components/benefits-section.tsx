@@ -14,7 +14,7 @@ const benefitsItems = [
         <p>Monmouth provides the first AI-native blockchain infrastructure, enabling real-time execution of neural workloads, on-chain inference, and memory-persistent AI contracts — all without off-chain dependencies.</p>
         <a
           href="#"
-          className="inline-flex items-center mt-4 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+          className="inline-flex items-center mt-4 text-sm font-medium text-[#1034A6] hover:text-gray-900 dark:text-gray-200 dark:hover:text-white"
         >
           Learn about the technology
           <ArrowRight className="ml-2 h-4 w-4" />
@@ -39,7 +39,7 @@ const benefitsItems = [
       "Built by infrastructure experts who scaled Verizon's edge computing, Monmouth brings industrial-grade AI performance and enterprise-level reliability to decentralized finance and autonomous apps.",
     header: <Skeleton />,
     icon: <IconShield className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    className: "md:col-span-1 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
+    className: "md:col-span-1 border-[#1034A6] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-zinc-50",
   },
 ]
 
@@ -57,7 +57,7 @@ export default function BenefitsSection() {
             </h2>
           </div>
           <p className="text-sm md:text-base text-muted-foreground dark:text-zinc-50 max-w-2xl mx-auto text-center mb-3">
-            Monmouth isn&apos;t just adding AI on top of blockchain — it&apos;s <em className="font-bold italic">rethinking blockchain for AI</em>. Our neural infrastructure enables <em className="font-bold italic">real-time AI execution</em> with sub-250ms finality, setting the foundation for autonomous on-chain intelligence.
+            Monmouth isn&apos;t just adding AI on top of blockchain — it&apos;s <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">rethinking blockchain for AI</em>. Our neural infrastructure enables <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">real-time AI execution</em> with sub-250ms finality, setting the foundation for autonomous on-chain intelligence.
           </p>
 
           <BentoGrid className="w-full mt-6 mb-6 max-w-full">

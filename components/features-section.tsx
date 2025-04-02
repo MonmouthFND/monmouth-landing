@@ -33,7 +33,7 @@ const items = [
     description: "Revolutionary execution extension system embedding AI reasoning into the blockchain.",
     header: <Skeleton />,
     icon: <IconSignature className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
+    className: "border-[#1034A6] hover:border-[#82D173]/80 dark:bg-transparent dark:border-zinc-50",
   },
   {
     title: "Developer-First SDK",
@@ -66,7 +66,7 @@ export default function FeaturesSection() {
               </h2>
           </div>
           <p className="text-sm md:text-base text-muted-foreground dark:text-zinc-50 max-w-2xl mx-auto text-center mb-3">
-            Designed from the ground up for AI agent interactions, Monmouth combines <em className="font-bold italic">blazing performance</em> with <em className="font-bold italic">embedded neural capabilities</em>.
+            Designed from the ground up for AI agent interactions, Monmouth combines <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">blazing performance</em> with <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">embedded neural capabilities</em>.
           </p>
           <BentoGrid className="w-full mt-6 mb-6 max-w-full">
             {items.map((item, i) => (

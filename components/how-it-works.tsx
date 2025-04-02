@@ -13,7 +13,7 @@ const howItWorksItems = [
         <p>Monmouth&apos;s ExEx modules enable AI-native execution at the blockchain&apos;s core—integrated at the binary level for sub-250ms execution, eliminating JSON-RPC overhead while enabling persistent, memory-aware AI agents to operate on-chain.</p>
         <a
           href="#"
-          className="inline-flex items-center mt-4 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+          className="inline-flex items-center mt-4 text-sm font-medium text-[#1034A6] hover:text-gray-900 dark:text-gray-200 dark:hover:text-white"
         >
           Learn about the technology
           <svg
@@ -46,7 +46,7 @@ const howItWorksItems = [
       "Monmouth's memory-optimized consensus ensures block finality in under 250ms, enabling real-time AI decision-making and responsiveness that traditional blockchains cannot match.",
     header: <Skeleton />,
     icon: <IconClock className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    className: "md:col-span-1 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
+    className: "md:col-span-1 border-[#1034A6] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-zinc-50",
   },
   {
     title: "Memory-Persistent Contracts",
@@ -72,7 +72,7 @@ export default function HowItWorks() {
             </h2>
           </div>
           <p className="text-sm md:text-base text-muted-foreground dark:text-zinc-50 max-w-2xl mx-auto text-center mb-3">
-            Monmouth&apos;s neural infrastructure isn&apos;t just another L1—it&apos;s purpose-built for AI agents to operate <em className="font-bold italic">autonomously with intelligence</em>, <em className="font-bold italic">memory</em>, and <em className="font-bold italic">real-time decision-making</em> capabilities.
+            Monmouth&apos;s neural infrastructure isn&apos;t just another L1—it&apos;s purpose-built for AI agents to operate <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">autonomously with intelligence</em>, <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">memory</em>, and <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">real-time decision-making</em> capabilities.
           </p>
 
           <BentoGrid className="w-full mt-6 mb-6 max-w-full">
@@ -89,7 +89,7 @@ export default function HowItWorks() {
           </BentoGrid>
 
           <p className="text-xs md:text-sm text-muted-foreground dark:text-zinc-50 text-center">
-            Monmouth&apos;s neural infrastructure enables AI agents to run directly on-chain with <em className="font-bold italic">persistent memory</em> and <em className="font-bold italic">adaptive state</em>.
+            Monmouth&apos;s neural infrastructure enables AI agents to run directly on-chain with <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">persistent memory</em> and <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">adaptive state</em>.
           </p>
         </div>
       </div>
