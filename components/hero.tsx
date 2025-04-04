@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button"
 
 export default function Hero() {
   return (
-    <div className="relative min-h-screen flex flex-col justify-center overflow-hidden dark:to-background border-b py-2">
-      <div className="absolute top-40 left-1/2 -translate-x-1/2 max-w-max whitespace-nowrap">
+    <div className="relative min-h-screen flex flex-col overflow-hidden dark:to-background border-b py-2">
+      {/* News banner positioned between navbar and hero content */}
+      <div className="w-full flex justify-center pt-32 pb-12 sm:pt-40 sm:pb-16">
         <a
           href="#"
           className="inline-flex items-center rounded-full bg-[#82d173] px-6 py-2 text-sm text-white hover:bg-[#82d173]/80"
@@ -20,7 +21,7 @@ export default function Hero() {
       </div>
 
       <div className="container mx-auto px-4 flex-grow flex items-center">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center justify-center max-w-6xl mx-auto max-[425px]:pt-[80px] max-[320px]:pt-[150px]">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center justify-center max-w-6xl mx-auto pt-4 sm:pt-0 max-[425px]:pt-0">
           {/* <div className="relative aspect-square lg:aspect-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-700/20 rounded-full blur-3xl" />
             <div className="relative h-full w-full rounded-full bg-purple-100 dark:bg-purple-950/50">
