@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 export default function Hero() {
   return (
     <div className="relative min-h-screen flex flex-col justify-center overflow-hidden dark:to-background border-b py-2">
-      <div className="absolute top-40 left-1/2 -translate-x-1/2">
+      <div className="absolute top-40 left-1/2 -translate-x-1/2 max-w-max whitespace-nowrap">
         <a
           href="#"
           className="inline-flex items-center rounded-full bg-[#82d173] px-6 py-2 text-sm text-white hover:bg-[#82d173]/80"

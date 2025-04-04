@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { Cross2Icon } from "@radix-ui/react-icons"
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
-
+import Image from "next/image"
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
@@ -16,7 +16,11 @@ export default function Navbar() {
     <>
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl mx-auto">
         <div className="flex items-center justify-between px-6 py-3 bg-background/80 backdrop-blur-md rounded-full border border-gray-200 shadow-sm">
-          <div className="flex items-center gap-2">
+          <Button variant="outline" className="rounded-full dark:border-white md:hidden">
+            Start building
+          </Button>
+          
+          <div className="hidden md:flex items-center gap-2">
             <Button variant="outline" className="rounded-full dark:border-white">
               Start building
             </Button>
@@ -33,18 +37,33 @@ export default function Navbar() {
           </div>
 
           <div className="absolute left-1/2 -translate-x-1/2">
-            <svg width="120" height="32" viewBox="0 0 120 32" fill="none">
-              <path d="M60 8L68 16L60 24L52 16L60 8Z" fill="#FF66CC" />
-              {/* <text x="75" y="22" className="text-xl font-bold">
-                MONMOUTH
-              </text> */}
-            </svg>
+            <div className="flex items-center justify-center">
+              <Image 
+                src="/monmouth-logo.png" 
+                alt="Monmouth Logo" 
+                width={60} 
+                height={16} 
+                className="dark:invert"
+              />
+            </div>
           </div>
 
-          <Button variant="ghost" className="rounded-full" onClick={() => setIsMenuOpen(true)}>
-            <Menu className="h-6 w-6" />
-            <span className="ml-2">MENU</span>
-          </Button>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full md:hidden"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+            <Button variant="ghost" className="rounded-full" onClick={() => setIsMenuOpen(true)}>
+              <Menu className="h-6 w-6" />
+              <span className="ml-2 hidden md:inline">MENU</span>
+            </Button>
+          </div>
         </div>
       </nav>
 
@@ -70,12 +89,15 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
           </Button>
 
           <div className="absolute left-1/2 -translate-x-1/2">
-            <svg width="120" height="32" viewBox="0 0 120 32" fill="none">
-              <path d="M60 8L68 16L60 24L52 16L60 8Z" fill="#FF66CC" />
-              {/* <text x="75" y="22" className="text-xl font-bold">
-                MONMOUTH
-              </text> */}
-            </svg>
+            <div className="flex items-center justify-center">
+              <Image 
+                src="/monmouth-logo.png" 
+                alt="Monmouth Logo" 
+                width={60} 
+                height={16} 
+                className="dark:invert"
+              />
+            </div>
           </div>
 
           <Button variant="ghost" className="rounded-full" onClick={onClose}>
