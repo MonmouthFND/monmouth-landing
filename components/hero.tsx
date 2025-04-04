@@ -20,7 +20,7 @@ export default function Hero() {
       </div>
 
       <div className="container mx-auto px-4 flex-grow flex items-center">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center justify-center max-w-6xl mx-auto">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center justify-center max-w-6xl mx-auto max-[425px]:pt-[80px] max-[320px]:pt-[150px]">
           {/* <div className="relative aspect-square lg:aspect-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-700/20 rounded-full blur-3xl" />
             <div className="relative h-full w-full rounded-full bg-purple-100 dark:bg-purple-950/50">
