@@ -8,30 +8,87 @@ import {
 
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
-const Skeleton = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
+const FeatureImage = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/features/features-1.png"
+      alt="Monmouth Features Visualization"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const FeatureImage2 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/features/features-2.png"
+      alt="Monmouth Performance Visualization"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const FeatureImage3 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/features/features-3.png"
+      alt="ExEx System"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const FeatureImage4 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/features/features-4.png"
+      alt="Developer-First SDK"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const FeatureImage5 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/features/features-5.png"
+      alt="Layer 3 Framework"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
 )
 
 const items = [
   {
     title: "AI-Native Architecture",
     description: "Built from the ground up for AI agent interactions with embedded RAG infrastructure.",
-    header: <Skeleton />,
+    header: <FeatureImage />,
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },
   {
     title: "Rust-Powered Performance",
     description: "High-performance Layer 2 implementation with blazing speed and reliability.",
-    header: <Skeleton />,
+    header: <FeatureImage2 />,
     icon: <IconFileBroken className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
   },
   {
     title: "ExEx System",
     description: "Revolutionary execution extension system embedding AI reasoning into the blockchain.",
-    header: <Skeleton />,
+    header: <FeatureImage3 />,
     icon: <IconSignature className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "border-[#1034A6] hover:border-[#82D173]/80 dark:bg-transparent dark:border-zinc-50",
   },
@@ -39,14 +96,14 @@ const items = [
     title: "Developer-First SDK",
     description:
       "A fully modular SDK designed for AI-enhanced smart contracts, enabling developers to embed RAG-powered agents into decentralized applications.",
-    header: <Skeleton />,
+    header: <FeatureImage4 />,
     icon: <IconTableColumn className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "md:col-span-2 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
   },
   {
     title: "Layer 3 Framework",
     description: "Deploy customized chains with embedded AI infrastructure for your specific needs.",
-    header: <Skeleton />,
+    header: <FeatureImage5 />,
     icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },

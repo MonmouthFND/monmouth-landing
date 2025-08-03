@@ -1,8 +1,57 @@
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
 import { IconClock, IconDatabase, IconCode } from "@tabler/icons-react"
+import Image from "next/image";
 
 const Skeleton = () => (
   <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
+)
+
+const HowItWorksImage = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/how-it-works/how-it-works-1.png"
+      alt="Execution Extensions (ExEx)"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const HowItWorksImage2 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/how-it-works/how-it-works-2.png"
+      alt="Memory-Optimized Storage"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const HowItWorksImage3 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/how-it-works/how-it-works-3.png"
+      alt="Sub-250ms Finality"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const HowItWorksImage4 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/how-it-works/how-it-works-4.png"
+      alt="Memory-Persistent Contracts"
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
 )
 
 const howItWorksItems = [
@@ -28,7 +77,7 @@ const howItWorksItems = [
         </a>
       </div>
     ),
-    header: <Skeleton />,
+    header: <HowItWorksImage />,
     icon: <IconCode className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "md:col-span-2 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
   },
@@ -36,7 +85,7 @@ const howItWorksItems = [
     title: "Memory-Optimized Storage",
     description:
       "Inspired by QMDB's append-only state model, our storage architecture is optimized for ephemeral AI state management with minimal write amplification and efficient SSD/NVMe utilization.",
-    header: <Skeleton />,
+    header: <HowItWorksImage2 />,
     icon: <IconDatabase className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },
@@ -44,7 +93,7 @@ const howItWorksItems = [
     title: "Sub-250ms Finality",
     description:
       "Monmouth's memory-optimized consensus ensures block finality in under 250ms, enabling real-time AI decision-making and responsiveness that traditional blockchains cannot match.",
-    header: <Skeleton />,
+    header: <HowItWorksImage3 />,
     icon: <IconClock className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "md:col-span-1 border-[#1034A6] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-zinc-50",
   },
@@ -52,7 +101,7 @@ const howItWorksItems = [
     title: "Memory-Persistent Contracts",
     description:
       "Monmouth redefines smart contracts with stateful execution—integrating memory persistence and vector embeddings to enable AI agents that recall, learn, and evolve with every transaction.",
-    header: <Skeleton />,
+    header: <HowItWorksImage4 />,
     icon: <IconCode className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "md:col-span-2 border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },

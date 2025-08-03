@@ -1,9 +1,42 @@
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
 import { IconBrain, IconServer, IconShield } from "@tabler/icons-react"
 import { ArrowRight } from "lucide-react"
+import Image from "next/image";
 
-const Skeleton = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
+const BenefitsImage = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/benefits/benefits-1.png"
+      alt="Built for AI, not just transactions."
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const BenefitsImage2 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/benefits/benefits-2.png"
+      alt="Built for AI, not just transactions."
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
+)
+
+const BenefitsImage3 = () => (
+  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
+    <Image
+      src="/benefits/benefits-3.png"
+      alt="Built for AI, not just transactions."
+      fill
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </div>
 )
 
 const benefitsItems = [
@@ -21,7 +54,7 @@ const benefitsItems = [
         </a>
       </div>
     ),
-    header: <Skeleton />,
+    header: <BenefitsImage />,
     icon: <IconBrain className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "md:col-span-3 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
   },
@@ -29,7 +62,7 @@ const benefitsItems = [
     title: "Neural Execution",
     description:
       "AI agents run directly on-chain, leveraging stateful intelligence with memory-persistent smart contracts that allow AI to recall and adapt, unlike traditional stateless contracts.",
-    header: <Skeleton />,
+    header: <BenefitsImage2 />,
     icon: <IconServer className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "md:col-span-2 border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
   },
@@ -37,7 +70,7 @@ const benefitsItems = [
     title: "Enterprise-Grade Reliability",
     description:
       "Built by infrastructure experts who scaled Verizon's edge computing, Monmouth brings industrial-grade AI performance and enterprise-level reliability to decentralized finance and autonomous apps.",
-    header: <Skeleton />,
+    header: <BenefitsImage3 />,
     icon: <IconShield className="h-4 w-4 text-neutral-500 dark:text-white" />,
     className: "md:col-span-1 border-[#1034A6] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-zinc-50",
   },
