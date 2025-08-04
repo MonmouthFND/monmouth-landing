@@ -38,16 +38,16 @@ export default function Hero() {
             </div>
           </div> */}
 
-          <div className="flex flex-col justify-center lg:col-span-2 relative">
+          <div className="flex flex-col justify-center lg:col-span-2 relative -mt-24">
             {/* Glassmorphism backdrop for text readability */}
-            <div className="absolute inset-0 bg-white/20 dark:bg-black/60 backdrop-blur-md rounded-3xl border border-white/30 dark:border-white/10 shadow-xl -m-4"></div>
+            <div className="absolute inset-0 bg-white/50 dark:bg-black/40 backdrop-blur-md rounded-3xl border border-white/30 dark:border-white/10 shadow-xl -m-2 sm:-m-4"></div>
             
-            <div className="relative z-10 p-6">
+            <div className="relative z-10 p-4 sm:p-6">
               <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl text-center">
                 <span className="block text-[#FF66CC] dark:text-[#FF66CC]">Intelligence at scale.</span>
                 <span className="block text-gray-900 dark:text-white">Welcome to Monmouth.</span>
               </h1>
-              <p className="mb-8 text-xl text-gray-800 dark:text-gray-100 text-center">
+              <p className="mb-8 text-lg sm:text-xl text-gray-900 dark:text-gray-100 text-center">
                 Monmouth is the <em className="font-bold italic text-[#1034A6] dark:text-blue-300">first AI-native blockchain infrastructure</em>, enabling <em className="font-bold italic text-[#1034A6] dark:text-blue-300">real-time execution</em> for AI agents with <em className="font-bold italic text-[#1034A6] dark:text-blue-300">seamless EVM and SVM compatibility</em>, decentralized security, and <em className="font-bold italic text-[#1034A6] dark:text-blue-300">lightning-fast performance</em>.
               </p>
               <p className="mb-8 text-lg text-gray-700 dark:text-gray-200 text-center">
