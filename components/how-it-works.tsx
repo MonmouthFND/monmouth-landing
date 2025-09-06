@@ -121,7 +121,7 @@ export default function HowItWorks() {
             </h2>
           </div>
           <p className="text-sm md:text-base text-muted-foreground dark:text-zinc-50 max-w-2xl mx-auto text-center mb-3">
-            Monmouth&apos;s neural infrastructure isn&apos;t just another L1—it&apos;s purpose-built for AI agents to operate <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">autonomously with intelligence</em>, <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">memory</em>, and <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">real-time decision-making</em> capabilities.
+            Monmouth&apos;s neural infrastructure isn&apos;t just another L2—it&apos;s purpose-built for AI agents to operate <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">autonomously with intelligence</em>, <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">memory</em>, and <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">real-time decision-making</em> capabilities.
           </p>
 
           <BentoGrid className="w-full mt-6 mb-6 max-w-full">
