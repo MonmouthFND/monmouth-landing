@@ -1,25 +1,27 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Instrument_Serif, JetBrains_Mono, DM_Sans } from 'next/font/google';
+import localFont from 'next/font/local';
 import { ThemeProvider } from "@/app/providers"
 
-const instrumentSerif = Instrument_Serif({
-	subsets: ['latin'],
-	weight: '400',
+const instrumentSerif = localFont({
+	src: '../public/fonts/instrument-serif-latin.woff2',
 	variable: '--font-display',
 	display: 'swap',
+	weight: '400',
 });
 
-const jetbrainsMono = JetBrains_Mono({
-	subsets: ['latin'],
+const jetbrainsMono = localFont({
+	src: '../public/fonts/jetbrains-mono-latin.woff2',
 	variable: '--font-mono',
 	display: 'swap',
+	weight: '400',
 });
 
-const dmSans = DM_Sans({
-	subsets: ['latin'],
+const dmSans = localFont({
+	src: '../public/fonts/dm-sans-latin.woff2',
 	variable: '--font-body',
 	display: 'swap',
+	weight: '100 900',
 });
 
 export const metadata: Metadata = {
