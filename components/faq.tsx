@@ -3,70 +3,94 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 const FAQSection = () => {
-    return (
-        <section className="w-full py-10 my-4 mt-16">
-            <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-                <div className="flex flex-col gap-2 space-y-2">
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-pink-100 text-[#FF66CC] font-medium text-sm mb-2 w-fit mx-auto">
-                        FAQ
-                    </div>
-                    <div className="flex gap-1.5 flex-col items-center">
-                        <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tighter max-w-xl font-medium text-center mb-2">
-                            Frequently Asked Questions
-                        </h2>
-                    </div>
-                    <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto text-center mb-3">
-                        Get answers to common questions about Monmouth&apos;s neural infrastructure and blockchain technology.
-                    </p>
-                    <div className="w-full max-w-3xl mx-auto mt-6">
-                        <Accordion type="single" collapsible className="w-full">
-                            <AccordionItem value="item-1" className="border-b border-neutral-200 dark:border-neutral-700">
-                                <AccordionTrigger className="text-left font-medium text-base py-4">What is Monmouth&apos;s neural infrastructure?</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                    Monmouth&apos;s neural infrastructure is a purpose-built L2 blockchain architecture designed specifically for AI agents to operate autonomously. Our infrastructure integrates AI execution capabilities at the binary level, enabling intelligent agents with persistent memory and real-time decision-making capabilities directly on-chain.
-                                </AccordionContent>
-                            </AccordionItem>
+  return (
+    <section className="w-full py-24 section-divider">
+      <div className="container px-4 md:px-6 max-w-4xl mx-auto">
+        <div className="flex flex-col gap-6 mb-12">
+          {/* Section label */}
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-border" />
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">04 / FAQ</span>
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-border" />
+          </div>
 
-                            <AccordionItem value="item-2" className="border-b border-neutral-200 dark:border-neutral-700">
-                                <AccordionTrigger className="text-left font-medium text-base py-4">How do Execution Extensions (ExEx) work?</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                    Execution Extensions (ExEx) are core modules that enable AI-native execution at the blockchain&apos;s binary level. They eliminate traditional JSON-RPC overhead, achieving sub-250ms execution times while allowing memory-aware AI agents to operate directly on-chain with persistent state and intelligence.
-                                </AccordionContent>
-                            </AccordionItem>
+          {/* Headline */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display text-center max-w-2xl mx-auto leading-tight">
+            Frequently Asked <span className="text-mint italic">Questions</span>
+          </h2>
 
-                            <AccordionItem value="item-3" className="border-b border-neutral-200 dark:border-neutral-700">
-                                <AccordionTrigger className="text-left font-medium text-base py-4">What makes Monmouth different from other L2 solutions?</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                    Unlike traditional L2s that focus primarily on scaling transactions, Monmouth is designed from the ground up for AI operations. Our memory-optimized storage, sub-250ms finality, and persistent memory contracts allow AI agents to recall, learn, and evolve with each transaction. This creates an environment where AI can operate autonomously with both intelligence and state persistence while benefiting from L2 scalability.
-                                </AccordionContent>
-                            </AccordionItem>
+          {/* Subhead */}
+          <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto text-center leading-relaxed">
+            Get answers about Monmouth&apos;s agent-aware L2 infrastructure.
+          </p>
+        </div>
 
-                            <AccordionItem value="item-4" className="border-b border-neutral-200 dark:border-neutral-700">
-                                <AccordionTrigger className="text-left font-medium text-base py-4">How does Monmouth achieve such fast finality?</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                    Monmouth achieves sub-250ms finality through our innovative memory-optimized consensus mechanism. Our L2 storage architecture is inspired by QMDB&apos;s append-only state model, which minimizes write amplification and optimizes for SSD/NVMe utilization. This approach eliminates the bottlenecks found in traditional blockchains, enabling real-time AI decision-making and responsiveness.
-                                </AccordionContent>
-                            </AccordionItem>
-                            
-                            <AccordionItem value="item-5" className="border-b border-neutral-200 dark:border-neutral-700">
-                                <AccordionTrigger className="text-left font-medium text-base py-4">What are memory-persistent contracts?</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                    Memory-persistent contracts redefine traditional smart contracts by integrating stateful execution capabilities. These contracts incorporate both memory persistence and vector embeddings, allowing AI agents to maintain context, recall past interactions, learn from experiences, and evolve with every transaction. This creates a fundamentally more intelligent contract layer on our L2 than what&apos;s possible on conventional blockchains.
-                                </AccordionContent>
-                            </AccordionItem>
-                            
-                            <AccordionItem value="item-6" className="border-b border-neutral-200 dark:border-neutral-700">
-                                <AccordionTrigger className="text-left font-medium text-base py-4">How does Monmouth connect to Ethereum?</AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground">
-                                    As an L2 solution, Monmouth inherits the security guarantees of Ethereum while providing specialized infrastructure for AI agent operations. We leverage Ethereum for settlement and security while offering a highly optimized execution environment with sub-250ms finality, memory persistence, and AI-native capabilities that aren&apos;t possible on the base layer.
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
+        <div className="w-full">
+          <Accordion type="single" collapsible className="w-full space-y-3">
+            <AccordionItem value="item-1" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
+              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
+                What is Monmouth?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                Monmouth is an agent-aware Layer 2 blockchain built on Reth, designed for AI agents to transact safely and efficiently. It provides guardrails, spending limits, and policy enforcement through our Wallet SDK, with custom precompiles for cross-chain operations.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-2" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-rose/50 transition-colors">
+              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-rose transition-colors">
+                Does AI run on-chain?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                No — and that&apos;s by design. AI/ML operations happen off-chain via LLM API calls (Claude, GPT, etc.). The blockchain handles verification and settlement only. On-chain ML isn&apos;t feasible at consensus speeds — even local MLX is slow, and requiring consensus would be impractical.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
+              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
+                What makes Monmouth different from other L2s?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                Monmouth is purpose-built for AI agents. Our Wallet SDK provides guardrails and policy enforcement. We have custom precompiles for Solana cross-chain operations (SVM Router) and L1↔L2 messaging. Plus we extend Reth without forking, ensuring zero maintenance burden and full compatibility.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-4" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-navy/30 dark:data-[state=open]:border-white/30 transition-colors">
+              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-navy dark:hover:text-white/80 transition-colors">
+                What are the custom precompiles?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                We have two main precompiles:{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">SVM Router (0x1003)</code> enables Solana VM program execution for cross-chain operations.{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">L2 Message Passer (0x4200)</code> handles L1↔L2 deposits, withdrawals, and cross-layer messaging.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-5" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-rose/50 transition-colors">
+              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-rose transition-colors">
+                How does transaction classification work?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                Our system automatically detects transaction intent — swap, transfer, lending, staking, NFT operations. It uses confidence scoring with configurable thresholds and heuristic classification based on function selectors. Transactions are then routed to the appropriate runtime (EVM, SVM, or Hybrid).
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-6" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
+              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
+                How does Monmouth connect to Ethereum?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                Monmouth L2 is deployed to Sepolia testnet with a Trusted Sequencer model. L1 contracts include{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">SequencerInbox</code> (receives batch data),{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">StateCommitmentChain</code> (stores L2 state roots),{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">L1StandardBridge</code> (ETH deposits/withdrawals), and{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">CrossDomainMessenger</code> (arbitrary L1↔L2 messaging).
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </div>
+    </section>
+  )
 }
 
-export default FAQSection 
+export default FAQSection

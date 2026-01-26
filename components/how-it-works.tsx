@@ -1,10 +1,7 @@
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
 import { IconClock, IconDatabase, IconCode } from "@tabler/icons-react"
+import { ArrowRight } from "lucide-react"
 import Image from "next/image";
-
-const Skeleton = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
-)
 
 const HowItWorksImage = () => (
   <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
@@ -12,7 +9,7 @@ const HowItWorksImage = () => (
       src="/how-it-works/how-it-works-1.png"
       alt="Execution Extensions (ExEx)"
       fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     />
   </div>
@@ -24,7 +21,7 @@ const HowItWorksImage2 = () => (
       src="/how-it-works/how-it-works-2.png"
       alt="Memory-Optimized Storage"
       fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     />
   </div>
@@ -36,7 +33,7 @@ const HowItWorksImage3 = () => (
       src="/how-it-works/how-it-works-3.png"
       alt="Sub-250ms Finality"
       fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     />
   </div>
@@ -48,7 +45,7 @@ const HowItWorksImage4 = () => (
       src="/how-it-works/how-it-works-4.png"
       alt="Memory-Persistent Contracts"
       fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110"
+      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     />
   </div>
@@ -56,92 +53,100 @@ const HowItWorksImage4 = () => (
 
 const howItWorksItems = [
   {
-    title: "Execution Extensions (ExEx)",
+    title: "Off-Chain AI, On-Chain Settlement",
     description: (
       <div>
-        <p>Monmouth&apos;s ExEx modules enable AI-native execution at the blockchain&apos;s core—integrated at the binary level for sub-250ms execution, eliminating JSON-RPC overhead while enabling persistent, memory-aware AI agents to operate on-chain.</p>
+        <p className="mb-4">AI agents connect to LLMs (Claude, GPT, etc.) for reasoning and planning off-chain. The Wallet SDK enforces guardrails and policies. Monmouth handles the settlement and verification — because on-chain ML isn&apos;t feasible at consensus speeds.</p>
         <a
           href="#"
-          className="inline-flex items-center mt-4 text-sm font-medium text-[#1034A6] hover:text-gray-900 dark:text-gray-200 dark:hover:text-white"
+          className="group/link inline-flex items-center gap-2 text-sm font-medium text-navy dark:text-mint hover:gap-3 transition-all"
         >
-          Learn about the technology
-          <svg
-            className="ml-1 w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
+          Read the architecture docs
+          <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5" />
         </a>
       </div>
     ),
     header: <HowItWorksImage />,
-    icon: <IconCode className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    className: "md:col-span-2 border-[#FF66CC] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-[#FF66CC]",
+    icon: <IconCode className="h-4 w-4" />,
+    className: "md:col-span-2 border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
   },
   {
-    title: "Memory-Optimized Storage",
+    title: "ExEx Host Service",
     description:
-      "Inspired by QMDB's append-only state model, our storage architecture is optimized for ephemeral AI state management with minimal write amplification and efficient SSD/NVMe utilization.",
+      "gRPC streaming of blockchain events — real-time headers, blocks, receipts, and logs. Health monitoring, service discovery, and configurable filtering for building reactive agent systems.",
     header: <HowItWorksImage2 />,
-    icon: <IconDatabase className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    className: "border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
+    icon: <IconDatabase className="h-4 w-4" />,
+    className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
   {
-    title: "Sub-250ms Finality",
+    title: "L1 Integration",
     description:
-      "Monmouth's memory-optimized consensus ensures block finality in under 250ms, enabling real-time AI decision-making and responsiveness that traditional blockchains cannot match.",
+      "Deployed to Sepolia with SequencerInbox, StateCommitmentChain, L1StandardBridge, and CrossDomainMessenger contracts for deposits, withdrawals, and cross-layer messaging.",
     header: <HowItWorksImage3 />,
-    icon: <IconClock className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    className: "md:col-span-1 border-[#1034A6] hover:border-[#FF66CC]/80 dark:bg-transparent dark:border-zinc-50",
+    icon: <IconClock className="h-4 w-4" />,
+    className: "md:col-span-1 border-navy/30 hover:border-navy dark:border-white/20 dark:hover:border-white/40",
   },
   {
-    title: "Memory-Persistent Contracts",
+    title: "Custom Precompiles",
     description:
-      "Monmouth redefines smart contracts with stateful execution—integrating memory persistence and vector embeddings to enable AI agents that recall, learn, and evolve with every transaction.",
+      "SVM Router (0x1003) for Solana VM program execution and cross-chain operations. L2 Message Passer (0x4200) for L1↔L2 deposits, withdrawals, and arbitrary message passing.",
     header: <HowItWorksImage4 />,
-    icon: <IconCode className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    className: "md:col-span-2 border-[#82D173] hover:border-[#82D173]/80 dark:bg-transparent dark:border-[#82D173]",
+    icon: <IconCode className="h-4 w-4" />,
+    className: "md:col-span-2 border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
 ]
 
 export default function HowItWorks() {
   return (
-    <section className="w-full py-10 my-4 mt-16">
+    <section className="w-full py-24 section-divider">
       <div className="container px-4 md:px-6 max-w-6xl mx-auto">
-        <div className="flex flex-col gap-2 space-y-2">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-pink-100 text-[#FF66CC] font-medium text-sm mb-2 w-fit mx-auto">
-            How It Works
+        <div className="flex flex-col gap-6 mb-12">
+          {/* Section label */}
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-border" />
+            <span className="font-mono text-xs uppercase tracking-widest text-navy dark:text-white/60">03 / Architecture</span>
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-border" />
           </div>
-          <div className="flex gap-1.5 flex-col items-center">
-            <h2 className="text-2xl md:text-4xl lg:text-5xl tracking-tighter max-w-xl font-medium text-center mb-2">
-              Redefining <span className="text-[#82d173]">Blockchain Execution</span>
-            </h2>
+
+          {/* Headline */}
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display text-center max-w-2xl mx-auto leading-tight">
+            How <span className="text-rose italic">Monmouth</span> Works
+          </h2>
+
+          {/* Technical flow diagram */}
+          <div className="flex items-center justify-center gap-2 text-sm font-mono text-muted-foreground flex-wrap">
+            <span className="px-3 py-1.5 rounded-lg bg-card border">AI Agent</span>
+            <span className="text-mint">→</span>
+            <span className="px-3 py-1.5 rounded-lg bg-card border">Wallet SDK</span>
+            <span className="text-mint">→</span>
+            <span className="px-3 py-1.5 rounded-lg bg-rose/10 border border-rose/30 text-rose">LLM API</span>
+            <span className="text-mint">→</span>
+            <span className="px-3 py-1.5 rounded-lg bg-card border">Tool calls</span>
+            <span className="text-mint">→</span>
+            <span className="px-3 py-1.5 rounded-lg bg-mint/10 border border-mint/30 text-mint-600 dark:text-mint">Monmouth L2</span>
           </div>
-          <p className="text-sm md:text-base text-muted-foreground dark:text-zinc-50 max-w-2xl mx-auto text-center mb-3">
-            Monmouth&apos;s neural infrastructure isn&apos;t just another L2—it&apos;s purpose-built for AI agents to operate <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">autonomously with intelligence</em>, <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">memory</em>, and <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">real-time decision-making</em> capabilities.
-          </p>
-
-          <BentoGrid className="w-full mt-6 mb-6 max-w-full">
-            {howItWorksItems.map((item, i) => (
-              <BentoGridItem
-                key={i}
-                title={item.title}
-                description={item.description}
-                header={item.header}
-                icon={item.icon}
-                className={item.className || ""}
-              />
-            ))}
-          </BentoGrid>
-
-          <p className="text-xs md:text-sm text-muted-foreground dark:text-zinc-50 text-center">
-            Monmouth&apos;s neural infrastructure enables AI agents to run directly on-chain with <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">persistent memory</em> and <em className="font-bold italic dark:text-zinc-50 text-[#1034A6]">adaptive state</em>.
-          </p>
         </div>
+
+        <BentoGrid className="w-full max-w-full">
+          {howItWorksItems.map((item, i) => (
+            <BentoGridItem
+              key={i}
+              title={item.title}
+              description={item.description}
+              header={item.header}
+              icon={item.icon}
+              className={item.className || ""}
+            />
+          ))}
+        </BentoGrid>
+
+        {/* Footer note */}
+        <p className="mt-8 text-center text-sm text-muted-foreground">
+          Built on Reth without forking —{" "}
+          <span className="font-mono text-xs text-navy dark:text-mint">zero maintenance burden</span>,{" "}
+          <span className="font-mono text-xs text-navy dark:text-mint">full compatibility</span>.
+        </p>
       </div>
     </section>
   )
-} 
+}

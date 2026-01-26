@@ -1,20 +1,37 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Instrument_Serif, JetBrains_Mono, DM_Sans } from 'next/font/google';
 import { ThemeProvider } from "@/app/providers"
 
-const inter = Inter({ subsets: ['latin'] });
+const instrumentSerif = Instrument_Serif({
+	subsets: ['latin'],
+	weight: '400',
+	variable: '--font-display',
+	display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+	subsets: ['latin'],
+	variable: '--font-mono',
+	display: 'swap',
+});
+
+const dmSans = DM_Sans({
+	subsets: ['latin'],
+	variable: '--font-body',
+	display: 'swap',
+});
 
 export const metadata: Metadata = {
-	title: 'Monmouth | Neural Infrastructure for Web3',
+	title: 'Monmouth | Agent-Aware L2 for AI',
 	description:
-		'Monmouth delivers unparalleled EVM compatibility with AI-native blockchain infrastructure, combining cutting-edge performance, genuine decentralization, robust security, and exceptional throughput.',
+		'Monmouth is an agent-aware Layer 2 blockchain built on Reth, designed for AI agents to transact safely and efficiently with guardrails, spending limits, and cross-chain capabilities.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang='en' suppressHydrationWarning>
-			<body>
+		<html lang='en' suppressHydrationWarning className={`${instrumentSerif.variable} ${jetbrainsMono.variable} ${dmSans.variable}`}>
+			<body className="font-body antialiased">
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
