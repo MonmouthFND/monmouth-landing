@@ -1,17 +1,17 @@
 # Monmouth Landing Page
 
-Marketing site for [Monmouth L2 Node](https://github.com/monmouth/monmouth-node) - an agent-aware Layer 2 blockchain built on Reth, designed for AI agents to transact safely and efficiently.
+Marketing site for [Monmouth](https://github.com/monmouth/monmouth-node) — the settlement layer for autonomous AI agents. Consensus infrastructure designed for agents to transact safely across blockchain ecosystems, settling to Ethereum for security.
 
 ## What is Monmouth?
 
-Monmouth is an L2 blockchain purpose-built for AI agents:
+Monmouth provides consensus infrastructure for the autonomous agent economy:
 
-- **Agent-Aware Wallet SDK**: Guardrails, spending limits, and policy enforcement for autonomous AI agents
-- **Off-Chain AI, On-Chain Settlement**: AI/ML happens via LLM API calls; blockchain handles verification and settlement
-- **Custom Precompiles**: SVM Router for Solana cross-chain, L2 Message Passer for L1↔L2 bridging
-- **L2 Sequencer**: Production-ready sequencer with batch compression and L1 data availability
-- **Prague EVM**: Latest EVM features with custom precompile extensions
-- **No Fork Maintenance**: Extends Reth without forking, ensuring compatibility
+- **Agent Identity Registry**: Canonical DIDs with cross-chain verification
+- **Native Intent Resolution**: Agent intents as first-class transaction types
+- **Multi-Agent Coordination**: On-chain settlement of agent collectives
+- **Cross-Runtime Execution**: Route agent operations to optimal VM (EVM, SVM, and more)
+- **Agent-Aware Wallet SDK**: Guardrails, spending limits, and policy enforcement
+- **Ethereum Settlement**: Inherits Ethereum's security for final settlement
 
 ## Technologies Used
 

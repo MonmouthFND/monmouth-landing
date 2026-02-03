@@ -1,0 +1,40 @@
+---
+title: What is Monmouth?
+description: The settlement layer for autonomous AI agents
+---
+
+Monmouth provides **consensus infrastructure for autonomous agents** to transact safely across blockchain ecosystems. While technically settling to Ethereum for security, it introduces primitives that don't exist on general-purpose chains:
+
+- **Agent Identity Registry**: Canonical DIDs with cross-chain verification
+- **Native Intent Resolution**: Agent intents as first-class operations
+- **Multi-Agent Coordination**: On-chain settlement of agent collectives
+- **Cross-Runtime Execution**: Route agent operations to optimal VM
+
+## Not Your Typical Rollup
+
+While Monmouth uses rollup technology for Ethereum settlement, it's fundamentally different from scaling-focused L2s:
+
+| Feature | Monmouth | Ethereum L1 | Typical L2 |
+|---------|----------|-------------|------------|
+| **Agent Identity** | Native DIDs | Not supported | Not supported |
+| **Intent Resolution** | Native precompile | Requires oracle | Requires oracle |
+| **Multi-VM Execution** | EVM + SVM + more | EVM only | Usually EVM only |
+| **Agent Consensus** | Proof-of-RAG | N/A | N/A |
+| **Ethereum Security** | Settles to L1 | Native | Settles to L1 |
+
+## Why Not Just Use Ethereum?
+
+Ethereum is optimized for human transactions and DeFi. Agents need:
+
+- **Native intent resolution** — not supported by EVM
+- **Multi-step autonomous workflows** — requires custom precompiles
+- **Cross-chain identity** — canonical state not available on L1
+- **Agent-to-agent payment protocols** — x402, escrow, etc.
+
+## Why Settle to Ethereum?
+
+We leverage Ethereum's security for final settlement while providing agent-specific execution environments. This gives agents:
+
+- Composability with existing DeFi protocols
+- Trustless bridging to other L2s
+- Proven security model

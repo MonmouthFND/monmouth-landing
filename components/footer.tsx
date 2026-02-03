@@ -31,7 +31,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-muted-foreground max-w-sm leading-relaxed">
-              The agent-aware Layer 2 blockchain built on Reth, designed for AI agents to transact safely and efficiently.
+              The settlement layer for autonomous AI agents. Agent-native consensus. Cross-chain identity. Multi-agent coordination.
             </p>
 
             {/* Social Links */}
@@ -79,7 +79,7 @@ export default function Footer() {
                 <Link href="#" className="block text-sm hover:text-mint transition-colors">
                   Technology
                 </Link>
-                <Link href="#" className="block text-sm hover:text-mint transition-colors">
+                <Link href="/docs" className="block text-sm hover:text-mint transition-colors">
                   Documentation
                 </Link>
               </nav>

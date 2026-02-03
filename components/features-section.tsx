@@ -94,7 +94,7 @@ const items = [
   {
     title: "Custom Precompiles",
     description:
-      "SVM Router for Solana cross-chain operations and L2 Message Passer for L1↔L2 deposits, withdrawals, and messaging.",
+      "SVM Router for Solana cross-chain operations and Message Passer for Ethereum deposits, withdrawals, and messaging.",
     header: <FeatureImage4 />,
     icon: <IconTableColumn className="h-4 w-4" />,
     className: "md:col-span-2 border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
@@ -122,7 +122,7 @@ export default function FeaturesSection() {
 
           {/* Headline */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display text-center max-w-2xl mx-auto leading-tight">
-            The <span className="text-mint italic">agent-aware</span> L2 built on Reth
+            The <span className="text-mint italic">agent-native</span> settlement layer
           </h2>
 
           {/* Subhead */}

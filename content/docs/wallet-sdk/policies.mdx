@@ -1,0 +1,211 @@
+---
+title: Policies
+description: Conditional rules for agent behavior
+---
+
+## Overview
+
+Policies are **conditional rules** that govern agent behavior. Unlike guardrails (which are hard limits), policies define contextual behavior:
+
+- Require human approval above a threshold
+- Limit gas prices during congestion
+- Restrict operations during certain hours
+- Enforce protocol preferences
+
+## Configuring Policies
+
+```typescript
+const wallet = new MonmouthWallet({
+  policies: {
+    // Approval thresholds
+    requireApprovalAbove: '5 ETH',
+
+    // Gas management
+    maxGasPrice: '100 gwei',
+    maxGasPerTransaction: 500000,
+
+    // Protocol preferences
+    allowedProtocols: ['uniswap', 'aave', 'compound'],
+    preferredProtocols: ['uniswap'],
+
+    // Time restrictions
+    operatingHours: {
+      timezone: 'UTC',
+      start: '09:00',
+      end: '17:00',
+    },
+
+    // Rate limiting
+    maxTransactionsPerHour: 10,
+    cooldownPeriod: 60, // seconds between transactions
+  }
+})
+```
+
+## Policy Types
+
+### Approval Policies
+
+Require human approval for high-value operations:
+
+```typescript
+{
+  requireApprovalAbove: '5 ETH',
+  approvalTimeout: 3600, // 1 hour to approve
+  approvalFallback: 'reject', // or 'queue'
+}
+```
+
+When triggered, the SDK emits an approval request:
+
+```typescript
+wallet.on('approvalRequired', async (request) => {
+  console.log(`Approval needed for ${request.intent.type}`)
+  console.log(`Value: ${request.value}`)
+  console.log(`Reason: ${request.reason}`)
+
+  // Forward to human for decision
+  const approved = await notifyHuman(request)
+
+  if (approved) {
+    await request.approve(humanSignature)
+  } else {
+    await request.reject('Human rejected')
+  }
+})
+```
+
+### Gas Policies
+
+Manage gas costs:
+
+```typescript
+{
+  maxGasPrice: '100 gwei',        // Max gas price
+  maxPriorityFee: '2 gwei',       // Max priority fee
+  maxGasPerTransaction: 500000,   // Max gas limit
+  gasEstimateBuffer: 1.2,         // 20% buffer on estimates
+}
+```
+
+### Protocol Policies
+
+Control which protocols agents can use:
+
+```typescript
+{
+  // Allowlist
+  allowedProtocols: ['uniswap', 'aave', 'compound'],
+
+  // Preferences (used for routing)
+  preferredProtocols: ['uniswap'],
+
+  // Version restrictions
+  protocolVersions: {
+    'uniswap': ['v3'],
+    'aave': ['v3'],
+  }
+}
+```
+
+### Time Policies
+
+Restrict when agents can operate:
+
+```typescript
+{
+  operatingHours: {
+    timezone: 'America/New_York',
+    start: '09:00',
+    end: '17:00',
+    daysOfWeek: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
+  }
+}
+```
+
+### Rate Limiting
+
+Control transaction frequency:
+
+```typescript
+{
+  maxTransactionsPerMinute: 1,
+  maxTransactionsPerHour: 10,
+  maxTransactionsPerDay: 50,
+  cooldownPeriod: 60, // seconds
+}
+```
+
+## Policy Violations
+
+Policies return structured violations:
+
+```typescript
+const result = await wallet.executeIntent(intent)
+
+if (result.policyViolations.length > 0) {
+  for (const violation of result.policyViolations) {
+    console.log(violation.policy)    // 'maxGasPrice'
+    console.log(violation.reason)    // 'Gas price 150 gwei exceeds limit 100 gwei'
+    console.log(violation.severity)  // 'warning' or 'error'
+  }
+}
+```
+
+## Policy Overrides
+
+Guardians can temporarily override policies:
+
+```typescript
+// Override gas policy for urgent transaction
+await wallet.executeIntent(intent, {
+  overrides: {
+    maxGasPrice: '200 gwei',
+  },
+  guardianSignature: '0x...',
+  overrideReason: 'Time-sensitive arbitrage',
+})
+```
+
+## Custom Policies
+
+Define custom policy functions:
+
+```typescript
+const wallet = new MonmouthWallet({
+  customPolicies: [
+    {
+      name: 'noWeekendTrading',
+      check: async (intent, context) => {
+        const day = new Date().getDay()
+        if (day === 0 || day === 6) {
+          return {
+            allowed: false,
+            reason: 'Trading not allowed on weekends',
+          }
+        }
+        return { allowed: true }
+      },
+    },
+  ],
+})
+```
+
+## Policy Auditing
+
+All policy decisions are logged:
+
+```typescript
+const logs = await wallet.getPolicyLogs({
+  from: '2024-01-01',
+  to: '2024-01-31',
+})
+
+for (const log of logs) {
+  console.log(log.timestamp)
+  console.log(log.intent)
+  console.log(log.policies)      // Policies evaluated
+  console.log(log.violations)    // Any violations
+  console.log(log.outcome)       // 'approved', 'rejected', 'pending'
+}
+```

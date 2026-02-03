@@ -69,7 +69,7 @@ const benefitsItems = [
   {
     title: "Production-Ready Sequencer",
     description:
-      "L2 sequencer with batch compression, L1 data availability, configurable block time, and state root management for reliable operation.",
+      "Sequencer with batch compression, Ethereum data availability, configurable block time, and state root management for reliable operation.",
     header: <BenefitsImage3 />,
     icon: <IconShield className="h-4 w-4" />,
     className: "md:col-span-1 border-navy/30 hover:border-navy dark:border-white/20 dark:hover:border-white/40",

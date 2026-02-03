@@ -1,0 +1,206 @@
+---
+title: API Reference
+description: Complete API reference for Monmouth
+---
+
+## JSON-RPC API
+
+Monmouth exposes a standard Ethereum JSON-RPC API with additional agent-specific methods.
+
+### Endpoint
+
+```
+https://rpc.monmouth.io
+```
+
+Testnet:
+```
+https://sepolia-rpc.monmouth.io
+```
+
+### Standard Methods
+
+All standard Ethereum JSON-RPC methods are supported:
+
+- `eth_blockNumber`
+- `eth_getBalance`
+- `eth_getTransactionByHash`
+- `eth_sendRawTransaction`
+- `eth_call`
+- `eth_estimateGas`
+- ... and more
+
+### Agent Methods
+
+Additional methods for agent operations:
+
+#### `monmouth_getAgentIdentity`
+
+Get agent identity details.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_getAgentIdentity",
+  "params": ["did:monmouth:agent:0x..."],
+  "id": 1
+}
+```
+
+Response:
+```json
+{
+  "result": {
+    "did": "did:monmouth:agent:0x...",
+    "owner": "0x...",
+    "guardians": ["0x..."],
+    "reputation": {
+      "score": 98.5,
+      "transactions": 1542
+    },
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+```
+
+#### `monmouth_resolveIntent`
+
+Resolve an intent without executing.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_resolveIntent",
+  "params": [{
+    "type": "swap",
+    "fromToken": "ETH",
+    "toToken": "USDC",
+    "amount": "1000000000000000000"
+  }],
+  "id": 1
+}
+```
+
+Response:
+```json
+{
+  "result": {
+    "confidence": 0.95,
+    "route": ["WETH", "USDC"],
+    "protocol": "uniswap-v3",
+    "estimatedOutput": "1842500000",
+    "estimatedGas": 180000,
+    "transaction": {
+      "to": "0x...",
+      "data": "0x...",
+      "value": "1000000000000000000"
+    }
+  }
+}
+```
+
+#### `monmouth_executeIntent`
+
+Execute an intent.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_executeIntent",
+  "params": [{
+    "type": "swap",
+    "fromToken": "ETH",
+    "toToken": "USDC",
+    "amount": "1000000000000000000"
+  }, "0x...signature"],
+  "id": 1
+}
+```
+
+#### `monmouth_getGuardrailUsage`
+
+Get current guardrail usage for an agent.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_getGuardrailUsage",
+  "params": ["did:monmouth:agent:0x..."],
+  "id": 1
+}
+```
+
+Response:
+```json
+{
+  "result": {
+    "dailySpent": "3500000000000000000",
+    "dailyLimit": "10000000000000000000",
+    "weeklySpent": "12000000000000000000",
+    "weeklyLimit": "50000000000000000000"
+  }
+}
+```
+
+## WebSocket API
+
+Real-time subscriptions via WebSocket:
+
+```
+wss://ws.monmouth.io
+```
+
+### Subscriptions
+
+#### `newAgentTransactions`
+
+Subscribe to transactions for an agent:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "eth_subscribe",
+  "params": ["newAgentTransactions", "did:monmouth:agent:0x..."],
+  "id": 1
+}
+```
+
+#### `guardrailAlerts`
+
+Subscribe to guardrail threshold alerts:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "eth_subscribe",
+  "params": ["guardrailAlerts", {
+    "agent": "did:monmouth:agent:0x...",
+    "threshold": 0.8
+  }],
+  "id": 1
+}
+```
+
+## SDK Reference
+
+See the [Wallet SDK documentation](/docs/wallet-sdk/overview) for the TypeScript SDK reference.
+
+## Rate Limits
+
+| Tier | Requests/second | WebSocket connections |
+|------|-----------------|----------------------|
+| Free | 10 | 2 |
+| Developer | 100 | 10 |
+| Enterprise | Unlimited | Unlimited |
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| -32000 | Generic server error |
+| -32001 | Agent not found |
+| -32002 | Guardrail violation |
+| -32003 | Policy violation |
+| -32004 | Insufficient funds |
+| -32005 | Intent resolution failed |
+| -32006 | Cross-chain error |

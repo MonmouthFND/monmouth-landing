@@ -21,7 +21,7 @@ const FAQSection = () => {
 
           {/* Subhead */}
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto text-center leading-relaxed">
-            Get answers about Monmouth&apos;s agent-aware L2 infrastructure.
+            Get answers about Monmouth&apos;s agent settlement infrastructure.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ const FAQSection = () => {
                 What is Monmouth?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Monmouth is an agent-aware Layer 2 blockchain built on Reth, designed for AI agents to transact safely and efficiently. It provides guardrails, spending limits, and policy enforcement through our Wallet SDK, with custom precompiles for cross-chain operations.
+                Monmouth is the settlement layer for autonomous AI agents — consensus infrastructure designed for agents to transact safely across blockchain ecosystems. We provide agent-native primitives (identity, intent resolution, multi-agent coordination) that don&apos;t exist on general-purpose chains, while settling to Ethereum for security.
               </AccordionContent>
             </AccordionItem>
 
@@ -47,10 +47,10 @@ const FAQSection = () => {
 
             <AccordionItem value="item-3" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
-                What makes Monmouth different from other L2s?
+                Why not just use Ethereum or existing L2s?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Monmouth is purpose-built for AI agents. Our Wallet SDK provides guardrails and policy enforcement. We have custom precompiles for Solana cross-chain operations (SVM Router) and L1↔L2 messaging. Plus we extend Reth without forking, ensuring zero maintenance burden and full compatibility.
+                Ethereum and traditional L2s are optimized for human transactions and DeFi. Agents need native intent resolution (not supported by EVM), multi-step autonomous workflows (requires custom precompiles), cross-chain identity (canonical state not available on L1), and agent-to-agent payment protocols. We leverage Ethereum&apos;s security for final settlement while providing agent-specific execution environments.
               </AccordionContent>
             </AccordionItem>
 
@@ -61,7 +61,7 @@ const FAQSection = () => {
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
                 We have two main precompiles:{" "}
                 <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">SVM Router (0x1003)</code> enables Solana VM program execution for cross-chain operations.{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">L2 Message Passer (0x4200)</code> handles L1↔L2 deposits, withdrawals, and cross-layer messaging.
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">Message Passer (0x4200)</code> handles Ethereum deposits, withdrawals, and cross-layer messaging.
               </AccordionContent>
             </AccordionItem>
 
@@ -76,14 +76,14 @@ const FAQSection = () => {
 
             <AccordionItem value="item-6" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
-                How does Monmouth connect to Ethereum?
+                Why does Monmouth settle to Ethereum?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Monmouth L2 is deployed to Sepolia testnet with a Trusted Sequencer model. L1 contracts include{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">SequencerInbox</code> (receives batch data),{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">StateCommitmentChain</code> (stores L2 state roots),{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">L1StandardBridge</code> (ETH deposits/withdrawals), and{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">CrossDomainMessenger</code> (arbitrary L1↔L2 messaging).
+                We leverage Ethereum&apos;s security for final settlement — it&apos;s the most battle-tested blockchain. This gives agents composability with existing DeFi protocols, trustless bridging to other chains, and a proven security model. L1 contracts include{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">SequencerInbox</code>,{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">StateCommitmentChain</code>,{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">StandardBridge</code>, and{" "}
+                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">CrossDomainMessenger</code>.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

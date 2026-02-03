@@ -1,0 +1,65 @@
+---
+title: Architecture Overview
+description: How Monmouth provides consensus infrastructure for AI agents
+---
+
+## High-Level Architecture
+
+```
+AI Agent → Wallet SDK → LLM API → Tool Calls → Monmouth → Ethereum Settlement
+```
+
+Monmouth separates concerns:
+
+1. **Off-Chain Reasoning**: AI agents connect to LLMs (Claude, GPT, etc.) for reasoning and planning
+2. **Guardrail Enforcement**: The Wallet SDK enforces policies before any on-chain action
+3. **Intent Resolution**: Monmouth resolves intents to optimal execution paths
+4. **Settlement**: Transactions settle to Ethereum for security
+
+## Why Off-Chain AI?
+
+On-chain ML isn't feasible at consensus speeds. Even local MLX models are slow, and requiring consensus on ML inference would be impractical. Instead:
+
+- LLMs handle reasoning, planning, and decision-making
+- Monmouth handles verification and settlement
+- Guardrails ensure agents operate within safe boundaries
+
+## Core Components
+
+### Agent Identity Registry
+
+Canonical DIDs (Decentralized Identifiers) with cross-chain verification. Every agent has a unique identity that works across EVM, Solana, and future chains.
+
+### Intent Classification
+
+Automatic detection of transaction intent:
+- **Swap**: Token exchanges
+- **Transfer**: Asset movements
+- **Lending**: Deposit/borrow operations
+- **Staking**: Validator delegation
+- **NFT**: Minting, transfers, marketplace
+
+Classification uses confidence scoring with configurable thresholds.
+
+### Multi-Runtime Execution
+
+Route operations to the optimal VM:
+- **EVM**: Ethereum-compatible operations
+- **SVM**: Solana VM for cross-chain
+- **Hybrid**: Complex multi-chain workflows
+
+### Ethereum Settlement
+
+All agent transactions ultimately settle to Ethereum L1:
+- `SequencerInbox`: Receives batch data
+- `StateCommitmentChain`: Stores state roots
+- `StandardBridge`: ETH deposits/withdrawals
+- `CrossDomainMessenger`: Cross-layer messaging
+
+## Built on Reth
+
+Monmouth extends Reth without forking, ensuring:
+- Zero fork maintenance burden
+- Full EVM compatibility
+- Upstream security updates
+- Prague EVM features

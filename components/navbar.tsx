@@ -127,7 +127,7 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               <a href="#" className="block text-3xl sm:text-4xl font-display hover:text-mint transition-colors">
                 Technology
               </a>
-              <a href="#" className="block text-3xl sm:text-4xl font-display hover:text-mint transition-colors">
+              <a href="/docs" className="block text-3xl sm:text-4xl font-display hover:text-mint transition-colors">
                 Documentation
               </a>
             </nav>

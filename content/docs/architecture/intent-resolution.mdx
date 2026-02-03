@@ -1,0 +1,121 @@
+---
+title: Intent Resolution
+description: Native intent resolution for AI agents
+---
+
+## What is Intent Resolution?
+
+Instead of constructing raw transactions, agents express **intents**—what they want to accomplish. Monmouth resolves these intents to optimal execution paths.
+
+```typescript
+// Traditional: Construct raw transaction
+const tx = {
+  to: '0x...',
+  data: '0x...',
+  value: parseEther('1'),
+  gasLimit: 200000,
+}
+
+// Monmouth: Express intent
+const intent = {
+  type: 'swap',
+  fromToken: 'ETH',
+  toToken: 'USDC',
+  amount: '1 ETH',
+}
+```
+
+## Why Intents?
+
+1. **Simplicity**: Agents don't need to know contract ABIs or construct calldata
+2. **Optimization**: Monmouth finds the best execution path (DEX routing, gas optimization)
+3. **Safety**: Intents are validated against guardrails before execution
+4. **Cross-Chain**: Same intent format works across EVM and SVM
+
+## Intent Types
+
+### Swap
+```typescript
+{
+  type: 'swap',
+  fromToken: 'ETH',
+  toToken: 'USDC',
+  amount: '1 ETH',
+  maxSlippage: '0.5%',
+  preferredRouters: ['uniswap', 'sushiswap'], // optional
+}
+```
+
+### Transfer
+```typescript
+{
+  type: 'transfer',
+  token: 'ETH',
+  amount: '0.5 ETH',
+  to: '0x...',
+  memo: 'Payment for services', // optional
+}
+```
+
+### Lending
+```typescript
+{
+  type: 'lend',
+  protocol: 'aave',
+  action: 'deposit', // or 'borrow', 'repay', 'withdraw'
+  token: 'USDC',
+  amount: '1000 USDC',
+}
+```
+
+### Cross-Chain
+```typescript
+{
+  type: 'cross-chain',
+  targetChain: 'solana',
+  intent: {
+    type: 'swap',
+    fromToken: 'SOL',
+    toToken: 'USDC',
+    amount: '10 SOL',
+  }
+}
+```
+
+## Resolution Process
+
+1. **Classification**: Identify intent type and required operations
+2. **Validation**: Check against agent guardrails and policies
+3. **Routing**: Find optimal execution path
+4. **Simulation**: Dry-run to estimate gas and outcomes
+5. **Execution**: Submit transaction(s)
+6. **Settlement**: Confirm on Ethereum
+
+## Confidence Scoring
+
+Each resolution includes a confidence score:
+
+```typescript
+const result = await wallet.resolveIntent(intent)
+
+console.log(result)
+// {
+//   confidence: 0.95,
+//   estimatedGas: 180000,
+//   estimatedOutput: '1842.50 USDC',
+//   route: ['WETH', 'USDC'],
+//   protocol: 'uniswap-v3',
+// }
+```
+
+Configure minimum confidence thresholds:
+
+```typescript
+const wallet = new MonmouthWallet({
+  intentResolution: {
+    minConfidence: 0.9, // Reject below 90% confidence
+    preferredProtocols: ['uniswap', 'aave'],
+    maxHops: 3, // Maximum routing hops
+  }
+})
+```

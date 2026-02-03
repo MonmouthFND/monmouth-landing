@@ -89,7 +89,7 @@ const howItWorksItems = [
   {
     title: "Custom Precompiles",
     description:
-      "SVM Router (0x1003) for Solana VM program execution and cross-chain operations. L2 Message Passer (0x4200) for L1↔L2 deposits, withdrawals, and arbitrary message passing.",
+      "SVM Router (0x1003) for Solana VM program execution and cross-chain operations. Message Passer (0x4200) for Ethereum deposits, withdrawals, and cross-layer messaging.",
     header: <HowItWorksImage4 />,
     icon: <IconCode className="h-4 w-4" />,
     className: "md:col-span-2 border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
@@ -123,7 +123,7 @@ export default function HowItWorks() {
             <span className="text-mint">→</span>
             <span className="px-3 py-1.5 rounded-lg bg-card border">Tool calls</span>
             <span className="text-mint">→</span>
-            <span className="px-3 py-1.5 rounded-lg bg-mint/10 border border-mint/30 text-mint-600 dark:text-mint">Monmouth L2</span>
+            <span className="px-3 py-1.5 rounded-lg bg-mint/10 border border-mint/30 text-mint-600 dark:text-mint">Monmouth</span>
           </div>
         </div>
 

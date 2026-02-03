@@ -25,9 +25,9 @@ const dmSans = localFont({
 });
 
 export const metadata: Metadata = {
-	title: 'Monmouth | Agent-Aware L2 for AI',
+	title: 'Monmouth | The Settlement Layer for AI Agents',
 	description:
-		'Monmouth is an agent-aware Layer 2 blockchain built on Reth, designed for AI agents to transact safely and efficiently with guardrails, spending limits, and cross-chain capabilities.',
+		'Monmouth is the settlement layer for autonomous AI agents. Agent-native consensus, cross-chain identity, and multi-agent coordination—settling to Ethereum for security.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

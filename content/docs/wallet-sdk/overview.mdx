@@ -1,0 +1,154 @@
+---
+title: Wallet SDK Overview
+description: The agent-aware wallet SDK for Monmouth
+---
+
+## Introduction
+
+The Monmouth Wallet SDK is the primary interface for AI agents to interact with blockchain ecosystems. It provides:
+
+- **Guardrails**: Safety boundaries for autonomous operations
+- **Policy Enforcement**: Rules that govern agent behavior
+- **Intent Resolution**: Natural language to transaction conversion
+- **Cross-Chain Support**: EVM and SVM compatibility
+
+## Installation
+
+```bash
+npm install @monmouth/wallet-sdk
+```
+
+## Basic Usage
+
+```typescript
+import { MonmouthWallet } from '@monmouth/wallet-sdk'
+
+// Initialize the wallet
+const wallet = new MonmouthWallet({
+  privateKey: process.env.AGENT_PRIVATE_KEY,
+
+  // Configure guardrails
+  guardrails: {
+    maxTransactionValue: '1 ETH',
+    dailySpendingLimit: '10 ETH',
+  },
+
+  // Configure policies
+  policies: {
+    requireApprovalAbove: '5 ETH',
+  },
+})
+
+// Execute an intent
+const result = await wallet.executeIntent({
+  type: 'swap',
+  fromToken: 'ETH',
+  toToken: 'USDC',
+  amount: '0.5 ETH',
+})
+```
+
+## Key Features
+
+### 1. Guardrails
+
+Guardrails are hard limits that cannot be exceeded:
+
+```typescript
+guardrails: {
+  maxTransactionValue: '1 ETH',      // Max single transaction
+  dailySpendingLimit: '10 ETH',       // Daily cumulative limit
+  allowedContracts: ['0x...'],        // Whitelist of contracts
+  blockedAddresses: ['0x...'],        // Blacklist of addresses
+}
+```
+
+### 2. Policies
+
+Policies define conditional behavior:
+
+```typescript
+policies: {
+  requireApprovalAbove: '5 ETH',      // Human approval needed
+  blockedOperations: ['selfdestruct'], // Forbidden operations
+  maxGasPrice: '100 gwei',            // Gas price limits
+}
+```
+
+### 3. Intent Resolution
+
+Convert high-level intents to optimal transactions:
+
+```typescript
+const intent = {
+  type: 'swap',
+  fromToken: 'ETH',
+  toToken: 'USDC',
+  amount: '1 ETH',
+}
+
+// SDK handles routing, gas estimation, execution
+const result = await wallet.executeIntent(intent)
+```
+
+### 4. Cross-Chain
+
+Seamlessly operate across chains:
+
+```typescript
+// Execute on Solana via SVM Router
+const result = await wallet.executeIntent({
+  type: 'cross-chain',
+  targetChain: 'solana',
+  intent: {
+    type: 'swap',
+    fromToken: 'SOL',
+    toToken: 'USDC',
+    amount: '10 SOL',
+  }
+})
+```
+
+## Configuration Reference
+
+```typescript
+interface WalletConfig {
+  // Authentication
+  privateKey?: string
+  mnemonic?: string
+
+  // Network
+  rpcUrl?: string
+  chainId?: number
+
+  // Guardrails
+  guardrails?: {
+    maxTransactionValue?: string
+    dailySpendingLimit?: string
+    allowedContracts?: string[]
+    blockedAddresses?: string[]
+    allowedTokens?: string[]
+  }
+
+  // Policies
+  policies?: {
+    requireApprovalAbove?: string
+    blockedOperations?: string[]
+    maxGasPrice?: string
+    allowedProtocols?: string[]
+  }
+
+  // Intent resolution
+  intentResolution?: {
+    minConfidence?: number
+    preferredProtocols?: string[]
+    maxHops?: number
+  }
+
+  // Guardian
+  guardian?: {
+    address: string
+    approvalRequired?: boolean
+  }
+}
+```

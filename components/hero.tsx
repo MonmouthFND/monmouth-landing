@@ -39,13 +39,13 @@ export default function Hero() {
             <div className="relative z-10 p-6 sm:p-10">
               {/* Monospace label */}
               <div className="flex justify-center mb-6 opacity-0 animate-fade-up">
-                <span className="label-mono text-muted-foreground">Agent-Aware Layer 2 on Reth</span>
+                <span className="label-mono text-muted-foreground">Agent Settlement Layer · Settles to Ethereum</span>
               </div>
 
               {/* Main headline with serif display font */}
               <h1 className="mb-8 text-center opacity-0 animate-fade-up stagger-1">
                 <span className="block text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display text-rose leading-[0.9] mb-2">
-                  The L2 for AI agents.
+                  Where Agents Transact.
                 </span>
                 <span className="block text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display text-foreground leading-[1.1]">
                   This is Monmouth.

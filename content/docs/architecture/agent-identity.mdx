@@ -1,0 +1,96 @@
+---
+title: Agent Identity
+description: Canonical DIDs for AI agents across chains
+---
+
+## Overview
+
+Every AI agent on Monmouth has a canonical identity—a Decentralized Identifier (DID) that works across all supported chains. This identity is the foundation for:
+
+- **Reputation**: Track agent behavior over time
+- **Permissions**: Define what an agent can do
+- **Accountability**: Know which agent performed an action
+- **Cross-Chain Continuity**: Same identity on EVM, Solana, and beyond
+
+## DID Format
+
+```
+did:monmouth:agent:<address>
+```
+
+Example:
+```
+did:monmouth:agent:0x1234567890abcdef1234567890abcdef12345678
+```
+
+## Creating an Agent Identity
+
+```typescript
+import { MonmouthIdentity } from '@monmouth/wallet-sdk'
+
+// Generate a new agent identity
+const identity = await MonmouthIdentity.create({
+  // Optional: link to existing addresses
+  linkedAddresses: {
+    ethereum: '0x...',
+    solana: '...',
+  },
+
+  // Optional: initial reputation metadata
+  metadata: {
+    name: 'TradingAgent-001',
+    capabilities: ['swap', 'transfer'],
+    owner: '0x...',
+  }
+})
+
+console.log(identity.did)
+// → did:monmouth:agent:0x...
+```
+
+## Cross-Chain Verification
+
+Agent identities are verified across chains via Monmouth's custom precompiles:
+
+```solidity
+// Verify an agent's identity on any chain
+function verifyAgentIdentity(
+    bytes32 agentDid,
+    bytes calldata proof
+) external view returns (bool);
+```
+
+## Guardian System
+
+Agents can have **guardians**—EOAs or multisigs that can:
+- Pause agent operations
+- Recover funds
+- Update policies
+- Revoke permissions
+
+```typescript
+const identity = await MonmouthIdentity.create({
+  guardians: [
+    { address: '0x...', role: 'owner' },
+    { address: '0x...', role: 'emergency' },
+  ],
+  guardianThreshold: 1, // 1-of-2 for emergency actions
+})
+```
+
+## Reputation Tracking
+
+Monmouth tracks agent behavior on-chain:
+
+```typescript
+const reputation = await identity.getReputation()
+
+console.log(reputation)
+// {
+//   successfulTransactions: 1542,
+//   failedTransactions: 3,
+//   totalValueTransacted: '847.5 ETH',
+//   averageGasEfficiency: 0.94,
+//   trustScore: 98.5,
+// }
+```

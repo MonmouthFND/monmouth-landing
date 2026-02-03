@@ -1,0 +1,23 @@
+{
+  "title": "Documentation",
+  "root": true,
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "quickstart",
+    "---Architecture---",
+    "architecture/overview",
+    "architecture/agent-identity",
+    "architecture/intent-resolution",
+    "architecture/ethereum-settlement",
+    "---Wallet SDK---",
+    "wallet-sdk/overview",
+    "wallet-sdk/guardrails",
+    "wallet-sdk/policies",
+    "---Precompiles---",
+    "precompiles/svm-router",
+    "precompiles/message-passer",
+    "---API Reference---",
+    "api/overview"
+  ]
+}

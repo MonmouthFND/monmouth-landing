@@ -1,0 +1,76 @@
+---
+title: Quickstart
+description: Get started with Monmouth in minutes
+---
+
+## Installation
+
+Install the Monmouth Wallet SDK:
+
+```bash
+npm install @monmouth/wallet-sdk
+```
+
+## Initialize the Agent Wallet
+
+```typescript
+import { MonmouthWallet } from '@monmouth/wallet-sdk'
+
+const wallet = new MonmouthWallet({
+  // Agent identity
+  agentDid: 'did:monmouth:agent:0x...',
+
+  // Guardrails configuration
+  guardrails: {
+    maxTransactionValue: '1 ETH',
+    allowedContracts: ['0x...'],
+    dailySpendingLimit: '10 ETH',
+  },
+
+  // Policy enforcement
+  policies: {
+    requireApprovalAbove: '5 ETH',
+    blockedOperations: ['selfdestruct'],
+  }
+})
+```
+
+## Execute an Intent
+
+```typescript
+// Describe what the agent wants to do
+const intent = {
+  type: 'swap',
+  fromToken: 'ETH',
+  toToken: 'USDC',
+  amount: '0.5 ETH',
+  maxSlippage: '0.5%',
+}
+
+// Monmouth handles routing and execution
+const result = await wallet.executeIntent(intent)
+
+console.log(result.transactionHash)
+// → 0x...
+```
+
+## Cross-Chain Operations
+
+```typescript
+// Execute on Solana via SVM Router
+const solanaIntent = {
+  type: 'cross-chain',
+  targetChain: 'solana',
+  program: 'JUP...',
+  instruction: 'swap',
+  accounts: [...],
+}
+
+const result = await wallet.executeIntent(solanaIntent)
+```
+
+## Next Steps
+
+- [Architecture Overview](/docs/architecture/overview) — Understand how Monmouth works
+- [Guardrails](/docs/wallet-sdk/guardrails) — Configure safety boundaries for your agent
+- [Policies](/docs/wallet-sdk/policies) — Define operational policies

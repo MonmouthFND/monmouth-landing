@@ -4,15 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Landing page for **Monmouth L2 Node** - an agent-aware Layer 2 blockchain built on Reth, designed for AI agents to transact safely and efficiently. Built with Next.js 13 App Router, Tailwind CSS, and shadcn/ui components.
+Landing page for **Monmouth** — the settlement layer for autonomous AI agents. Consensus infrastructure designed for agents to transact safely across blockchain ecosystems, settling to Ethereum for security. Built with Next.js 13 App Router, Tailwind CSS, and shadcn/ui components.
 
 ### What Monmouth Does
 
+- **Agent Identity Registry**: Canonical DIDs with cross-chain verification
+- **Native Intent Resolution**: Agent intents as first-class transaction types
+- **Multi-Agent Coordination**: On-chain settlement of agent collectives
 - **Agent-Aware Wallet SDK**: Guardrails, spending limits, and policy enforcement for autonomous AI agents
-- **Off-Chain AI, On-Chain Settlement**: AI/ML via LLM API calls; blockchain handles verification and settlement
-- **Custom Precompiles**: SVM Router for Solana cross-chain, L2 Message Passer for L1↔L2 bridging
-- **L2 Sequencer**: Production-ready sequencer with batch compression and L1 data availability
-- **Prague EVM**: Latest EVM features with custom precompile extensions
+- **Cross-Runtime Execution**: Route agent operations to optimal VM (EVM, SVM, and more)
+- **Ethereum Settlement**: Inherits Ethereum's security while providing agent-specific execution environments
 
 ## Documentation Practice
 
@@ -41,13 +42,23 @@ bunx v0 add <id>                        # Add v0 AI component
 
 - `app/` - Next.js App Router pages and layouts
   - `(protected)/` - Route group for authenticated pages (uses layout with auth checks)
-  - `api/` - API routes (`data/`, `login/`, `me/`)
+  - `api/` - API routes (`data/`, `login/`, `me/`, `search/`)
+  - `docs/` - Documentation pages (powered by Fumadocs)
   - `providers/` - Context providers (auth, theme)
   - `services/` - Service utilities
 - `components/` - React components
   - `ui/` - Base shadcn/ui primitives (button, input, accordion, etc.)
   - Root level: Page sections (hero, navbar, footer, faq, features-section, etc.)
-- `lib/utils.ts` - Utility functions including `cn()` for className merging
+- `content/docs/` - MDX documentation content
+  - `index.mdx` - What is Monmouth
+  - `quickstart.mdx` - Getting started guide
+  - `architecture/` - Architecture documentation
+  - `wallet-sdk/` - Wallet SDK documentation
+  - `precompiles/` - Custom precompiles documentation
+  - `api/` - API reference
+- `lib/` - Utility functions
+  - `utils.ts` - `cn()` for className merging
+  - `source.ts` - Fumadocs content source configuration
 
 ### Key Patterns
 
@@ -65,3 +76,17 @@ The main page (`app/page.tsx`) renders full-screen snap-scrolling sections:
 4. How It Works
 5. FAQ
 6. Footer
+
+### Documentation (Fumadocs)
+
+Technical documentation is powered by [Fumadocs](https://fumadocs.vercel.app):
+- Content lives in `content/docs/` as MDX files
+- Configuration in `source.config.ts`
+- Source loader in `lib/source.ts`
+- Docs layout in `app/docs/layout.tsx`
+- Search API in `app/api/search/route.ts`
+
+To add new documentation:
+1. Create MDX file in `content/docs/`
+2. Add to `content/docs/meta.json` for sidebar ordering
+3. Rebuild to generate routes
