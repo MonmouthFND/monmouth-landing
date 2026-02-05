@@ -1,16 +1,13 @@
 ---
 title: Agent Identity
-description: Canonical DIDs for AI agents across chains
+description: On-chain identity for AI agents
 ---
 
 ## Overview
 
-Every AI agent on Monmouth has a canonical identity—a Decentralized Identifier (DID) that works across all supported chains. This identity is the foundation for:
+Every AI agent on Monmouth has a canonical on-chain identity. This identity is the foundation for reputation, permissions, accountability, and cross-chain verification.
 
-- **Reputation**: Track agent behavior over time
-- **Permissions**: Define what an agent can do
-- **Accountability**: Know which agent performed an action
-- **Cross-Chain Continuity**: Same identity on EVM, Solana, and beyond
+Agent identities are implemented as **ERC-8004 NFTs** — soulbound tokens that represent a unique agent on the network.
 
 ## DID Format
 
@@ -23,53 +20,94 @@ Example:
 did:monmouth:agent:0x1234567890abcdef1234567890abcdef12345678
 ```
 
-## Creating an Agent Identity
+## Registration
+
+### Via SDK
 
 ```typescript
 import { MonmouthIdentity } from '@monmouth/wallet-sdk'
 
-// Generate a new agent identity
-const identity = await MonmouthIdentity.create({
-  // Optional: link to existing addresses
-  linkedAddresses: {
-    ethereum: '0x...',
-    solana: '...',
-  },
-
-  // Optional: initial reputation metadata
+// Register a new agent identity
+const identity = await MonmouthIdentity.register({
+  // Agent metadata
   metadata: {
     name: 'TradingAgent-001',
     capabilities: ['swap', 'transfer'],
     owner: '0x...',
-  }
+  },
+
+  // Guardian configuration
+  guardians: [
+    { address: '0x...', role: 'owner' },
+    { address: '0x...', role: 'emergency' },
+  ],
+  guardianThreshold: 1,
 })
 
 console.log(identity.did)
 // → did:monmouth:agent:0x...
+console.log(identity.tokenId)
+// → 42 (ERC-8004 token ID)
 ```
 
-## Cross-Chain Verification
+### Registration URI
 
-Agent identities are verified across chains via Monmouth's custom precompiles:
+Agents can also be registered via URI:
+
+```
+monmouth://register?name=TradingAgent-001&owner=0x...&capabilities=swap,transfer
+```
+
+## ERC-8004 Identity NFT
+
+Each agent identity is a non-transferable (soulbound) NFT:
 
 ```solidity
-// Verify an agent's identity on any chain
-function verifyAgentIdentity(
-    bytes32 agentDid,
-    bytes calldata proof
-) external view returns (bool);
+interface IAgentIdentity {
+    // Register a new agent
+    function register(
+        address owner,
+        string calldata name,
+        bytes calldata metadata
+    ) external returns (uint256 tokenId);
+
+    // Get agent DID from token ID
+    function getAgentDid(uint256 tokenId) external view returns (bytes32);
+
+    // Get token ID from agent address
+    function getTokenId(address agent) external view returns (uint256);
+}
 ```
+
+## Wallet Delegation
+
+Agents can delegate operations to specific wallets:
+
+```typescript
+// Delegate swap operations to a hot wallet
+await identity.delegate({
+  wallet: '0x...',
+  capabilities: ['swap', 'transfer'],
+  expiry: '2025-12-31',
+  limits: {
+    maxTransactionValue: '1 ETH',
+    dailySpendingLimit: '10 ETH',
+  },
+})
+```
+
+Delegations are recorded on-chain and checked by the Wallet SDK before any operation.
 
 ## Guardian System
 
-Agents can have **guardians**—EOAs or multisigs that can:
+Agents can have **guardians** — EOAs or multisigs that can:
 - Pause agent operations
 - Recover funds
 - Update policies
-- Revoke permissions
+- Revoke delegations
 
 ```typescript
-const identity = await MonmouthIdentity.create({
+const identity = await MonmouthIdentity.register({
   guardians: [
     { address: '0x...', role: 'owner' },
     { address: '0x...', role: 'emergency' },
@@ -78,19 +116,42 @@ const identity = await MonmouthIdentity.create({
 })
 ```
 
+## Cross-Chain Verification
+
+Agent identities are verified across chains via the identity precompile:
+
+```solidity
+// Verify an agent's identity
+function verifyAgentIdentity(
+    bytes32 agentDid,
+    bytes calldata proof
+) external view returns (bool);
+```
+
+## Linking External Addresses
+
+Agents can link addresses from other chains to their Monmouth identity:
+
+```typescript
+await identity.linkAddress({
+  chain: 'ethereum',
+  address: '0x...',
+  proof: '0x...', // Signed message proving ownership
+})
+```
+
 ## Reputation Tracking
 
-Monmouth tracks agent behavior on-chain:
+Every identity automatically tracks reputation. See [Reputation System](/docs/architecture/reputation) for details.
 
 ```typescript
 const reputation = await identity.getReputation()
 
 console.log(reputation)
 // {
-//   successfulTransactions: 1542,
-//   failedTransactions: 3,
-//   totalValueTransacted: '847.5 ETH',
-//   averageGasEfficiency: 0.94,
-//   trustScore: 98.5,
+//   trustScore: 94.2,
+//   totalTransactions: 2847,
+//   successRate: 0.998,
+//   activeSince: '2025-03-15T00:00:00Z',
 // }
 ```

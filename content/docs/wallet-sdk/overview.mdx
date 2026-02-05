@@ -5,12 +5,13 @@ description: The agent-aware wallet SDK for Monmouth
 
 ## Introduction
 
-The Monmouth Wallet SDK is the primary interface for AI agents to interact with blockchain ecosystems. It provides:
+The Monmouth Wallet SDK is the primary interface for AI agents to interact with Monmouth. It provides:
 
+- **Identity**: Register and manage agent identities
 - **Guardrails**: Safety boundaries for autonomous operations
 - **Policy Enforcement**: Rules that govern agent behavior
-- **Intent Resolution**: Natural language to transaction conversion
-- **Cross-Chain Support**: EVM and SVM compatibility
+- **Intent Resolution**: High-level intents to transaction conversion
+- **Reputation**: Query and track agent trust scores
 
 ## Installation
 
@@ -21,10 +22,17 @@ npm install @monmouth/wallet-sdk
 ## Basic Usage
 
 ```typescript
-import { MonmouthWallet } from '@monmouth/wallet-sdk'
+import { MonmouthWallet, MonmouthIdentity } from '@monmouth/wallet-sdk'
+
+// Register an agent identity
+const identity = await MonmouthIdentity.register({
+  metadata: { name: 'MyAgent-001', capabilities: ['swap', 'transfer'] },
+  guardians: [{ address: '0x...', role: 'owner' }],
+})
 
 // Initialize the wallet
 const wallet = new MonmouthWallet({
+  agentDid: identity.did,
   privateKey: process.env.AGENT_PRIVATE_KEY,
 
   // Configure guardrails
@@ -50,7 +58,26 @@ const result = await wallet.executeIntent({
 
 ## Key Features
 
-### 1. Guardrails
+### 1. Identity Management
+
+Register, delegate, and manage agent identities:
+
+```typescript
+// Register identity
+const identity = await MonmouthIdentity.register({ ... })
+
+// Delegate to a hot wallet
+await identity.delegate({
+  wallet: '0x...',
+  capabilities: ['swap'],
+  expiry: '2025-12-31',
+})
+
+// Check reputation
+const reputation = await identity.getReputation()
+```
+
+### 2. Guardrails
 
 Guardrails are hard limits that cannot be exceeded:
 
@@ -63,7 +90,7 @@ guardrails: {
 }
 ```
 
-### 2. Policies
+### 3. Policies
 
 Policies define conditional behavior:
 
@@ -75,7 +102,7 @@ policies: {
 }
 ```
 
-### 3. Intent Resolution
+### 4. Intent Resolution
 
 Convert high-level intents to optimal transactions:
 
@@ -91,28 +118,13 @@ const intent = {
 const result = await wallet.executeIntent(intent)
 ```
 
-### 4. Cross-Chain
-
-Seamlessly operate across chains:
-
-```typescript
-// Execute on Solana via SVM Router
-const result = await wallet.executeIntent({
-  type: 'cross-chain',
-  targetChain: 'solana',
-  intent: {
-    type: 'swap',
-    fromToken: 'SOL',
-    toToken: 'USDC',
-    amount: '10 SOL',
-  }
-})
-```
-
 ## Configuration Reference
 
 ```typescript
 interface WalletConfig {
+  // Identity
+  agentDid?: string
+
   // Authentication
   privateKey?: string
   mnemonic?: string

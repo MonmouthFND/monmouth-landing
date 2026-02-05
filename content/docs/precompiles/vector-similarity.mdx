@@ -1,0 +1,100 @@
+---
+title: Vector Similarity
+description: On-chain cosine similarity computation for agent matching
+---
+
+## Overview
+
+The Vector Similarity precompile (`0x1001`) provides efficient on-chain cosine similarity computation. This enables agent matching, capability comparison, and intent similarity scoring at the protocol level.
+
+## Address
+
+```
+0x0000000000000000000000000000000000001001
+```
+
+## Use Cases
+
+- **Agent matching**: Find agents with similar capabilities
+- **Intent deduplication**: Detect near-duplicate intents
+- **Reputation comparison**: Compare behavioral profiles
+- **Capability scoring**: Score how well an agent matches a task
+
+## Interface
+
+```solidity
+interface IVectorSimilarity {
+    /// @notice Compute cosine similarity between two vectors
+    /// @param vectorA First vector (fixed-point encoded)
+    /// @param vectorB Second vector (fixed-point encoded)
+    /// @return similarity Cosine similarity (0-10000, representing 0.0-1.0)
+    function cosineSimilarity(
+        int256[] calldata vectorA,
+        int256[] calldata vectorB
+    ) external pure returns (uint256 similarity);
+
+    /// @notice Find the most similar vector from a set
+    /// @param query The query vector
+    /// @param candidates Array of candidate vectors
+    /// @return bestIndex Index of the most similar candidate
+    /// @return bestSimilarity Similarity score of the best match
+    function findMostSimilar(
+        int256[] calldata query,
+        int256[][] calldata candidates
+    ) external pure returns (uint256 bestIndex, uint256 bestSimilarity);
+
+    /// @notice Batch similarity computation
+    /// @param query The query vector
+    /// @param candidates Array of candidate vectors
+    /// @return similarities Array of similarity scores
+    function batchSimilarity(
+        int256[] calldata query,
+        int256[][] calldata candidates
+    ) external pure returns (uint256[] memory similarities);
+}
+```
+
+## SDK Usage
+
+```typescript
+import { VectorSimilarity } from '@monmouth/wallet-sdk'
+
+const similarity = new VectorSimilarity(wallet)
+
+// Compare two agent profiles
+const score = await similarity.compare(
+  agentAProfile.embedding,
+  agentBProfile.embedding,
+)
+
+console.log(score) // 0.87 — highly similar
+
+// Find best match from a set
+const match = await similarity.findBestMatch(
+  taskRequirements.embedding,
+  candidateAgents.map(a => a.embedding),
+)
+
+console.log(match)
+// { index: 3, similarity: 0.94, agent: candidateAgents[3] }
+```
+
+## Vector Encoding
+
+Vectors are encoded as fixed-point integers with 18 decimal places:
+
+```
+1.0  → 1000000000000000000
+0.5  → 500000000000000000
+-0.3 → -300000000000000000
+```
+
+Maximum vector dimensions: 1024
+
+## Gas Costs
+
+| Operation | Base Gas | Per-Dimension Gas |
+|-----------|----------|-------------------|
+| `cosineSimilarity` | 15,000 | 1,000 |
+| `findMostSimilar` | 15,000 | 1,000 × dimensions × candidates |
+| `batchSimilarity` | 15,000 | 1,000 × dimensions × candidates |

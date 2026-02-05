@@ -47,7 +47,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "shadcn": "shadcn-ui"
+    "shadcn": "shadcn-ui",
+    "postinstall": "rm -rf node_modules/fumadocs-core/node_modules/next"
   },
   "version": "0.1.0",
   "devDependencies": {}

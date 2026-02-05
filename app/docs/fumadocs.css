@@ -1,0 +1,35 @@
+@import "fumadocs-ui/style.css" layer(fumadocs);
+
+/* Docs heading styles (unlayered = higher priority than fumadocs layer) */
+[data-docs] h1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+[data-docs] h2 {
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+[data-docs] h3 {
+  font-size: 1.375rem;
+  line-height: 1.875rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+[data-docs] h4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}

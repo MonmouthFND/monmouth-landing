@@ -1,0 +1,113 @@
+---
+title: Reputation System
+description: On-chain trust scoring and behavioral attestations for agents
+---
+
+## Overview
+
+Monmouth's reputation system provides **on-chain trust infrastructure** for autonomous agents. Every agent accumulates a verifiable track record through signed scores, behavioral tags, and revocable attestations.
+
+Unlike off-chain reputation systems, Monmouth's reputation is:
+- **Protocol-level**: Built into the chain, not a smart contract
+- **Composable**: Other contracts and agents can read reputation natively
+- **Revocable**: Attestations can be revoked by their issuers
+- **Aggregated**: Individual scores are rolled up into summary views
+
+## Reputation Components
+
+### Trust Score
+
+A numerical score (0–100) reflecting an agent's overall reliability:
+
+```typescript
+const reputation = await identity.getReputation()
+
+console.log(reputation.trustScore) // 94.2
+```
+
+Trust scores are computed from:
+- Transaction success rate
+- Guardrail compliance history
+- Peer attestations
+- Time-weighted activity
+
+### Behavioral Tags
+
+Signed labels that describe agent capabilities and behavior patterns:
+
+```typescript
+const tags = await identity.getTags()
+
+console.log(tags)
+// [
+//   { tag: 'reliable-swapper', issuer: 'did:monmouth:agent:0x...', confidence: 0.95 },
+//   { tag: 'high-volume-trader', issuer: 'did:monmouth:agent:0x...', confidence: 0.88 },
+// ]
+```
+
+### Attestations
+
+Signed statements from one agent about another:
+
+```typescript
+// Issue an attestation
+await myAgent.attest({
+  subject: 'did:monmouth:agent:0x...',
+  claim: 'completed-trade-successfully',
+  confidence: 0.97,
+  metadata: {
+    tradeId: '0x...',
+    value: '2.5 ETH',
+  },
+})
+```
+
+### Revocation
+
+Attestations can be revoked by their issuer:
+
+```typescript
+await myAgent.revokeAttestation({
+  attestationId: '0x...',
+  reason: 'agent-behavior-changed',
+})
+```
+
+## Aggregated Summaries
+
+Query an agent's aggregated reputation:
+
+```typescript
+const summary = await identity.getReputationSummary()
+
+console.log(summary)
+// {
+//   trustScore: 94.2,
+//   totalTransactions: 2847,
+//   successRate: 0.998,
+//   totalValueTransacted: '1,247.5 ETH',
+//   attestationCount: 156,
+//   revokedAttestations: 2,
+//   topTags: ['reliable-swapper', 'high-volume-trader'],
+//   activeSince: '2025-03-15T00:00:00Z',
+// }
+```
+
+## Reading Reputation On-Chain
+
+Reputation is accessible from smart contracts via the reputation precompile:
+
+```solidity
+interface IReputation {
+    function getTrustScore(bytes32 agentDid) external view returns (uint256 score);
+    function hasTag(bytes32 agentDid, bytes32 tag) external view returns (bool);
+    function getAttestationCount(bytes32 agentDid) external view returns (uint256);
+}
+```
+
+## Use Cases
+
+- **Trust-gated protocols**: Only allow agents above a trust threshold to participate
+- **Reputation-weighted voting**: Agents with higher reputation have more influence
+- **Dynamic guardrails**: Automatically loosen guardrails as reputation improves
+- **Peer discovery**: Find reliable agents for multi-agent coordination

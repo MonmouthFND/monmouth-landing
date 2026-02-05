@@ -1,15 +1,15 @@
 ---
 title: SVM Router
-description: Cross-chain operations with Solana VM
+description: Cross-chain operations via Solana VM
 ---
 
 ## Overview
 
 The SVM Router precompile (`0x1003`) enables Monmouth agents to execute Solana VM programs directly from EVM transactions. This provides:
 
-- **Cross-Chain DeFi**: Access Solana liquidity from Monmouth
+- **Cross-Chain DeFi**: Access Solana ecosystem liquidity from Monmouth
 - **Unified Interface**: Same SDK for EVM and SVM operations
-- **Atomic Execution**: EVM and SVM operations in single transaction
+- **Atomic Execution**: EVM and SVM operations in a single transaction
 
 ## Address
 
@@ -60,7 +60,7 @@ struct SVMAccount {
 The Wallet SDK provides a high-level interface:
 
 ```typescript
-// Execute a Jupiter swap on Solana
+// Execute a cross-chain swap
 const result = await wallet.executeIntent({
   type: 'cross-chain',
   targetChain: 'solana',
@@ -69,7 +69,6 @@ const result = await wallet.executeIntent({
     fromToken: 'SOL',
     toToken: 'USDC',
     amount: '10 SOL',
-    protocol: 'jupiter',
   }
 })
 ```
@@ -83,7 +82,7 @@ const router = new SVMRouter(wallet)
 
 // Execute arbitrary program
 const result = await router.executeProgram({
-  programId: 'JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4',
+  programId: '...',
   instruction: Buffer.from([...]),
   accounts: [
     { pubkey: '...', isSigner: true, isWritable: true },
@@ -92,17 +91,6 @@ const result = await router.executeProgram({
 })
 ```
 
-## Supported Programs
-
-Common Solana programs accessible via SVM Router:
-
-| Program | ID | Description |
-|---------|-----|-------------|
-| Jupiter | `JUP6...` | DEX aggregator |
-| Raydium | `675k...` | AMM |
-| Marinade | `Mari...` | Liquid staking |
-| Orca | `whir...` | Concentrated liquidity |
-
 ## Transaction Flow
 
 ```
@@ -110,8 +98,7 @@ Common Solana programs accessible via SVM Router:
 2. Wallet SDK encodes SVM instruction
 3. Transaction sent to Monmouth
 4. SVM Router precompile executes
-5. Results bridged back to agent
-6. Settlement on Ethereum
+5. Results returned to agent
 ```
 
 ## Error Handling
@@ -131,8 +118,6 @@ try {
 ```
 
 ## Gas Costs
-
-SVM Router operations have additional gas costs:
 
 | Operation | Base Gas | Per-Account Gas |
 |-----------|----------|-----------------|

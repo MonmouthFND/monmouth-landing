@@ -8,6 +8,7 @@ import { Cross2Icon } from "@radix-ui/react-icons"
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -18,18 +19,20 @@ export default function Navbar() {
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl mx-auto">
         <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-background/70 backdrop-blur-xl rounded-2xl border border-border/50 shadow-lg shadow-black/5">
           <Button
+            asChild
             variant="outline"
             className="rounded-full border-2 border-mint text-mint hover:bg-mint hover:text-white transition-all md:hidden font-medium"
           >
-            Start building
+            <Link href="/docs/quickstart">Start building</Link>
           </Button>
 
           <div className="hidden md:flex items-center gap-3">
             <Button
+              asChild
               variant="outline"
               className="rounded-full border-2 border-mint text-mint hover:bg-mint hover:text-white transition-all font-medium"
             >
-              Start building
+              <Link href="/docs/quickstart">Start building</Link>
             </Button>
             <Button
               variant="ghost"
@@ -48,8 +51,8 @@ export default function Navbar() {
               <Image
                 src="/monmouth-logo.png"
                 alt="Monmouth Logo"
-                width={60}
-                height={16}
+                width={48}
+                height={48}
                 className="dark:invert"
               />
             </div>
@@ -95,8 +98,8 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
     >
       <div className="px-6 py-6">
         <div className="flex items-center justify-between mb-10">
-          <Button variant="outline" className="rounded-full border-2 border-mint text-mint hover:bg-mint hover:text-white transition-all font-medium">
-            Start building
+          <Button asChild variant="outline" className="rounded-full border-2 border-mint text-mint hover:bg-mint hover:text-white transition-all font-medium">
+            <Link href="/docs/quickstart">Start building</Link>
           </Button>
 
           <div className="absolute left-1/2 -translate-x-1/2">
@@ -104,8 +107,8 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               <Image
                 src="/monmouth-logo.png"
                 alt="Monmouth Logo"
-                width={60}
-                height={16}
+                width={36}
+                height={36}
                 className="dark:invert"
               />
             </div>
@@ -124,11 +127,11 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               <a href="#" className="block text-3xl sm:text-4xl font-display hover:text-mint transition-colors">
                 Home
               </a>
-              <a href="#" className="block text-3xl sm:text-4xl font-display hover:text-mint transition-colors">
-                Technology
-              </a>
               <a href="/docs" className="block text-3xl sm:text-4xl font-display hover:text-mint transition-colors">
                 Documentation
+              </a>
+              <a href="/docs/quickstart" className="block text-3xl sm:text-4xl font-display hover:text-mint transition-colors">
+                Quickstart
               </a>
             </nav>
 
@@ -151,10 +154,10 @@ function MenuOverlay({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
           <div>
             <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-6 block">Featured</span>
             <div className="space-y-4">
-              <a href="#" className="group block p-6 rounded-xl bg-mint text-white hover:shadow-lg hover:shadow-mint/25 transition-all">
-                <h3 className="text-xl font-display mb-3">Introducing: Monmouth Foundation</h3>
+              <a href="/docs" className="group block p-6 rounded-xl bg-mint text-white hover:shadow-lg hover:shadow-mint/25 transition-all">
+                <h3 className="text-xl font-display mb-3">Explore Monmouth Docs</h3>
                 <span className="inline-flex items-center gap-2 text-sm font-medium group-hover:gap-3 transition-all">
-                  Read post
+                  Read the docs
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>

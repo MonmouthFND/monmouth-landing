@@ -1,109 +1,65 @@
 import {
-  IconArrowWaveRightUp,
-  IconClipboardCopy,
-  IconFileBroken,
-  IconSignature,
-  IconTableColumn,
-} from "@tabler/icons-react";
+  IconFingerprint,
+  IconChartBar,
+  IconShieldCheck,
+  IconCategory,
+  IconHexagons,
+  IconMessageForward,
+} from "@tabler/icons-react"
 
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import Image from "next/image";
-
-const FeatureImage = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
-    <Image
-      src="/features/features-1.png"
-      alt="Monmouth Features Visualization"
-      fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    />
-  </div>
-)
-
-const FeatureImage2 = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
-    <Image
-      src="/features/features-2.png"
-      alt="Monmouth Performance Visualization"
-      fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    />
-  </div>
-)
-
-const FeatureImage3 = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
-    <Image
-      src="/features/features-3.png"
-      alt="ExEx System"
-      fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    />
-  </div>
-)
-
-const FeatureImage4 = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
-    <Image
-      src="/features/features-4.png"
-      alt="Developer-First SDK"
-      fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    />
-  </div>
-)
-
-const FeatureImage5 = () => (
-  <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden relative group">
-    <Image
-      src="/features/features-5.png"
-      alt="Layer 3 Framework"
-      fill
-      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    />
-  </div>
-)
+import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
+import {
+  IdentityAnimation,
+  ReputationAnimation,
+  ValidationAnimation,
+  ClassificationAnimation,
+  PrecompilesAnimation,
+  IntentAnimation,
+} from "@/components/ui/bento-animations"
 
 const items = [
   {
-    title: "Agent-Aware Wallet SDK",
-    description: "Guardrails, spending limits, and policy enforcement for autonomous AI agents to transact safely.",
-    header: <FeatureImage />,
-    icon: <IconClipboardCopy className="h-4 w-4" />,
+    title: "Agent Identity",
+    description: "Every agent gets a permanent, verifiable identity. One ID that works everywhere — no more anonymous wallets.",
+    header: <IdentityAnimation />,
+    icon: <IconFingerprint className="h-4 w-4" />,
     className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
   {
-    title: "Built on Reth",
-    description: "Extends Reth without forking — ensuring compatibility and zero fork maintenance burden.",
-    header: <FeatureImage2 />,
-    icon: <IconFileBroken className="h-4 w-4" />,
+    title: "Reputation System",
+    description: "Agents build trust over time. Every transaction adds to a public track record that other agents and protocols can check.",
+    header: <ReputationAnimation />,
+    icon: <IconChartBar className="h-4 w-4" />,
     className: "border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
   },
   {
-    title: "ExEx Host Service",
-    description: "gRPC streaming of blockchain events with real-time header, block, receipt, and log notifications.",
-    header: <FeatureImage3 />,
-    icon: <IconSignature className="h-4 w-4" />,
+    title: "Validation Framework",
+    description: "Before an agent is trusted to do something, it has to prove it can. Built-in capability checks, not just permissions.",
+    header: <ValidationAnimation />,
+    icon: <IconShieldCheck className="h-4 w-4" />,
     className: "border-navy/30 hover:border-navy dark:border-white/20 dark:hover:border-white/40",
   },
   {
-    title: "Custom Precompiles",
+    title: "Transaction Classification",
     description:
-      "SVM Router for Solana cross-chain operations and Message Passer for Ethereum deposits, withdrawals, and messaging.",
-    header: <FeatureImage4 />,
-    icon: <IconTableColumn className="h-4 w-4" />,
-    className: "md:col-span-2 border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
+      "Monmouth automatically understands what each transaction is trying to do — swap, transfer, lend — and routes it accordingly.",
+    header: <ClassificationAnimation />,
+    icon: <IconCategory className="h-4 w-4" />,
+    className: "border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
   },
   {
-    title: "Prague EVM",
-    description: "Latest EVM features with custom precompile extensions for agent-native operations.",
-    header: <FeatureImage5 />,
-    icon: <IconArrowWaveRightUp className="h-4 w-4" />,
+    title: "Custom Precompiles",
+    description: "Specialized operations baked directly into the chain. Faster and cheaper than anything you could build with a smart contract.",
+    header: <PrecompilesAnimation />,
+    icon: <IconHexagons className="h-4 w-4" />,
+    className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
+  },
+  {
+    title: "Native Intents",
+    description:
+      "Tell Monmouth what you want, not how to get it. Say \"swap 1 ETH for USDC\" and the chain figures out the rest.",
+    header: <IntentAnimation />,
+    icon: <IconMessageForward className="h-4 w-4" />,
     className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
 ]
@@ -116,20 +72,18 @@ export default function FeaturesSection() {
           {/* Section label */}
           <div className="flex items-center justify-center gap-4">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-border" />
-            <span className="font-mono text-xs uppercase tracking-widest text-mint">01 / Features</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-mint">01 / Primitives</span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-border" />
           </div>
 
           {/* Headline */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display text-center max-w-2xl mx-auto leading-tight">
-            The <span className="text-mint italic">agent-native</span> settlement layer
+            Agent-native. <span className="text-mint italic">Protocol-level.</span>
           </h2>
 
           {/* Subhead */}
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto text-center leading-relaxed">
-            Purpose-built for AI agents to transact safely.{" "}
-            <span className="font-mono text-sm text-navy dark:text-mint">Off-chain reasoning</span>,{" "}
-            <span className="font-mono text-sm text-navy dark:text-mint">on-chain settlement</span>.
+            Six primitives built directly into the chain. Not smart contracts. Not middleware. Protocol.
           </p>
         </div>
 
@@ -147,5 +101,5 @@ export default function FeaturesSection() {
         </BentoGrid>
       </div>
     </section>
-  );
+  )
 }

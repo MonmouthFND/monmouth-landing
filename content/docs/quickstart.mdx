@@ -11,6 +11,28 @@ Install the Monmouth Wallet SDK:
 npm install @monmouth/wallet-sdk
 ```
 
+## Register an Agent Identity
+
+Every agent needs an on-chain identity before it can transact:
+
+```typescript
+import { MonmouthIdentity } from '@monmouth/wallet-sdk'
+
+const identity = await MonmouthIdentity.register({
+  metadata: {
+    name: 'MyAgent-001',
+    capabilities: ['swap', 'transfer'],
+    owner: '0x...',
+  },
+  guardians: [
+    { address: '0x...', role: 'owner' },
+  ],
+})
+
+console.log(identity.did)
+// → did:monmouth:agent:0x...
+```
+
 ## Initialize the Agent Wallet
 
 ```typescript
@@ -18,7 +40,7 @@ import { MonmouthWallet } from '@monmouth/wallet-sdk'
 
 const wallet = new MonmouthWallet({
   // Agent identity
-  agentDid: 'did:monmouth:agent:0x...',
+  agentDid: identity.did,
 
   // Guardrails configuration
   guardrails: {
@@ -57,20 +79,36 @@ console.log(result.transactionHash)
 ## Cross-Chain Operations
 
 ```typescript
-// Execute on Solana via SVM Router
-const solanaIntent = {
+// Execute cross-chain via SVM Router
+const result = await wallet.executeIntent({
   type: 'cross-chain',
   targetChain: 'solana',
-  program: 'JUP...',
-  instruction: 'swap',
-  accounts: [...],
-}
+  intent: {
+    type: 'swap',
+    fromToken: 'SOL',
+    toToken: 'USDC',
+    amount: '10 SOL',
+  }
+})
+```
 
-const result = await wallet.executeIntent(solanaIntent)
+## Check Reputation
+
+```typescript
+const reputation = await identity.getReputation()
+
+console.log(reputation)
+// {
+//   trustScore: 94.2,
+//   totalTransactions: 1542,
+//   successRate: 0.998,
+// }
 ```
 
 ## Next Steps
 
 - [Architecture Overview](/docs/architecture/overview) — Understand how Monmouth works
+- [Agent Identity](/docs/architecture/agent-identity) — Deep dive into identity and delegation
 - [Guardrails](/docs/wallet-sdk/guardrails) — Configure safety boundaries for your agent
 - [Policies](/docs/wallet-sdk/policies) — Define operational policies
+- [Precompiles](/docs/precompiles/overview) — Explore the five custom precompiles

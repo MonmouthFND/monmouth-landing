@@ -10,13 +10,16 @@ export default function Footer() {
         <div className="flex flex-col items-center text-center">
           <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-6">Ready to build?</span>
           <Button
+            asChild
             size="lg"
             className="group rounded-full bg-mint hover:bg-mint-600 text-white text-2xl sm:text-3xl md:text-4xl py-8 sm:py-10 px-12 sm:px-16 h-auto shadow-xl shadow-mint/20 hover:shadow-2xl hover:shadow-mint/30 transition-all"
           >
-            <svg className="mr-4 sm:mr-6 h-8 sm:h-10 w-8 sm:w-10 transition-transform group-hover:rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span className="font-display">Start building</span>
+            <Link href="/docs/quickstart">
+              <svg className="mr-4 sm:mr-6 h-8 sm:h-10 w-8 sm:w-10 transition-transform group-hover:rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="font-display">Start building</span>
+            </Link>
           </Button>
         </div>
       </div>
@@ -31,7 +34,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-muted-foreground max-w-sm leading-relaxed">
-              The settlement layer for autonomous AI agents. Agent-native consensus. Cross-chain identity. Multi-agent coordination.
+              The blockchain for autonomous AI agents. Agent-native primitives. On-chain identity. Protocol-level coordination.
             </p>
 
             {/* Social Links */}
@@ -76,11 +79,11 @@ export default function Footer() {
                 <Link href="#" className="block text-sm hover:text-mint transition-colors">
                   Home
                 </Link>
-                <Link href="#" className="block text-sm hover:text-mint transition-colors">
-                  Technology
-                </Link>
                 <Link href="/docs" className="block text-sm hover:text-mint transition-colors">
                   Documentation
+                </Link>
+                <Link href="/docs/quickstart" className="block text-sm hover:text-mint transition-colors">
+                  Quickstart
                 </Link>
               </nav>
               <nav className="space-y-3">
@@ -108,7 +111,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Monmouth. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground font-mono">
-            Built on <span className="text-mint">Reth</span> · Deployed on <span className="text-rose">Sepolia</span>
+            The chain for agents
           </p>
         </div>
       </div>

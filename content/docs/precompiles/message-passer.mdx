@@ -1,15 +1,15 @@
 ---
 title: Message Passer
-description: Ethereum deposits, withdrawals, and cross-layer messaging
+description: Cross-chain messaging and asset transfers
 ---
 
 ## Overview
 
-The Message Passer precompile (`0x4200`) handles all communication between Monmouth and Ethereum L1:
+The Message Passer precompile (`0x4200`) handles cross-chain communication and asset transfers:
 
-- **Deposits**: Move assets from Ethereum to Monmouth
-- **Withdrawals**: Move assets from Monmouth to Ethereum
-- **Messaging**: Arbitrary data between layers
+- **Asset Transfers**: Move assets between Monmouth and connected chains
+- **Messaging**: Arbitrary data between chains
+- **Proof Generation**: Merkle proofs for cross-chain verification
 
 ## Address
 
@@ -21,33 +21,33 @@ The Message Passer precompile (`0x4200`) handles all communication between Monmo
 
 ```solidity
 interface IMessagePasser {
-    /// @notice Initiate a withdrawal to L1
-    /// @param target The L1 address to receive funds/message
+    /// @notice Initiate an outbound asset transfer
+    /// @param target The destination address
     /// @param value The ETH value to send
-    /// @param data The calldata to execute on L1
-    /// @param gasLimit The L1 gas limit
-    function initiateWithdrawal(
+    /// @param data The calldata to execute on the destination chain
+    /// @param gasLimit The destination gas limit
+    function initiateTransfer(
         address target,
         uint256 value,
         bytes calldata data,
         uint256 gasLimit
     ) external payable;
 
-    /// @notice Send a message to L1
-    /// @param target The L1 contract to call
+    /// @notice Send a cross-chain message
+    /// @param target The destination contract to call
     /// @param data The message data
-    /// @param gasLimit The L1 gas limit
+    /// @param gasLimit The destination gas limit
     function sendMessage(
         address target,
         bytes calldata data,
         uint256 gasLimit
     ) external;
 
-    /// @notice Get withdrawal proof for L1 finalization
-    /// @param withdrawalHash The withdrawal hash
+    /// @notice Get transfer proof for finalization
+    /// @param transferHash The transfer hash
     /// @return proof The Merkle proof
-    function getWithdrawalProof(
-        bytes32 withdrawalHash
+    function getTransferProof(
+        bytes32 transferHash
     ) external view returns (bytes memory proof);
 
     /// @notice Check if a message has been relayed
@@ -59,99 +59,88 @@ interface IMessagePasser {
 }
 ```
 
-## Deposits (L1 → Monmouth)
+## Inbound Transfers (→ Monmouth)
 
-Deposits are initiated on Ethereum L1 via the StandardBridge:
+Inbound transfers are initiated on the source chain via the bridge contract:
 
 ```typescript
-// On Ethereum L1
+// On source chain
 const bridge = new ethers.Contract(
-  STANDARD_BRIDGE_ADDRESS,
-  StandardBridgeABI,
+  BRIDGE_ADDRESS,
+  BridgeABI,
   signer
 )
 
-// Deposit ETH
+// Transfer ETH
 await bridge.depositETH(200000, { value: parseEther('1') })
 
-// Deposit ERC-20
+// Transfer ERC-20
 await bridge.depositERC20(
-  l1TokenAddress,
-  l2TokenAddress,
+  sourceTokenAddress,
+  monmouthTokenAddress,
   parseUnits('1000', 6), // USDC
   200000
 )
 ```
 
-Deposits appear on Monmouth after L1 confirmation (~12 minutes).
+## Outbound Transfers (Monmouth →)
 
-## Withdrawals (Monmouth → L1)
-
-Withdrawals are initiated on Monmouth:
+Outbound transfers are initiated on Monmouth:
 
 ```typescript
 import { MessagePasser } from '@monmouth/wallet-sdk'
 
 const passer = new MessagePasser(wallet)
 
-// Initiate withdrawal
-const withdrawal = await passer.initiateWithdrawal({
-  target: l1RecipientAddress,
+// Initiate transfer
+const transfer = await passer.initiateTransfer({
+  target: recipientAddress,
   value: parseEther('1'),
   gasLimit: 200000,
 })
 
-console.log(withdrawal.hash) // Withdrawal hash
+console.log(transfer.hash) // Transfer hash
 ```
 
-After the challenge period, finalize on L1:
+After the challenge period, finalize on the destination chain:
 
 ```typescript
 // Get proof from Monmouth
-const proof = await passer.getWithdrawalProof(withdrawal.hash)
+const proof = await passer.getTransferProof(transfer.hash)
 
-// Finalize on L1
-const l1Bridge = new ethers.Contract(
-  STANDARD_BRIDGE_ADDRESS,
-  StandardBridgeABI,
-  l1Signer
-)
-
-await l1Bridge.finalizeWithdrawal(
-  withdrawal.target,
-  withdrawal.token,
-  withdrawal.value,
+// Finalize on destination chain
+await bridge.finalizeTransfer(
+  transfer.target,
+  transfer.token,
+  transfer.value,
   proof
 )
 ```
 
-## Cross-Layer Messaging
+## Cross-Chain Messaging
 
-Send arbitrary messages between layers:
+Send arbitrary messages between chains:
 
 ```typescript
-// Send message to L1 contract
+// Send message to contract on another chain
 await passer.sendMessage({
-  target: l1ContractAddress,
-  data: l1Contract.interface.encodeFunctionData('someFunction', [arg1, arg2]),
+  target: targetContractAddress,
+  data: targetContract.interface.encodeFunctionData('someFunction', [arg1, arg2]),
   gasLimit: 200000,
 })
 ```
 
-Receive messages from L1:
+Receive messages on Monmouth:
 
 ```solidity
-// On Monmouth
 contract MyContract {
-    address public l1Messenger;
-
-    modifier onlyL1Messenger() {
-        require(msg.sender == address(0x4200), "Not from L1");
+    modifier onlyMessagePasser() {
+        require(msg.sender == address(0x4200), "Not from Message Passer");
         _;
     }
 
-    function receiveMessage(bytes calldata data) external onlyL1Messenger {
-        // Process L1 message
+    function receiveMessage(bytes calldata data) external onlyMessagePasser {
+        // Process cross-chain message
     }
 }
 ```
@@ -161,35 +150,26 @@ contract MyContract {
 The Wallet SDK provides high-level helpers:
 
 ```typescript
-// Bridge ETH to Monmouth
+// Transfer assets to Monmouth
 await wallet.bridge({
-  direction: 'deposit',
+  direction: 'inbound',
   token: 'ETH',
   amount: '1 ETH',
 })
 
-// Bridge back to Ethereum
+// Transfer assets from Monmouth
 await wallet.bridge({
-  direction: 'withdraw',
+  direction: 'outbound',
   token: 'ETH',
   amount: '1 ETH',
   recipient: '0x...', // Optional, defaults to agent
 })
 ```
 
-## Timing
-
-| Operation | Duration |
-|-----------|----------|
-| Deposit confirmation | ~12 minutes (L1 finality) |
-| Withdrawal initiation | Instant on Monmouth |
-| Challenge period | 7 days (mainnet) / 1 hour (testnet) |
-| Withdrawal finalization | ~12 minutes (L1 finality) |
-
 ## Gas Costs
 
 | Operation | Gas |
 |-----------|-----|
-| initiateWithdrawal | 50,000 |
+| initiateTransfer | 50,000 |
 | sendMessage | 30,000 |
-| getWithdrawalProof | 10,000 |
+| getTransferProof | 10,000 |

@@ -1,12 +1,12 @@
 ---
 title: Architecture Overview
-description: How Monmouth provides consensus infrastructure for AI agents
+description: How Monmouth provides infrastructure for AI agents
 ---
 
 ## High-Level Architecture
 
 ```
-AI Agent → Wallet SDK → LLM API → Tool Calls → Monmouth → Ethereum Settlement
+AI Agent → Wallet SDK → Intent → Monmouth → Settled
 ```
 
 Monmouth separates concerns:
@@ -14,52 +14,88 @@ Monmouth separates concerns:
 1. **Off-Chain Reasoning**: AI agents connect to LLMs (Claude, GPT, etc.) for reasoning and planning
 2. **Guardrail Enforcement**: The Wallet SDK enforces policies before any on-chain action
 3. **Intent Resolution**: Monmouth resolves intents to optimal execution paths
-4. **Settlement**: Transactions settle to Ethereum for security
+4. **Classification & Validation**: Transactions are classified, validated, and scored
+5. **Settlement**: Transactions settle with full audit trail and reputation updates
 
 ## Why Off-Chain AI?
 
-On-chain ML isn't feasible at consensus speeds. Even local MLX models are slow, and requiring consensus on ML inference would be impractical. Instead:
+On-chain ML isn't feasible at consensus speeds. Instead:
 
 - LLMs handle reasoning, planning, and decision-making
 - Monmouth handles verification and settlement
 - Guardrails ensure agents operate within safe boundaries
 
-## Core Components
+## Technical Stack
+
+### Commonware Framework
+
+Monmouth is built on [Commonware](https://commonware.xyz), a modular blockchain framework:
+
+- **BFT Simplex Consensus**: Single-slot finality with Byzantine fault tolerance. No probabilistic finality — a transaction is final in ~250ms.
+- **Deterministic Execution**: All validators execute the same state transitions in the same order.
+
+### REVM v34
+
+The execution environment is REVM (Rust EVM), providing:
+
+- Full Prague EVM compatibility
+- Custom precompile extensions for agent-native operations
+- High-performance Rust implementation
+
+### QMDB
+
+Storage is powered by QMDB, a memory-mapped database optimized for blockchain state:
+
+- O(1) state lookups
+- Efficient state root computation
+- Copy-on-write snapshots for parallel execution
+
+### Chain Parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Block time | 250ms |
+| Finality | Single-slot (~250ms) |
+| EVM version | Prague |
+| Gas limit | 30M per block |
+| Custom precompiles | 5 (0x1000–0x1002, 0x1003, 0x4200) |
+
+## Core Primitives
 
 ### Agent Identity Registry
 
-Canonical DIDs (Decentralized Identifiers) with cross-chain verification. Every agent has a unique identity that works across EVM, Solana, and future chains.
+Canonical on-chain identity for every agent. NFT-based (ERC-8004) with delegation, guardian management, and cross-chain verification. See [Agent Identity](/docs/architecture/agent-identity).
 
-### Intent Classification
+### Reputation System
 
-Automatic detection of transaction intent:
-- **Swap**: Token exchanges
-- **Transfer**: Asset movements
-- **Lending**: Deposit/borrow operations
-- **Staking**: Validator delegation
-- **NFT**: Minting, transfers, marketplace
+On-chain trust scores, behavioral tags, and revocable attestations. See [Reputation System](/docs/architecture/reputation).
 
-Classification uses confidence scoring with configurable thresholds.
+### Validation Framework
 
-### Multi-Runtime Execution
+Request-response capability verification. See [Validation Framework](/docs/architecture/validation).
 
-Route operations to the optimal VM:
-- **EVM**: Ethereum-compatible operations
-- **SVM**: Solana VM for cross-chain
-- **Hybrid**: Complex multi-chain workflows
+### Transaction Classification
 
-### Ethereum Settlement
+Automatic intent detection with five classification types and confidence scoring. See [Transaction Classification](/docs/architecture/transaction-classification).
 
-All agent transactions ultimately settle to Ethereum L1:
-- `SequencerInbox`: Receives batch data
-- `StateCommitmentChain`: Stores state roots
-- `StandardBridge`: ETH deposits/withdrawals
-- `CrossDomainMessenger`: Cross-layer messaging
+### Intent Resolution
 
-## Built on Reth
+Agents express intents — Monmouth resolves them to optimal execution paths. See [Intent Resolution](/docs/architecture/intent-resolution).
 
-Monmouth extends Reth without forking, ensuring:
-- Zero fork maintenance burden
-- Full EVM compatibility
-- Upstream security updates
-- Prague EVM features
+### Custom Precompiles
+
+Five precompiles for agent-native operations: AI Inference, Vector Similarity, Intent Parser, SVM Router, Message Passer. See [Precompiles Overview](/docs/precompiles/overview).
+
+## Agent Transaction Lifecycle
+
+```
+1. Agent creates intent (e.g., "swap 1 ETH for USDC")
+2. Wallet SDK validates intent against guardrails and policies
+3. Intent Parser precompile validates and normalizes the intent
+4. Transaction Classification identifies the operation type
+5. Intent Resolution finds optimal execution path
+6. Validation Framework verifies agent capability
+7. Transaction executes
+8. Reputation updates based on outcome
+9. Transaction is finalized in ~250ms
+```

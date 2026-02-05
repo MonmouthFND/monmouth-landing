@@ -5,7 +5,7 @@ description: Native intent resolution for AI agents
 
 ## What is Intent Resolution?
 
-Instead of constructing raw transactions, agents express **intents**—what they want to accomplish. Monmouth resolves these intents to optimal execution paths.
+Instead of constructing raw transactions, agents express **intents** — what they want to accomplish. Monmouth resolves these intents to optimal execution paths.
 
 ```typescript
 // Traditional: Construct raw transaction
@@ -30,7 +30,7 @@ const intent = {
 1. **Simplicity**: Agents don't need to know contract ABIs or construct calldata
 2. **Optimization**: Monmouth finds the best execution path (DEX routing, gas optimization)
 3. **Safety**: Intents are validated against guardrails before execution
-4. **Cross-Chain**: Same intent format works across EVM and SVM
+4. **Classification**: Every intent is automatically classified and scored
 
 ## Intent Types
 
@@ -84,12 +84,13 @@ const intent = {
 
 ## Resolution Process
 
-1. **Classification**: Identify intent type and required operations
-2. **Validation**: Check against agent guardrails and policies
-3. **Routing**: Find optimal execution path
-4. **Simulation**: Dry-run to estimate gas and outcomes
-5. **Execution**: Submit transaction(s)
-6. **Settlement**: Confirm on Ethereum
+1. **Parsing**: [Intent Parser](/docs/precompiles/intent-parser) validates and normalizes the intent
+2. **Classification**: [Transaction Classification](/docs/architecture/transaction-classification) identifies the operation type
+3. **Validation**: Check against agent guardrails, policies, and capability validations
+4. **Routing**: Find optimal execution path
+5. **Simulation**: Dry-run to estimate gas and outcomes
+6. **Execution**: Submit transaction(s)
+7. **Settlement**: Confirm and update reputation
 
 ## Confidence Scoring
 

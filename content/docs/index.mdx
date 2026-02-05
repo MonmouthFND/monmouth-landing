@@ -1,40 +1,61 @@
 ---
 title: What is Monmouth?
-description: The settlement layer for autonomous AI agents
+description: The blockchain for autonomous AI agents
 ---
 
-Monmouth provides **consensus infrastructure for autonomous agents** to transact safely across blockchain ecosystems. While technically settling to Ethereum for security, it introduces primitives that don't exist on general-purpose chains:
+Monmouth is a blockchain **purpose-built for autonomous AI agents**. It provides six agent-native primitives at the protocol level — capabilities that don't exist on general-purpose chains:
 
-- **Agent Identity Registry**: Canonical DIDs with cross-chain verification
-- **Native Intent Resolution**: Agent intents as first-class operations
-- **Multi-Agent Coordination**: On-chain settlement of agent collectives
-- **Cross-Runtime Execution**: Route agent operations to optimal VM
+- **Agent Identity**: Canonical on-chain identity with delegation and verification
+- **Reputation System**: Trust scores, behavioral tags, and revocable attestations
+- **Validation Framework**: Request-response capability verification
+- **Transaction Classification**: Automatic intent detection with confidence scoring
+- **Custom Precompiles**: Protocol-level opcodes for AI inference, vector similarity, and intent parsing
+- **Native Intent Resolution**: Express what you want, not how to do it
 
-## Not Your Typical Rollup
+## Not a General-Purpose Chain
 
-While Monmouth uses rollup technology for Ethereum settlement, it's fundamentally different from scaling-focused L2s:
+Monmouth isn't trying to be the next Ethereum or Solana. It's designed for one thing: giving AI agents the on-chain primitives they need to transact safely, build reputation, and coordinate with other agents.
 
-| Feature | Monmouth | Ethereum L1 | Typical L2 |
-|---------|----------|-------------|------------|
-| **Agent Identity** | Native DIDs | Not supported | Not supported |
-| **Intent Resolution** | Native precompile | Requires oracle | Requires oracle |
-| **Multi-VM Execution** | EVM + SVM + more | EVM only | Usually EVM only |
-| **Agent Consensus** | Proof-of-RAG | N/A | N/A |
-| **Ethereum Security** | Settles to L1 | Native | Settles to L1 |
+| Capability | Monmouth | General-Purpose Chains |
+|-----------|----------|----------------------|
+| **Agent Identity** | Protocol-level | Not supported |
+| **Reputation** | Native trust scores | Requires oracle |
+| **Intent Resolution** | Built-in precompile | Requires middleware |
+| **Transaction Classification** | Automatic | Not available |
+| **Agent Guardrails** | SDK-enforced | Manual implementation |
 
-## Why Not Just Use Ethereum?
+## Why Agents Need Their Own Chain
 
-Ethereum is optimized for human transactions and DeFi. Agents need:
+Existing blockchains are optimized for human-driven transactions and DeFi. Agents need:
 
-- **Native intent resolution** — not supported by EVM
-- **Multi-step autonomous workflows** — requires custom precompiles
-- **Cross-chain identity** — canonical state not available on L1
-- **Agent-to-agent payment protocols** — x402, escrow, etc.
+- **Native identity** — verifiable presence without depending on external registries
+- **Intent resolution** — express goals instead of constructing raw transactions
+- **Reputation** — on-chain track record for trust and accountability
+- **Policy enforcement** — guardrails at the protocol level, not as afterthoughts
+- **Coordination** — primitives for multi-agent workflows
 
-## Why Settle to Ethereum?
+## Technical Foundation
 
-We leverage Ethereum's security for final settlement while providing agent-specific execution environments. This gives agents:
+Monmouth is built on the [Commonware](https://commonware.xyz) framework:
 
-- Composability with existing DeFi protocols
-- Trustless bridging to other L2s
-- Proven security model
+- **Consensus**: BFT Simplex — single-slot finality with Byzantine fault tolerance
+- **Execution**: REVM v34 — Rust EVM implementation with custom precompiles
+- **Storage**: QMDB — memory-mapped database optimized for blockchain state
+
+### Chain Parameters
+
+| Parameter | Value |
+|-----------|-------|
+| Block time | 250ms |
+| Finality | Single-slot (~250ms) |
+| EVM version | Prague |
+| Chain ID | TBD |
+| Gas limit | 30M per block |
+
+## Off-Chain AI, On-Chain Settlement
+
+AI reasoning and planning happen off-chain via LLMs (Claude, GPT, etc.). Monmouth handles what blockchains are good at: verification, settlement, and coordination. On-chain ML isn't feasible at consensus speeds — so we don't pretend it is.
+
+```
+Agent → LLM API → Decision → Wallet SDK → Monmouth → Settled
+```

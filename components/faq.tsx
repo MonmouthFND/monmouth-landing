@@ -21,7 +21,7 @@ const FAQSection = () => {
 
           {/* Subhead */}
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto text-center leading-relaxed">
-            Get answers about Monmouth&apos;s agent settlement infrastructure.
+            Everything you need to know about building on Monmouth.
           </p>
         </div>
 
@@ -32,58 +32,43 @@ const FAQSection = () => {
                 What is Monmouth?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Monmouth is the settlement layer for autonomous AI agents — consensus infrastructure designed for agents to transact safely across blockchain ecosystems. We provide agent-native primitives (identity, intent resolution, multi-agent coordination) that don&apos;t exist on general-purpose chains, while settling to Ethereum for security.
+                Monmouth is a blockchain purpose-built for autonomous AI agents. It has six agent-native primitives built directly into the protocol: identity, reputation, validation, transaction classification, custom precompiles, and native intent resolution. These aren&apos;t smart contracts or middleware — they&apos;re part of the chain itself.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-2" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-rose/50 transition-colors">
-              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-rose transition-colors">
-                Does AI run on-chain?
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                No — and that&apos;s by design. AI/ML operations happen off-chain via LLM API calls (Claude, GPT, etc.). The blockchain handles verification and settlement only. On-chain ML isn&apos;t feasible at consensus speeds — even local MLX is slow, and requiring consensus would be impractical.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-3" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
+            <AccordionItem value="item-2" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
-                Why not just use Ethereum or existing L2s?
+                Why not use an existing blockchain?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Ethereum and traditional L2s are optimized for human transactions and DeFi. Agents need native intent resolution (not supported by EVM), multi-step autonomous workflows (requires custom precompiles), cross-chain identity (canonical state not available on L1), and agent-to-agent payment protocols. We leverage Ethereum&apos;s security for final settlement while providing agent-specific execution environments.
+                Existing chains are optimized for human-driven transactions and DeFi. They lack native agent identity, intent resolution, reputation systems, and policy enforcement at the protocol level. You can bolt these on as smart contracts, but that&apos;s slow, expensive, and fragile. Monmouth builds them into the chain so they&apos;re fast, cheap, and reliable.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-4" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-navy/30 dark:data-[state=open]:border-white/30 transition-colors">
+            <AccordionItem value="item-3" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-navy/30 dark:data-[state=open]:border-white/30 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-navy dark:hover:text-white/80 transition-colors">
-                What are the custom precompiles?
+                What are agent-native primitives?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                We have two main precompiles:{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">SVM Router (0x1003)</code> enables Solana VM program execution for cross-chain operations.{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">Message Passer (0x4200)</code> handles Ethereum deposits, withdrawals, and cross-layer messaging.
+                Agent-native primitives are protocol-level capabilities specifically designed for AI agents. Instead of implementing identity, reputation, or intent resolution as smart contracts on top of a general-purpose chain, these features are built directly into Monmouth&apos;s execution environment. This means they&apos;re faster, cheaper, and more reliable than contract-based alternatives.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-5" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-rose/50 transition-colors">
+            <AccordionItem value="item-4" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-rose/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-rose transition-colors">
-                How does transaction classification work?
+                How does the Wallet SDK work?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Our system automatically detects transaction intent — swap, transfer, lending, staking, NFT operations. It uses confidence scoring with configurable thresholds and heuristic classification based on function selectors. Transactions are then routed to the appropriate runtime (EVM, SVM, or Hybrid).
+                The Wallet SDK is your agent&apos;s interface to Monmouth. It handles identity registration, guardrail enforcement (spending limits, contract allowlists), policy management (approval thresholds, blocked operations), and intent resolution (express what you want, not how to do it). One SDK call to register, configure, and start transacting.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-6" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
+            <AccordionItem value="item-5" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
-                Why does Monmouth settle to Ethereum?
+                How do I start building?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                We leverage Ethereum&apos;s security for final settlement — it&apos;s the most battle-tested blockchain. This gives agents composability with existing DeFi protocols, trustless bridging to other chains, and a proven security model. L1 contracts include{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">SequencerInbox</code>,{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">StateCommitmentChain</code>,{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">StandardBridge</code>, and{" "}
-                <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">CrossDomainMessenger</code>.
+                Install the SDK with <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">npm install @monmouth/wallet-sdk</code>, register an agent identity, configure your guardrails and policies, then start expressing intents. The <a href="/docs/quickstart" className="text-mint hover:underline">quickstart guide</a> walks through every step.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

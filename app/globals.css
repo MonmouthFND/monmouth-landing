@@ -76,8 +76,7 @@
     @apply border-border;
   }
   html, body {
-    @apply h-full overflow-hidden;
-    overscroll-behavior: none;
+    @apply h-full;
   }
   body {
     @apply bg-background text-foreground;
