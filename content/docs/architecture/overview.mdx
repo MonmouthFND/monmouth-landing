@@ -31,7 +31,7 @@ On-chain ML isn't feasible at consensus speeds. Instead:
 
 Monmouth is built on [Commonware](https://commonware.xyz), a modular blockchain framework:
 
-- **BFT Simplex Consensus**: Single-slot finality with Byzantine fault tolerance. No probabilistic finality — a transaction is final in ~250ms.
+- **Minimmit Consensus**: 2-round finality with Byzantine fault tolerance. Minimmit achieves 130ms block times and ~250ms finality by reducing the consensus path from 3 rounds (Simplex) to 2. Requires n ≥ 5f+1 validators — a higher honesty threshold that fits Monmouth's permissioned validator set. Launching on Simplex (3f+1) and migrating to Minimmit once it ships in the Commonware runtime.
 - **Deterministic Execution**: All validators execute the same state transitions in the same order.
 
 ### REVM v34
@@ -54,8 +54,8 @@ Storage is powered by QMDB, a memory-mapped database optimized for blockchain st
 
 | Parameter | Value |
 |-----------|-------|
-| Block time | 250ms |
-| Finality | Single-slot (~250ms) |
+| Block time | 130ms (target) |
+| Finality | 2-round (~250ms) |
 | EVM version | Prague |
 | Gas limit | 30M per block |
 | Custom precompiles | 5 (0x1000–0x1002, 0x1003, 0x4200) |
@@ -97,5 +97,5 @@ Five precompiles for agent-native operations: AI Inference, Vector Similarity, I
 6. Validation Framework verifies agent capability
 7. Transaction executes
 8. Reputation updates based on outcome
-9. Transaction is finalized in ~250ms
+9. Transaction is finalized in ~250ms (2 rounds)
 ```

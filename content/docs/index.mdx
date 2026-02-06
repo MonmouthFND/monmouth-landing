@@ -38,7 +38,7 @@ Existing blockchains are optimized for human-driven transactions and DeFi. Agent
 
 Monmouth is built on the [Commonware](https://commonware.xyz) framework:
 
-- **Consensus**: BFT Simplex — single-slot finality with Byzantine fault tolerance
+- **Consensus**: Minimmit — 2-round finality with Byzantine fault tolerance (launching on Simplex, migrating to Minimmit)
 - **Execution**: REVM v34 — Rust EVM implementation with custom precompiles
 - **Storage**: QMDB — memory-mapped database optimized for blockchain state
 
@@ -46,8 +46,8 @@ Monmouth is built on the [Commonware](https://commonware.xyz) framework:
 
 | Parameter | Value |
 |-----------|-------|
-| Block time | 250ms |
-| Finality | Single-slot (~250ms) |
+| Block time | 130ms (target) |
+| Finality | 2-round (~250ms) |
 | EVM version | Prague |
 | Chain ID | TBD |
 | Gas limit | 30M per block |
