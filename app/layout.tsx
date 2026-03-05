@@ -25,9 +25,9 @@ const dmSans = localFont({
 });
 
 export const metadata: Metadata = {
-	title: 'Monmouth | The Settlement Layer for AI Agents',
+	title: 'Monmouth | The Chain for AI Agents',
 	description:
-		'Monmouth is the settlement layer for autonomous AI agents. Agent-native consensus, cross-chain identity, and multi-agent coordination—settling to Ethereum for security.',
+		'Monmouth is a blockchain purpose-built for autonomous AI agents. Twelve native modules, dual-VM execution (EVM + SVM), and built-in policy enforcement — everything agents need to act, coordinate, and prove their work.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
