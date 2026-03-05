@@ -77,7 +77,7 @@ export default function Hero() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="rounded-full border-2 border-foreground/20 hover:border-mint hover:text-mint bg-white/50 dark:bg-white/5 backdrop-blur-sm transition-all px-8 h-12 text-base font-medium"
+                  className="rounded-full border-2 border-foreground/20 hover:border-mint hover:bg-mint hover:text-white bg-white/50 dark:bg-white/5 backdrop-blur-sm transition-all px-8 h-12 text-base font-medium"
                 >
                   <Link href="/docs/architecture/overview">
                     Explore the architecture
