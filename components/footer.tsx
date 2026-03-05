@@ -34,7 +34,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-muted-foreground max-w-sm leading-relaxed">
-              The execution layer for autonomous AI agents. Twelve native modules. Dual-VM execution. Protocol-level policy and coordination.
+              The chain for autonomous AI agents. Purpose-built infrastructure for the agent economy.
             </p>
 
             {/* Social Links */}

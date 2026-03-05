@@ -21,7 +21,7 @@ const FAQSection = () => {
 
           {/* Subhead */}
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto text-center leading-relaxed">
-            Everything you need to know about building on Monmouth.
+            Everything you need to know about Monmouth.
           </p>
         </div>
 
@@ -32,43 +32,52 @@ const FAQSection = () => {
                 What is Monmouth?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Monmouth is a blockchain purpose-built for autonomous AI agents. It has twelve native modules built directly into the protocol — capabilities, delegation, policy enforcement, intent receipts, coordination, attestation, memory anchoring, and more. Plus dual-VM execution: EVM and SVM side by side. These aren&apos;t smart contracts or middleware — they&apos;re part of the chain itself.
+                Monmouth is a blockchain designed specifically for AI agents. Where general-purpose chains give you a blank canvas and expect you to build everything from scratch, Monmouth comes with twelve built-in modules that agents need out of the box — things like spending limits, delegation, job coordination, and a verifiable audit trail. It also runs both Ethereum and Solana programs side by side, so agents aren&apos;t locked into one ecosystem.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-2" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
-                Why not use an existing blockchain?
+                Who is Monmouth for?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Existing chains are optimized for human-driven transactions and DeFi. They lack native delegation, policy enforcement, capability registries, and coordination primitives at the protocol level. You can bolt these on as smart contracts, but that&apos;s slow, expensive, and fragile. Monmouth builds them into the chain so they&apos;re fast, cheap, and reliable.
+                Teams building autonomous AI agent systems — whether that&apos;s LLM orchestration frameworks, DeFi agents, trading bots, or multi-agent workflows. If you&apos;re building software that needs to transact, coordinate, and prove what it did on-chain, Monmouth gives you the infrastructure so you can focus on the intelligence. The AI agent economy is already producing hundreds of millions in value through frameworks like the Agent Commerce Protocol. Monmouth provides the native infrastructure that general-purpose chains can&apos;t.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-3" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-navy/30 dark:data-[state=open]:border-white/30 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-navy dark:hover:text-white/80 transition-colors">
-                What are native modules?
+                Why not use an existing blockchain?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Native modules are protocol-level capabilities specifically designed for AI agents. Instead of implementing delegation, policy, or coordination as smart contracts on top of a general-purpose chain, these features are built directly into Monmouth&apos;s execution environment as typed registries with enforced schemas. This means they&apos;re faster, cheaper, and more reliable than contract-based alternatives.
+                Existing chains are optimized for human-driven transactions and DeFi. They don&apos;t have built-in support for things agents need: scoped delegation, spending policies, capability discovery, or multi-agent job coordination. You can build all of this as smart contracts, but that&apos;s slow, expensive, and fragile. Monmouth builds these features directly into the chain so they&apos;re fast, cheap, and reliable.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-4" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-rose/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-rose transition-colors">
-                How does the agent loop work?
+                Does Monmouth run AI on-chain?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Intelligence lives off-chain in your LLM runtime. Your agent reads on-chain state, simulates outcomes via the preview module, submits transactions through typed envelopes, and verifies results via intent receipts. The chain handles deterministic execution, policy enforcement, and settlement. Your LLM handles reasoning, planning, and tool calling.
+                No — and that&apos;s by design. AI reasoning and planning happen off-chain in your LLM (Claude, GPT, or any model). The chain handles what blockchains are good at: deterministic execution, policy enforcement, and settlement. Your agent thinks off-chain, acts on-chain, and verifies the results. This separation is what makes the system fast, auditable, and trustworthy.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-5" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
+                What&apos;s EVM + SVM?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                EVM is the Ethereum Virtual Machine — the most widely used smart contract platform. SVM is the Solana Virtual Machine. Monmouth runs both in every block, which means agents can work with Ethereum contracts and Solana programs on a single chain. No bridges, no cross-chain risk. Deploy in Solidity or Rust — it all settles on Monmouth.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-6" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-mint/50 transition-colors">
+              <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-mint transition-colors">
                 How do I start building?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Point your LLM at a Monmouth RPC endpoint, register capabilities, configure policies and delegation scopes, then start submitting transactions. Monmouth exposes 52 JSON-RPC endpoints — the full Ethereum API plus agent-specific methods. The <a href="/docs/quickstart" className="text-mint hover:underline">quickstart guide</a> walks through every step.
+                Point any Ethereum-compatible tool at a Monmouth RPC endpoint and you&apos;re connected. Monmouth speaks standard Ethereum JSON-RPC with additional agent-specific methods — 52 endpoints in total. The <a href="/docs/quickstart" className="text-mint hover:underline">quickstart guide</a> walks through connecting, querying capabilities, configuring policies, and submitting your first transaction.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

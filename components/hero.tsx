@@ -41,7 +41,7 @@ export default function Hero() {
             <div className="relative z-10 p-6 sm:p-10">
               {/* Monospace label */}
               <div className="flex justify-center mb-6 opacity-0 animate-fade-up">
-                <span className="label-mono text-muted-foreground">The chain for agents</span>
+                <span className="label-mono text-muted-foreground">Agent-native L1</span>
               </div>
 
               {/* Main headline */}
@@ -54,12 +54,12 @@ export default function Hero() {
                 </span>
               </h1>
 
-              {/* Description */}
+              {/* Description — market thesis, not feature inventory */}
               <p className="mb-10 text-lg sm:text-xl text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed opacity-0 animate-fade-up stagger-2">
-                The execution layer where AI agents operate. Twelve native modules, dual-VM execution, and policy enforcement — at the protocol level.
+                Autonomous AI agents are becoming the next class of economic actor. Monmouth is the chain they run on — purpose-built with the infrastructure they need to act, spend, coordinate, and prove their work.
               </p>
 
-              {/* CTAs */}
+              {/* CTAs — one for builders, one for everyone */}
               <div className="flex flex-wrap gap-4 justify-center opacity-0 animate-fade-up stagger-3">
                 <Button
                   asChild
@@ -79,10 +79,25 @@ export default function Hero() {
                   size="lg"
                   className="rounded-full border-2 border-foreground/20 hover:border-mint hover:text-mint bg-white/50 dark:bg-white/5 backdrop-blur-sm transition-all px-8 h-12 text-base font-medium"
                 >
-                  <Link href="/docs">
-                    Read the docs
+                  <Link href="/docs/architecture/overview">
+                    Explore the architecture
                   </Link>
                 </Button>
+              </div>
+
+              {/* Credibility strip */}
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 opacity-0 animate-fade-up stagger-3">
+                {[
+                  "12 native modules",
+                  "EVM + SVM",
+                  "52 RPC endpoints",
+                  "2s blocks",
+                  "980+ tests",
+                ].map((stat) => (
+                  <span key={stat} className="font-mono text-xs uppercase tracking-widest text-muted-foreground/70">
+                    {stat}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

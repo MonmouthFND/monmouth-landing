@@ -10,23 +10,23 @@ const benefitsItems = [
   {
     title: "Purpose-built, not retrofitted.",
     description:
-      "General-purpose chains bolt on agent features as afterthoughts. Monmouth has capabilities, delegation, policy enforcement, and coordination baked into the protocol from day one.",
+      "General-purpose chains bolt on agent features as afterthoughts. Monmouth has capabilities, delegation, policies, and coordination built into the chain from day one — not layered on top.",
     header: <PurposeBuiltAnimation />,
     icon: <IconBrain className="h-4 w-4" />,
     className: "md:col-span-3 border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
   },
   {
-    title: "Know your agents.",
+    title: "Every agent has a track record.",
     description:
-      "On-chain attestations, intent receipts, and memory anchoring mean every agent has a verifiable track record. What it declared, what it did, and what it remembers — transparent and protocol-enforced.",
+      "Intent receipts, attestations, and memory anchoring create a verifiable history for every agent. What it declared, what it did, and what it remembered — transparent and on-chain.",
     header: <KnowAgentsAnimation />,
     icon: <IconUserScan className="h-4 w-4" />,
     className: "md:col-span-2 border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
   {
-    title: "Ship faster.",
+    title: "You build the brain. We handle the rest.",
     description:
-      "Your LLM reads state, simulates, submits transactions, and verifies outcomes. You write the agent logic. The chain handles execution, policy, and settlement.",
+      "Your LLM handles reasoning and planning. The chain handles execution, policy enforcement, and settlement. Write agent logic, not infrastructure.",
     header: <ShipFasterAnimation />,
     icon: <IconRocket className="h-4 w-4" />,
     className: "md:col-span-1 border-navy/30 hover:border-navy dark:border-white/20 dark:hover:border-white/40",
@@ -50,7 +50,7 @@ export default function BenefitsSection() {
             Agents need more than <span className="text-rose italic">gas</span>
           </h2>
 
-          {/* Subhead */}
+          {/* Subhead — the best line, elevated */}
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto text-center leading-relaxed">
             General-purpose chains were designed for humans clicking buttons. Monmouth is designed for autonomous software that never sleeps.
           </p>
