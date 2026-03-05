@@ -32,7 +32,7 @@ const FAQSection = () => {
                 What is Monmouth?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Monmouth is a blockchain purpose-built for autonomous AI agents. It has six agent-native primitives built directly into the protocol: identity, reputation, validation, transaction classification, custom precompiles, and native intent resolution. These aren&apos;t smart contracts or middleware — they&apos;re part of the chain itself.
+                Monmouth is a blockchain purpose-built for autonomous AI agents. It has twelve native modules built directly into the protocol — capabilities, delegation, policy enforcement, intent receipts, coordination, attestation, memory anchoring, and more. Plus dual-VM execution: EVM and SVM side by side. These aren&apos;t smart contracts or middleware — they&apos;re part of the chain itself.
               </AccordionContent>
             </AccordionItem>
 
@@ -41,25 +41,25 @@ const FAQSection = () => {
                 Why not use an existing blockchain?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Existing chains are optimized for human-driven transactions and DeFi. They lack native agent identity, intent resolution, reputation systems, and policy enforcement at the protocol level. You can bolt these on as smart contracts, but that&apos;s slow, expensive, and fragile. Monmouth builds them into the chain so they&apos;re fast, cheap, and reliable.
+                Existing chains are optimized for human-driven transactions and DeFi. They lack native delegation, policy enforcement, capability registries, and coordination primitives at the protocol level. You can bolt these on as smart contracts, but that&apos;s slow, expensive, and fragile. Monmouth builds them into the chain so they&apos;re fast, cheap, and reliable.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-3" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-navy/30 dark:data-[state=open]:border-white/30 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-navy dark:hover:text-white/80 transition-colors">
-                What are agent-native primitives?
+                What are native modules?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Agent-native primitives are protocol-level capabilities specifically designed for AI agents. Instead of implementing identity, reputation, or intent resolution as smart contracts on top of a general-purpose chain, these features are built directly into Monmouth&apos;s execution environment. This means they&apos;re faster, cheaper, and more reliable than contract-based alternatives.
+                Native modules are protocol-level capabilities specifically designed for AI agents. Instead of implementing delegation, policy, or coordination as smart contracts on top of a general-purpose chain, these features are built directly into Monmouth&apos;s execution environment as typed registries with enforced schemas. This means they&apos;re faster, cheaper, and more reliable than contract-based alternatives.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-4" className="border-2 border-border/50 rounded-xl px-6 data-[state=open]:border-rose/50 transition-colors">
               <AccordionTrigger className="text-left font-display text-lg py-5 hover:no-underline hover:text-rose transition-colors">
-                How does the Wallet SDK work?
+                How does the agent loop work?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                The Wallet SDK is your agent&apos;s interface to Monmouth. It handles identity registration, guardrail enforcement (spending limits, contract allowlists), policy management (approval thresholds, blocked operations), and intent resolution (express what you want, not how to do it). One SDK call to register, configure, and start transacting.
+                Intelligence lives off-chain in your LLM runtime. Your agent reads on-chain state, simulates outcomes via the preview module, submits transactions through typed envelopes, and verifies results via intent receipts. The chain handles deterministic execution, policy enforcement, and settlement. Your LLM handles reasoning, planning, and tool calling.
               </AccordionContent>
             </AccordionItem>
 
@@ -68,7 +68,7 @@ const FAQSection = () => {
                 How do I start building?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                Install the SDK with <code className="font-mono text-sm bg-muted px-1.5 py-0.5 rounded">npm install @monmouth/wallet-sdk</code>, register an agent identity, configure your guardrails and policies, then start expressing intents. The <a href="/docs/quickstart" className="text-mint hover:underline">quickstart guide</a> walks through every step.
+                Point your LLM at a Monmouth RPC endpoint, register capabilities, configure policies and delegation scopes, then start submitting transactions. Monmouth exposes 52 JSON-RPC endpoints — the full Ethereum API plus agent-specific methods. The <a href="/docs/quickstart" className="text-mint hover:underline">quickstart guide</a> walks through every step.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

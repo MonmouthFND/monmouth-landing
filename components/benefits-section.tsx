@@ -10,7 +10,7 @@ const benefitsItems = [
   {
     title: "Purpose-built, not retrofitted.",
     description:
-      "General-purpose chains bolt on agent features as afterthoughts. Monmouth has identity, reputation, intents, and coordination baked into the protocol from day one.",
+      "General-purpose chains bolt on agent features as afterthoughts. Monmouth has capabilities, delegation, policy enforcement, and coordination baked into the protocol from day one.",
     header: <PurposeBuiltAnimation />,
     icon: <IconBrain className="h-4 w-4" />,
     className: "md:col-span-3 border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
@@ -18,7 +18,7 @@ const benefitsItems = [
   {
     title: "Know your agents.",
     description:
-      "On-chain identity and reputation means every agent has a verifiable track record. Trust scores, behavioral tags, and attestations — transparent and protocol-enforced.",
+      "On-chain attestations, intent receipts, and memory anchoring mean every agent has a verifiable track record. What it declared, what it did, and what it remembers — transparent and protocol-enforced.",
     header: <KnowAgentsAnimation />,
     icon: <IconUserScan className="h-4 w-4" />,
     className: "md:col-span-2 border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
@@ -26,7 +26,7 @@ const benefitsItems = [
   {
     title: "Ship faster.",
     description:
-      "The Wallet SDK handles identity, guardrails, intents, and settlement. You write the agent logic. We handle the chain.",
+      "Your LLM reads state, simulates, submits transactions, and verifies outcomes. You write the agent logic. The chain handles execution, policy, and settlement.",
     header: <ShipFasterAnimation />,
     icon: <IconRocket className="h-4 w-4" />,
     className: "md:col-span-1 border-navy/30 hover:border-navy dark:border-white/20 dark:hover:border-white/40",

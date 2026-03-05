@@ -1,11 +1,11 @@
 ---
 title: API Reference
-description: Complete API reference for Monmouth
+description: Complete API reference for Monmouth — 52 JSON-RPC endpoints
 ---
 
 ## JSON-RPC API
 
-Monmouth exposes a standard Ethereum JSON-RPC API with additional agent-specific methods.
+Monmouth exposes a standard Ethereum JSON-RPC API with additional agent-specific methods. Any EVM-compatible client works out of the box.
 
 ### Endpoint
 
@@ -13,194 +13,232 @@ Monmouth exposes a standard Ethereum JSON-RPC API with additional agent-specific
 https://rpc.monmouth.io
 ```
 
-Testnet:
-```
-https://testnet-rpc.monmouth.io
-```
-
-### Standard Methods
-
-All standard Ethereum JSON-RPC methods are supported:
-
-- `eth_blockNumber`
-- `eth_getBalance`
-- `eth_getTransactionByHash`
-- `eth_sendRawTransaction`
-- `eth_call`
-- `eth_estimateGas`
-- ... and more
-
-### Agent Methods
-
-Additional methods for agent operations:
-
-#### `monmouth_getAgentIdentity`
-
-Get agent identity details.
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "monmouth_getAgentIdentity",
-  "params": ["did:monmouth:agent:0x..."],
-  "id": 1
-}
-```
-
-Response:
-```json
-{
-  "result": {
-    "did": "did:monmouth:agent:0x...",
-    "owner": "0x...",
-    "guardians": ["0x..."],
-    "reputation": {
-      "score": 98.5,
-      "transactions": 1542
-    },
-    "createdAt": "2025-01-01T00:00:00Z"
-  }
-}
-```
-
-#### `monmouth_resolveIntent`
-
-Resolve an intent without executing.
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "monmouth_resolveIntent",
-  "params": [{
-    "type": "swap",
-    "fromToken": "ETH",
-    "toToken": "USDC",
-    "amount": "1000000000000000000"
-  }],
-  "id": 1
-}
-```
-
-Response:
-```json
-{
-  "result": {
-    "confidence": 0.95,
-    "route": ["WETH", "USDC"],
-    "protocol": "uniswap-v3",
-    "estimatedOutput": "1842500000",
-    "estimatedGas": 180000,
-    "transaction": {
-      "to": "0x...",
-      "data": "0x...",
-      "value": "1000000000000000000"
-    }
-  }
-}
-```
-
-#### `monmouth_executeIntent`
-
-Execute an intent.
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "monmouth_executeIntent",
-  "params": [{
-    "type": "swap",
-    "fromToken": "ETH",
-    "toToken": "USDC",
-    "amount": "1000000000000000000"
-  }, "0x...signature"],
-  "id": 1
-}
-```
-
-#### `monmouth_getGuardrailUsage`
-
-Get current guardrail usage for an agent.
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "monmouth_getGuardrailUsage",
-  "params": ["did:monmouth:agent:0x..."],
-  "id": 1
-}
-```
-
-Response:
-```json
-{
-  "result": {
-    "dailySpent": "3500000000000000000",
-    "dailyLimit": "10000000000000000000",
-    "weeklySpent": "12000000000000000000",
-    "weeklyLimit": "50000000000000000000"
-  }
-}
-```
-
-## WebSocket API
-
-Real-time subscriptions via WebSocket:
-
+WebSocket:
 ```
 wss://ws.monmouth.io
 ```
 
-### Subscriptions
+## Standard Ethereum Methods (26)
 
-#### `newAgentTransactions`
+All standard `eth_*` methods are supported:
 
-Subscribe to transactions for an agent:
+| Method | Description |
+|--------|-------------|
+| `eth_blockNumber` | Current block number |
+| `eth_getBalance` | Account balance |
+| `eth_getTransactionByHash` | Transaction by hash |
+| `eth_getTransactionReceipt` | Transaction receipt |
+| `eth_sendRawTransaction` | Submit a signed transaction |
+| `eth_call` | Simulate a call (read-only) |
+| `eth_estimateGas` | Estimate gas for a transaction |
+| `eth_getBlockByNumber` | Block by number |
+| `eth_getBlockByHash` | Block by hash |
+| `eth_getCode` | Contract bytecode |
+| `eth_getStorageAt` | Storage slot value |
+| `eth_getTransactionCount` | Account nonce |
+| `eth_chainId` | Chain ID (7750) |
+| `eth_gasPrice` | Current gas price |
+| `eth_getLogs` | Query event logs |
+| ... | Full Ethereum JSON-RPC spec |
+
+## Monmouth Methods (7)
+
+### `monmouth_nodeStatus`
+
+Get node status, sync state, and module health.
 
 ```json
 {
   "jsonrpc": "2.0",
-  "method": "eth_subscribe",
-  "params": ["newAgentTransactions", "did:monmouth:agent:0x..."],
+  "method": "monmouth_nodeStatus",
+  "params": [],
   "id": 1
 }
 ```
 
-#### `guardrailAlerts`
+### `monmouth_listCapabilities`
 
-Subscribe to guardrail threshold alerts:
+List all registered capabilities in the Capability Registry.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_listCapabilities",
+  "params": [],
+  "id": 1
+}
+```
+
+Response:
+```json
+{
+  "result": [
+    {
+      "id": "swap",
+      "name": "Token Swap",
+      "description": "Swap one token for another",
+      "permissionLevel": "public"
+    }
+  ]
+}
+```
+
+### `monmouth_getCapability`
+
+Get full details for a specific capability.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_getCapability",
+  "params": ["swap"],
+  "id": 1
+}
+```
+
+### `monmouth_getCapabilitySchema`
+
+Get the typed JSON schema for a capability's inputs and outputs.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_getCapabilitySchema",
+  "params": ["swap"],
+  "id": 1
+}
+```
+
+### `monmouth_svmStatus`
+
+Get SVM executor status — account count, last executed block, health.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_svmStatus",
+  "params": [],
+  "id": 1
+}
+```
+
+### `monmouth_svmGetAccount`
+
+Get a Solana account by its 32-byte public key.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_svmGetAccount",
+  "params": ["<base58_pubkey>"],
+  "id": 1
+}
+```
+
+Response:
+```json
+{
+  "result": {
+    "lamports": 1000000000,
+    "owner": "11111111111111111111111111111111",
+    "executable": false,
+    "data": "base64..."
+  }
+}
+```
+
+### `monmouth_svmGetProgramInfo`
+
+Get metadata about a deployed Solana program.
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "monmouth_svmGetProgramInfo",
+  "params": ["<base58_program_id>"],
+  "id": 1
+}
+```
+
+## Filter Methods (6)
+
+Polling-based event filters, compatible with standard Ethereum tooling:
+
+| Method | Description |
+|--------|-------------|
+| `eth_newFilter` | Create a log filter |
+| `eth_newBlockFilter` | Create a new-block filter |
+| `eth_newPendingTransactionFilter` | Create a pending-tx filter |
+| `eth_getFilterChanges` | Poll for new events |
+| `eth_getFilterLogs` | Get all logs matching a filter |
+| `eth_uninstallFilter` | Remove a filter |
+
+Filter IDs are generated with a cryptographically secure random number generator (OsRng).
+
+## WebSocket Subscriptions
+
+Real-time push notifications via `eth_subscribe` / `eth_unsubscribe`:
+
+### `newHeads`
+
+Subscribe to new block headers:
 
 ```json
 {
   "jsonrpc": "2.0",
   "method": "eth_subscribe",
-  "params": ["guardrailAlerts", {
-    "agent": "did:monmouth:agent:0x...",
-    "threshold": 0.8
+  "params": ["newHeads"],
+  "id": 1
+}
+```
+
+### `logs`
+
+Subscribe to contract event logs with optional filter:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "eth_subscribe",
+  "params": ["logs", {
+    "address": "0x...",
+    "topics": ["0x..."]
   }],
   "id": 1
 }
 ```
 
-## SDK Reference
+### `newPendingTransactions`
 
-See the [Wallet SDK documentation](/docs/wallet-sdk/overview) for the TypeScript SDK reference.
+Subscribe to pending transactions entering the mempool:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "eth_subscribe",
+  "params": ["newPendingTransactions"],
+  "id": 1
+}
+```
 
 ## Rate Limits
 
-| Tier | Requests/second | WebSocket connections |
-|------|-----------------|----------------------|
-| Free | 10 | 2 |
-| Developer | 100 | 10 |
-| Enterprise | Unlimited | Unlimited |
+The RPC server enforces per-IP rate limiting with configurable thresholds. JSON-RPC requests are capped at:
+
+- **Request body**: 2 MB max
+- **Response body**: 10 MB max
+- **Batch requests**: 50 per batch
 
 ## Error Codes
 
 | Code | Description |
 |------|-------------|
 | -32000 | Generic server error |
-| -32001 | Agent not found |
-| -32002 | Guardrail violation |
-| -32003 | Policy violation |
+| -32001 | Resource not found |
+| -32002 | Policy violation |
+| -32003 | Rate limit exceeded |
 | -32004 | Insufficient funds |
-| -32005 | Intent resolution failed |
-| -32006 | Cross-chain error |
+| -32005 | Invalid envelope |
+| -32600 | Invalid request |
+| -32601 | Method not found |
+| -32602 | Invalid params |

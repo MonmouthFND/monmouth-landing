@@ -1,0 +1,87 @@
+---
+title: Native Modules
+description: Twelve protocol-level modules for agent operations
+---
+
+## Overview
+
+Monmouth has twelve native modules implemented as Rust crates. Each module is a typed registry with enforced schemas — not a smart contract, not middleware. They're compiled into the node binary and execute at native speed.
+
+All registries use `parking_lot::RwLock` for thread-safe concurrent access. Critical sections never span `.await` boundaries.
+
+## Core Agent Loop
+
+These five modules form the inner loop every agent uses:
+
+### 1. Capability Registry
+A typed catalog of every tool an agent can call. Each capability has an ID, a JSON schema for inputs/outputs, permissions, and optional rate limits.
+
+**Crate**: `monmouth-capabilities` (21 tests)
+
+### 2. Transaction Envelope
+Explicit transaction types with VM routing. Every transaction declares its type (EVM call, SVM program, intent) and target VM. The `0x4d` magic byte routes to SVM.
+
+**Crate**: `monmouth-envelope` (14 tests)
+
+### 3. Simulation / Preview
+Object-safe provider trait for preflight dry-runs. Agents simulate transactions before committing, catching errors and estimating gas.
+
+**Crate**: `monmouth-simulation` (5 tests)
+
+### 4. Policy Engine
+Spending caps, rate limits, contract allowlists, and confirmation flags. Every transaction is validated against the agent's policy set before execution.
+
+**Crate**: `monmouth-policy` (17 tests)
+
+### 5. Intent Receipts
+Every agent declares what it intends before acting. The chain records the declared intent alongside the actual outcome — a three-index store (by agent, by block, by ID).
+
+**Crate**: `monmouth-intent-receipts` (15 tests)
+
+## Agent Economy Layer
+
+These seven modules enable the agent economy:
+
+### 6. Delegation
+Scoped session keys with secp256k1 crypto. Grant an agent time-limited authority to act on your behalf with specific spend limits and capability restrictions.
+
+**Crate**: `monmouth-delegation` (26 tests)
+
+### 7. State Observation
+Structured read queries with pluggable backends. Agents query on-chain state through a typed interface rather than raw storage slots.
+
+**Crate**: `monmouth-state-observation` (1 test)
+
+### 8. Memory Anchoring
+On-chain commitments for off-chain memory. Agents anchor hashes of their memory/context to the chain, creating verifiable references with auto-incrementing sequence numbers.
+
+**Crate**: `monmouth-memory-anchoring` (16 tests)
+
+### 9. Coordination
+ACP-compatible job posting, escrow, and multi-agent settlement. Agents post jobs, other agents bid, work is escrowed, and settlement happens on-chain.
+
+**Crate**: `monmouth-coordination` (15 tests)
+
+### 10. Conditional Subscriptions
+Trigger-based notifications that turn agents into reactors. Subscribe to on-chain conditions and get notified when they're met.
+
+**Crate**: `monmouth-conditional-subs` (18 tests)
+
+### 11. Attestation
+Native secp256k1 signature verification for attestations. Extensible to TEE and ZK proof types. Agents and oracles can vouch for claims with cryptographic proof.
+
+**Crate**: `monmouth-attestation` (19 tests)
+
+### 12. SVM Module
+Full Solana VM execution alongside EVM. Includes account bridge, fork graph, sysvar injection, builtin programs, and state store. Dual-VM block building produces independent state roots for each VM.
+
+**Crate**: `monmouth-svm` (58 tests)
+
+## Shared Types
+
+- **`monmouth-agent-types`** (13 tests): `AgentId`, `VmTarget`, `SessionGrant`, `PolicyRule`, `Job`, `Attestation`, and other shared types
+- **`monmouth-verification`** (8 tests): Q8.24 fixed-point math for vector similarity verification
+
+## Total Test Coverage
+
+910+ Rust tests across all modules, plus 71 Solidity tests for the ERC-8004 contracts.

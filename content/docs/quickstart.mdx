@@ -3,112 +3,152 @@ title: Quickstart
 description: Get started with Monmouth in minutes
 ---
 
-## Installation
+## Connect to Monmouth
 
-Install the Monmouth Wallet SDK:
+Monmouth exposes a standard Ethereum JSON-RPC API. Any EVM-compatible library works — ethers.js, viem, alloy, or raw HTTP.
+
+```typescript
+import { createPublicClient, http } from 'viem'
+
+const client = createPublicClient({
+  chain: {
+    id: 7750,
+    name: 'Monmouth',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: { default: { http: ['https://rpc.monmouth.io'] } },
+  },
+  transport: http(),
+})
+
+const blockNumber = await client.getBlockNumber()
+```
+
+## Query Capabilities
+
+List the agent capabilities registered on the network:
 
 ```bash
-npm install @monmouth/wallet-sdk
+curl -X POST https://rpc.monmouth.io \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "monmouth_listCapabilities",
+    "params": [],
+    "id": 1
+  }'
 ```
 
-## Register an Agent Identity
+Get details for a specific capability:
 
-Every agent needs an on-chain identity before it can transact:
-
-```typescript
-import { MonmouthIdentity } from '@monmouth/wallet-sdk'
-
-const identity = await MonmouthIdentity.register({
-  metadata: {
-    name: 'MyAgent-001',
-    capabilities: ['swap', 'transfer'],
-    owner: '0x...',
-  },
-  guardians: [
-    { address: '0x...', role: 'owner' },
-  ],
-})
-
-console.log(identity.did)
-// → did:monmouth:agent:0x...
+```bash
+curl -X POST https://rpc.monmouth.io \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "monmouth_getCapabilitySchema",
+    "params": ["swap"],
+    "id": 1
+  }'
 ```
 
-## Initialize the Agent Wallet
+## The Agent Loop
 
-```typescript
-import { MonmouthWallet } from '@monmouth/wallet-sdk'
+The core pattern for an LLM-powered agent on Monmouth:
 
-const wallet = new MonmouthWallet({
-  // Agent identity
-  agentDid: identity.did,
+```python
+# 1. Read on-chain state
+state = rpc.call("eth_call", [query_params])
 
-  // Guardrails configuration
-  guardrails: {
-    maxTransactionValue: '1 ETH',
-    allowedContracts: ['0x...'],
-    dailySpendingLimit: '10 ETH',
-  },
+# 2. LLM reasons about what to do
+action = llm.plan(state, goal="swap 1 ETH for USDC")
 
-  // Policy enforcement
-  policies: {
-    requireApprovalAbove: '5 ETH',
-    blockedOperations: ['selfdestruct'],
-  }
-})
-```
+# 3. Simulate the transaction
+preview = rpc.call("eth_call", [action.to_tx()])
 
-## Execute an Intent
-
-```typescript
-// Describe what the agent wants to do
-const intent = {
-  type: 'swap',
-  fromToken: 'ETH',
-  toToken: 'USDC',
-  amount: '0.5 ETH',
-  maxSlippage: '0.5%',
+# 4. Submit with intent declaration
+envelope = {
+    "tx": action.to_signed_tx(),
+    "intent": {
+        "action": "swap",
+        "expected_output": "~1800 USDC",
+    }
 }
+tx_hash = rpc.call("eth_sendRawTransaction", [envelope])
 
-// Monmouth handles routing and execution
-const result = await wallet.executeIntent(intent)
+# 5. Verify the outcome
+receipt = rpc.call("eth_getTransactionReceipt", [tx_hash])
 
-console.log(result.transactionHash)
-// → 0x...
+# 6. Repeat
 ```
 
-## Cross-Chain Operations
+## Configure Policies
+
+Set up spending limits and operational boundaries using the policy engine:
 
 ```typescript
-// Execute cross-chain via SVM Router
-const result = await wallet.executeIntent({
-  type: 'cross-chain',
-  targetChain: 'solana',
-  intent: {
-    type: 'swap',
-    fromToken: 'SOL',
-    toToken: 'USDC',
-    amount: '10 SOL',
-  }
-})
+// Policy rules are registered per-agent via the Policy module
+const policyRules = [
+  {
+    type: 'spending_cap',
+    asset: 'ETH',
+    maxPerTx: '1.0',
+    maxPerDay: '10.0',
+  },
+  {
+    type: 'rate_limit',
+    maxTxPerMinute: 5,
+  },
+  {
+    type: 'allowlist',
+    contracts: ['0x...uniswap_router', '0x...aave_pool'],
+  },
+]
 ```
 
-## Check Reputation
+## Delegate a Session Key
+
+Grant a scoped session key so your agent can transact without exposing the master key:
 
 ```typescript
-const reputation = await identity.getReputation()
+// Session keys are scoped by time, spend limit, and allowed operations
+const sessionGrant = {
+  delegate: '0x...agent_hot_wallet',
+  capabilities: ['swap', 'transfer'],
+  expiresAt: Math.floor(Date.now() / 1000) + 3600, // 1 hour
+  spendLimit: '5.0 ETH',
+}
+```
 
-console.log(reputation)
-// {
-//   trustScore: 94.2,
-//   totalTransactions: 1542,
-//   successRate: 0.998,
-// }
+## Dual-VM: Target EVM or SVM
+
+Monmouth runs EVM and SVM side by side. To target the Solana VM, prefix your transaction with the `0x4d` magic byte:
+
+```typescript
+// EVM transaction — standard Ethereum tx
+const evmTx = await wallet.sendTransaction({ to: '0x...', value: parseEther('1') })
+
+// SVM transaction — bincode-encoded Solana tx with 0x4d prefix
+const svmTx = Buffer.concat([Buffer.from([0x4d]), solanaTxBytes])
+const svmHash = await rpc.call("eth_sendRawTransaction", ['0x' + svmTx.toString('hex')])
+```
+
+## Check Node Status
+
+```bash
+curl -X POST https://rpc.monmouth.io \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "monmouth_nodeStatus",
+    "params": [],
+    "id": 1
+  }'
 ```
 
 ## Next Steps
 
-- [Architecture Overview](/docs/architecture/overview) — Understand how Monmouth works
-- [Agent Identity](/docs/architecture/agent-identity) — Deep dive into identity and delegation
-- [Guardrails](/docs/wallet-sdk/guardrails) — Configure safety boundaries for your agent
-- [Policies](/docs/wallet-sdk/policies) — Define operational policies
-- [Precompiles](/docs/precompiles/overview) — Explore the five custom precompiles
+- [Architecture Overview](/docs/architecture/overview) — Understand the three-layer model
+- [Native Modules](/docs/architecture/native-modules) — The twelve protocol-level modules
+- [Dual-VM Execution](/docs/architecture/dual-vm) — EVM + SVM side by side
+- [Policy Engine](/docs/modules/policy) — Configure spending limits and guardrails
+- [API Reference](/docs/api/overview) — All 52 JSON-RPC endpoints

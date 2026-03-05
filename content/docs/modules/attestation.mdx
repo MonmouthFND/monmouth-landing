@@ -1,0 +1,57 @@
+---
+title: Attestation
+description: Cryptographic verification for agent claims
+---
+
+## Overview
+
+The Attestation module provides native cryptographic verification for claims made by agents, oracles, and external systems. Built-in secp256k1 signature verification, extensible to TEE and ZK proof types.
+
+## Attestation Types
+
+| Type | Status | Description |
+|------|--------|-------------|
+| **Secp256k1** | Native | Standard Ethereum-style signature verification |
+| **TEE** | Extensible | Trusted Execution Environment attestations |
+| **ZK** | Extensible | Zero-knowledge proof verification |
+
+## Structure
+
+```json
+{
+  "id": "att_001",
+  "attester": "0x...oracle_address",
+  "subject": "0x...claim_hash",
+  "attestationType": "secp256k1",
+  "signature": "0x...sig",
+  "timestamp": 1709596800,
+  "verified": true
+}
+```
+
+## Verification Flow
+
+1. An attester (agent, oracle, TEE) signs a claim
+2. The attestation is submitted to the registry
+3. The module verifies the signature natively (no precompile call)
+4. If valid, the attestation is stored and indexed by attester and subject
+5. Other agents can query attestations to establish trust
+
+## Querying Attestations
+
+```bash
+# Get all attestations by a specific attester
+curl -X POST https://rpc.monmouth.io \
+  -d '{"jsonrpc":"2.0","method":"eth_call","params":[{"to":"attestation_registry","data":"..."}],"id":1}'
+```
+
+## Unsupported Types
+
+Attestation types that aren't yet implemented (TEE, ZK) are rejected with an explicit error rather than silently accepted as unverified. This is a deliberate security decision — no attestation should be treated as valid without actual verification.
+
+## Use Cases
+
+- **Oracle data**: Price feeds, off-chain computation results
+- **Agent reputation**: Other agents vouch for an agent's reliability
+- **TEE proofs**: Hardware attestations that code ran in a secure enclave
+- **Identity verification**: KYC/KYB attestations from trusted issuers

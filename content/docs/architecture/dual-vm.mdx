@@ -1,0 +1,102 @@
+---
+title: Dual-VM Execution
+description: EVM and SVM running side by side in every block
+---
+
+## Overview
+
+Monmouth runs two virtual machines in every block:
+
+- **REVM v34**: Full Prague EVM — deploy any Solidity contract
+- **SVM (Solana VM 3.1.9)**: Native Solana program execution — deploy Solana programs
+
+Both VMs execute in the same block, producing independent state roots that are included in the block header.
+
+## How It Works
+
+### Transaction Routing
+
+Transactions are split by VM target before execution:
+
+1. **EVM transactions**: Standard Ethereum-format transactions (default)
+2. **SVM transactions**: Prefixed with the `0x4d` magic byte, containing bincode-encoded Solana `VersionedTransaction`
+
+The `partition_by_vm_target()` function in the block builder splits incoming transactions, and each VM processes its batch independently.
+
+### Block Building
+
+```
+Incoming Transactions
+        │
+   partition_by_vm_target()
+        │
+   ┌────┴────┐
+   │         │
+  EVM       SVM
+   │         │
+  REVM    SvmExecutor
+   │         │
+state_root  svm_state_root
+   │         │
+   └────┬────┘
+        │
+   Block Header
+   (both roots)
+```
+
+### Block Header
+
+Every block carries two state roots:
+
+| Field | Description |
+|-------|-------------|
+| `state_root` | Merkle root of EVM state after execution |
+| `svm_state_root` | Root of SVM account state after execution |
+
+Validators verify both roots independently during `verify_block()`.
+
+## SVM Execution Pipeline
+
+The SVM module (`monmouth-svm`) implements a full Solana execution pipeline:
+
+1. **Deserialization**: bincode → `VersionedTransaction` → `SanitizedTransaction` (blake3 hash)
+2. **Account Bridge**: `SvmStateStore` → `SvmAccountBridge` (injects builtin program accounts)
+3. **Execution**: `TransactionBatchProcessor` processes sanitized transactions with sysvars and builtins
+4. **State Changes**: `SvmChangeSet` captures account mutations in 32-byte Solana pubkey space
+5. **State Root**: Compute Merkle root over modified accounts
+
+### Builtin Programs
+
+Three Solana builtin programs are registered:
+
+- **System Program**: Account creation, transfers, allocation
+- **BPF Loader v2**: Legacy program execution
+- **Loader v4**: Current program deployment and execution
+
+### Sysvars
+
+Standard Solana sysvars are injected per-block:
+
+- `Clock` — current slot, epoch, timestamp
+- `Rent` — rent parameters
+- `EpochSchedule` — epoch boundaries
+
+## Targeting the SVM
+
+To submit a Solana transaction, prefix the bincode-encoded bytes with `0x4d`:
+
+```
+0x4d || bincode(VersionedTransaction)
+```
+
+The envelope's `VmTarget::Svm` field tells the block builder to route to the SVM executor.
+
+## Blockhash
+
+SVM blockhashes are derived via SHA-256 with a domain separator to prevent cross-VM replay:
+
+```
+SHA-256("monmouth-svm-blockhash-v1" || block_height || prevrandao)
+```
+
+The optional `prevrandao` field mixes additional entropy when available.

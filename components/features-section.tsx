@@ -1,8 +1,8 @@
 import {
   IconFingerprint,
-  IconChartBar,
   IconShieldCheck,
-  IconCategory,
+  IconKey,
+  IconFileDescription,
   IconHexagons,
   IconMessageForward,
 } from "@tabler/icons-react"
@@ -10,55 +10,55 @@ import {
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid"
 import {
   IdentityAnimation,
-  ReputationAnimation,
   ValidationAnimation,
-  ClassificationAnimation,
   PrecompilesAnimation,
   IntentAnimation,
+  ClassificationAnimation,
+  ReputationAnimation,
 } from "@/components/ui/bento-animations"
 
 const items = [
   {
-    title: "Agent Identity",
-    description: "Every agent gets a permanent, verifiable identity. One ID that works everywhere — no more anonymous wallets.",
+    title: "Capability Registry",
+    description: "A typed catalog of every tool an agent can call. Schemas, permissions, and rate limits — enforced at the protocol level.",
     header: <IdentityAnimation />,
     icon: <IconFingerprint className="h-4 w-4" />,
     className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
   {
-    title: "Reputation System",
-    description: "Agents build trust over time. Every transaction adds to a public track record that other agents and protocols can check.",
-    header: <ReputationAnimation />,
-    icon: <IconChartBar className="h-4 w-4" />,
+    title: "Policy Engine",
+    description: "Spending caps, rate limits, allowlists, and confirmation flags. Your agent operates autonomously — within boundaries you define.",
+    header: <ValidationAnimation />,
+    icon: <IconShieldCheck className="h-4 w-4" />,
     className: "border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
   },
   {
-    title: "Validation Framework",
-    description: "Before an agent is trusted to do something, it has to prove it can. Built-in capability checks, not just permissions.",
-    header: <ValidationAnimation />,
-    icon: <IconShieldCheck className="h-4 w-4" />,
+    title: "Delegation & Session Keys",
+    description: "Scoped, time-limited session keys with secp256k1 crypto. Grant an agent authority to act on your behalf without sharing private keys.",
+    header: <ReputationAnimation />,
+    icon: <IconKey className="h-4 w-4" />,
     className: "border-navy/30 hover:border-navy dark:border-white/20 dark:hover:border-white/40",
   },
   {
-    title: "Transaction Classification",
+    title: "Intent Receipts",
     description:
-      "Monmouth automatically understands what each transaction is trying to do — swap, transfer, lend — and routes it accordingly.",
-    header: <ClassificationAnimation />,
-    icon: <IconCategory className="h-4 w-4" />,
+      "Every agent declares what it intends before it acts. The chain records the declared intent alongside the actual outcome — a verifiable audit trail.",
+    header: <IntentAnimation />,
+    icon: <IconFileDescription className="h-4 w-4" />,
     className: "border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
   },
   {
-    title: "Custom Precompiles",
-    description: "Specialized operations baked directly into the chain. Faster and cheaper than anything you could build with a smart contract.",
+    title: "Dual-VM Execution",
+    description: "Run EVM and SVM side by side in the same block. Deploy Solidity or Solana programs — one chain, two execution environments.",
     header: <PrecompilesAnimation />,
     icon: <IconHexagons className="h-4 w-4" />,
     className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
   {
-    title: "Native Intents",
+    title: "Multi-Agent Coordination",
     description:
-      "Tell Monmouth what you want, not how to get it. Say \"swap 1 ETH for USDC\" and the chain figures out the rest.",
-    header: <IntentAnimation />,
+      "Native job posting, escrow, and multi-party settlement. Agents find work, collaborate, and get paid — without middleware.",
+    header: <ClassificationAnimation />,
     icon: <IconMessageForward className="h-4 w-4" />,
     className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
@@ -72,7 +72,7 @@ export default function FeaturesSection() {
           {/* Section label */}
           <div className="flex items-center justify-center gap-4">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-border" />
-            <span className="font-mono text-xs uppercase tracking-widest text-mint">01 / Primitives</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-mint">01 / Native Modules</span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-border" />
           </div>
 
@@ -83,7 +83,7 @@ export default function FeaturesSection() {
 
           {/* Subhead */}
           <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto text-center leading-relaxed">
-            Six primitives built directly into the chain. Not smart contracts. Not middleware. Protocol.
+            Twelve native modules built directly into the chain. Not smart contracts. Not middleware. Protocol.
           </p>
         </div>
 

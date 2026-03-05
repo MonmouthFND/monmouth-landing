@@ -1,0 +1,72 @@
+---
+title: ERC-8004 & On-Chain Contracts
+description: Identity, reputation, and validation smart contracts
+---
+
+## Overview
+
+Monmouth includes three Solidity smart contracts aligned with the ERC-8004 standard (ratified January 2026). These contracts handle agent identity, reputation tracking, and capability validation at the smart contract layer.
+
+## Identity Registry
+
+Canonical on-chain identity for every agent. NFT-based (ERC-721) with metadata for agent name, capabilities, and owner.
+
+```solidity
+interface IIdentityRegistry {
+    function register(
+        address owner,
+        string calldata name,
+        bytes calldata metadata
+    ) external returns (uint256 tokenId);
+
+    function getAgent(uint256 tokenId)
+        external view returns (address owner, string memory name);
+}
+```
+
+## Reputation Registry
+
+On-chain reputation tracking with trust scores, behavioral tags, and revocable attestations:
+
+```solidity
+interface IReputationRegistry {
+    function submitAttestation(
+        uint256 agentId,
+        uint8 category,
+        int8 score,
+        bytes calldata evidence
+    ) external;
+
+    function getSummary(uint256 agentId)
+        external view returns (ReputationSummary memory);
+}
+```
+
+Reputation is aggregated from attestations submitted by other agents, protocols, and oracles. The `getSummary` function returns a composite view.
+
+## Validation Registry
+
+Capability verification via challenge-response:
+
+```solidity
+interface IValidationRegistry {
+    function submitChallenge(
+        uint256 agentId,
+        bytes32 capabilityHash,
+        bytes calldata challengeData
+    ) external returns (uint256 challengeId);
+
+    function submitResponse(
+        uint256 challengeId,
+        bytes calldata responseData
+    ) external;
+}
+```
+
+## ACP Integration
+
+The contracts are designed to work with the Agent Commerce Protocol (ACP). OpenClaw + Virtuals ACP has 18,000+ agents, 1.77M jobs, and $479M aGDP on Base. Monmouth provides a better deployment target because the native modules (simulation, policy, intent receipts) replace what would otherwise require custom middleware on Base.
+
+## Test Coverage
+
+71 Solidity tests across the three contracts, run via Foundry (`forge test`).

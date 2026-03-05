@@ -1,0 +1,70 @@
+---
+title: SVM Module
+description: Native Solana VM execution alongside EVM
+---
+
+## Overview
+
+The SVM module provides full Solana Virtual Machine execution alongside REVM. Agents can deploy and interact with Solana programs natively on Monmouth — no bridge, no middleware.
+
+## Architecture
+
+```
+monmouth-svm/
+├── executor.rs       — TransactionBatchProcessor wrapper
+├── account_bridge.rs — SvmStateStore → TransactionProcessingCallback
+├── store.rs          — In-memory account state with apply_changes
+├── fork_graph.rs     — MonmouthForkGraph for program cache
+├── builtins.rs       — System Program, BPF Loader, Loader v4
+├── sysvars.rs        — Clock, Rent, EpochSchedule injection
+├── deserialize.rs    — bincode → SanitizedTransaction
+├── changeset.rs      — SvmChangeSet (32-byte pubkey mutations)
+└── error.rs          — SvmError types
+```
+
+## Execution Pipeline
+
+1. **Deserialize**: Raw bytes → `VersionedTransaction` → `SanitizedTransaction` (blake3 hash)
+2. **Bridge**: `SvmStateStore.to_bridge()` creates an `SvmAccountBridge` that injects builtin program accounts
+3. **Execute**: `TransactionBatchProcessor` processes transactions with sysvars and compute budget
+4. **Collect**: Results are gathered into `SvmChangeSet` with per-account mutations
+5. **Apply**: `apply_changes()` writes mutations back to the store (with capacity limits)
+6. **Root**: Compute Merkle root over all modified accounts → `svm_state_root`
+
+## Builtin Programs
+
+| Program | Pubkey | Purpose |
+|---------|--------|---------|
+| System Program | `1111...1111` | Account creation, transfers |
+| BPF Loader v2 | `BPFLoader2111...` | Legacy program execution |
+| Loader v4 | `LoaderV411...` | Current program deployment |
+
+## Sysvars
+
+Injected per-block:
+
+| Sysvar | Data |
+|--------|------|
+| Clock | Slot, epoch, unix timestamp |
+| Rent | Lamports per byte-year, exemption threshold |
+| EpochSchedule | Epoch length, warmup |
+
+## Blockhash Derivation
+
+SVM blockhashes use SHA-256 with a domain separator to prevent cross-VM replay:
+
+```
+SHA-256("monmouth-svm-blockhash-v1" || block_height || prevrandao)
+```
+
+## RPC Methods
+
+| Method | Description |
+|--------|-------------|
+| `monmouth_svmStatus` | SVM executor status and account count |
+| `monmouth_svmGetAccount` | Get a Solana account by pubkey |
+| `monmouth_svmGetProgramInfo` | Get program metadata |
+
+## State Store
+
+The `SvmStateStore` holds Solana accounts in memory with a configurable maximum account limit. When at capacity, new accounts from transaction execution are dropped with a warning — existing accounts are always updated.

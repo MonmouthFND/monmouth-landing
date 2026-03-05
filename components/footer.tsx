@@ -34,7 +34,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-muted-foreground max-w-sm leading-relaxed">
-              The blockchain for autonomous AI agents. Agent-native primitives. On-chain identity. Protocol-level coordination.
+              The execution layer for autonomous AI agents. Twelve native modules. Dual-VM execution. Protocol-level policy and coordination.
             </p>
 
             {/* Social Links */}

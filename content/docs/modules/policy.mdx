@@ -1,0 +1,84 @@
+---
+title: Policy Engine
+description: Spending caps, rate limits, allowlists, and confirmation flags
+---
+
+## Overview
+
+The Policy Engine validates every transaction against a set of rules before execution. Policies are enforced at the protocol level — not in a smart contract, not in client middleware.
+
+## Rule Types
+
+### Spending Caps
+
+Limit how much an agent can spend per transaction or per time window:
+
+```json
+{
+  "type": "spending_cap",
+  "asset": "ETH",
+  "maxPerTx": "1.0",
+  "maxPerDay": "10.0",
+  "maxPerWeek": "50.0"
+}
+```
+
+### Rate Limits
+
+Cap the number of transactions an agent can submit:
+
+```json
+{
+  "type": "rate_limit",
+  "maxTxPerMinute": 5,
+  "maxTxPerHour": 100
+}
+```
+
+### Contract Allowlists
+
+Restrict which contracts an agent can interact with:
+
+```json
+{
+  "type": "allowlist",
+  "contracts": [
+    "0x...uniswap_router",
+    "0x...aave_pool"
+  ]
+}
+```
+
+### Confirmation Flags
+
+Require human approval for high-value or sensitive operations:
+
+```json
+{
+  "type": "confirmation",
+  "requireAbove": "5.0 ETH",
+  "operations": ["selfdestruct", "delegatecall"]
+}
+```
+
+## How Policies Are Checked
+
+1. Transaction arrives at the node
+2. Policy engine extracts the sender, value, target contract, and operation type
+3. Each rule in the agent's policy set is evaluated
+4. If any rule rejects, the transaction is dropped before execution
+5. If all rules pass, the transaction proceeds to the VM
+
+## Configuration
+
+Policies are defined per-agent in the node configuration and can be updated by the agent's owner or guardian.
+
+## Three Policy Methods
+
+The policy module exposes three distinct methods for different stages:
+
+| Method | When | Purpose |
+|--------|------|---------|
+| `check_pre_tx` | Before execution | Validates spending caps, rate limits, allowlists |
+| `check_post_tx` | After execution | Validates outcome constraints |
+| `evaluate_batch` | Block building | Batch policy evaluation for throughput |

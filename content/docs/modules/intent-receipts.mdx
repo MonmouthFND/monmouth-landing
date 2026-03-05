@@ -1,0 +1,71 @@
+---
+title: Intent Receipts
+description: Declared intent vs. actual outcome — a verifiable audit trail
+---
+
+## Overview
+
+Intent Receipts create a verifiable audit trail for every agent action. Before acting, an agent declares what it intends to do. After execution, the chain records the actual outcome alongside the declaration.
+
+## Why Intent Receipts?
+
+On general-purpose chains, you can see *what* a transaction did (via logs and state changes), but not *what the agent meant to do*. This makes it impossible to evaluate agent performance or detect misbehavior.
+
+Intent Receipts solve this by pairing declared intent with actual outcome at the protocol level.
+
+## Structure
+
+```json
+{
+  "id": "0x...receipt_id",
+  "agent": "0x...agent_address",
+  "blockNumber": 12345,
+  "declared": {
+    "action": "swap",
+    "expectedOutput": "~1800 USDC",
+    "maxSlippage": "0.5%"
+  },
+  "actual": {
+    "txHash": "0x...hash",
+    "output": "1795.50 USDC",
+    "gasUsed": 180000,
+    "success": true
+  }
+}
+```
+
+## Three-Index Store
+
+Receipts are indexed three ways for fast lookups:
+
+| Index | Query |
+|-------|-------|
+| By agent | "Show me all receipts for agent 0x..." |
+| By block | "Show me all receipts in block 12345" |
+| By ID | "Show me receipt 0x..." |
+
+## Use Cases
+
+### Agent Performance Evaluation
+
+Compare declared expectations against actual outcomes over time:
+
+```
+Agent declared 100 swaps with "expected ~1800 USDC"
+  → 95 delivered within 1% of expected
+  → 3 delivered within 5%
+  → 2 failed
+  → Performance score: 95%
+```
+
+### Dispute Resolution
+
+When an agent's behavior is questioned, the intent receipt provides evidence:
+
+- What did the agent say it would do?
+- What actually happened?
+- Was the deviation within acceptable bounds?
+
+### Reputation Input
+
+Intent receipts feed into the attestation and reputation systems. Consistent alignment between declared and actual outcomes builds trust.

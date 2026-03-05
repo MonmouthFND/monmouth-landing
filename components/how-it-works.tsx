@@ -9,33 +9,33 @@ import {
 
 const howItWorksItems = [
   {
-    title: "Register your agent.",
+    title: "Read state, plan off-chain.",
     description:
-      "Create an on-chain identity with a single SDK call. Link wallets, set guardians, and establish your agent's verifiable presence on Monmouth.",
+      "Your LLM runtime reads on-chain state, queries capabilities, and simulates outcomes. All reasoning happens off-chain — the chain stays deterministic.",
     header: <RegisterAnimation />,
     icon: <IconId className="h-4 w-4" />,
     className: "md:col-span-2 border-rose/50 hover:border-rose dark:border-rose/30 dark:hover:border-rose",
   },
   {
-    title: "Express intents, not transactions.",
+    title: "Declare intent, submit transaction.",
     description:
-      "Tell Monmouth what you want — swap, transfer, lend. The protocol finds the optimal path and executes it.",
+      "Wrap your action in a typed envelope — declare what you intend, target EVM or SVM, and submit. The policy engine validates it before execution.",
     header: <IntentsFlowAnimation />,
     icon: <IconMessageForward className="h-4 w-4" />,
     className: "border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
   },
   {
-    title: "Set guardrails and policies.",
+    title: "Enforce policies automatically.",
     description:
-      "Define spending limits, contract allowlists, and approval thresholds. Your agent operates autonomously — within boundaries you control.",
+      "Spending caps, rate limits, allowlists, and confirmation flags — checked at the protocol level before every transaction lands.",
     header: <GuardrailsAnimation />,
     icon: <IconShieldLock className="h-4 w-4" />,
     className: "md:col-span-1 border-navy/30 hover:border-navy dark:border-white/20 dark:hover:border-white/40",
   },
   {
-    title: "Settle with confidence.",
+    title: "Verify and iterate.",
     description:
-      "Every transaction is classified, validated, and settled. Confidence scoring, reputation updates, and a full audit trail — built in.",
+      "Every outcome is recorded as an intent receipt — what was declared vs. what happened. Your agent reads the result, learns, and repeats the loop.",
     header: <SettleAnimation />,
     icon: <IconCircleCheck className="h-4 w-4" />,
     className: "md:col-span-2 border-mint/50 hover:border-mint dark:border-mint/30 dark:hover:border-mint",
@@ -61,15 +61,15 @@ export default function HowItWorks() {
 
           {/* Technical flow diagram */}
           <div className="flex items-center justify-center gap-2 text-sm font-mono text-muted-foreground flex-wrap">
-            <span className="px-3 py-1.5 rounded-lg bg-card border">Your Agent</span>
+            <span className="px-3 py-1.5 rounded-lg bg-card border">LLM Runtime</span>
             <span className="text-mint">&rarr;</span>
-            <span className="px-3 py-1.5 rounded-lg bg-card border">Wallet SDK</span>
+            <span className="px-3 py-1.5 rounded-lg bg-card border">Simulate</span>
             <span className="text-mint">&rarr;</span>
-            <span className="px-3 py-1.5 rounded-lg bg-rose/10 border border-rose/30 text-rose">Intent</span>
+            <span className="px-3 py-1.5 rounded-lg bg-rose/10 border border-rose/30 text-rose">Envelope</span>
             <span className="text-mint">&rarr;</span>
             <span className="px-3 py-1.5 rounded-lg bg-mint/10 border border-mint/30 text-mint-600 dark:text-mint">Monmouth</span>
             <span className="text-mint">&rarr;</span>
-            <span className="px-3 py-1.5 rounded-lg bg-card border">Settled</span>
+            <span className="px-3 py-1.5 rounded-lg bg-card border">Verify</span>
           </div>
         </div>
 

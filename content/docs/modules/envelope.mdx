@@ -1,0 +1,59 @@
+---
+title: Transaction Envelope
+description: Explicit transaction types with VM routing
+---
+
+## Overview
+
+The Transaction Envelope module replaces implicit transaction classification with explicit declarations. Every transaction states what it is, what it intends, and which VM should execute it.
+
+## Why Explicit Envelopes?
+
+On general-purpose chains, the network has to guess what a transaction is trying to do (swap? transfer? governance vote?). This is error-prone and expensive.
+
+On Monmouth, the agent declares its intent up front. The chain doesn't guess — it verifies.
+
+## Envelope Structure
+
+```json
+{
+  "txType": "evm_call",
+  "vmTarget": "evm",
+  "intent": {
+    "action": "swap",
+    "expectedOutput": "~1800 USDC"
+  },
+  "tx": "0x...signed_transaction"
+}
+```
+
+### Fields
+
+| Field | Description |
+|-------|-------------|
+| `txType` | Transaction type: `evm_call`, `svm_program`, `evm_deploy`, etc. |
+| `vmTarget` | Target VM: `evm` or `svm` |
+| `intent` | Optional intent declaration (recorded as an intent receipt) |
+| `tx` | The signed transaction bytes |
+
+## VM Routing
+
+The `vmTarget` field determines which execution environment processes the transaction:
+
+- **`evm`** (default): Standard Ethereum transaction → REVM v34
+- **`svm`**: Solana transaction prefixed with `0x4d` → SVM executor
+
+The block builder calls `partition_by_vm_target()` to split transactions before execution.
+
+## Intent Declarations
+
+When an envelope includes an `intent` field, the chain records it as an [Intent Receipt](/docs/modules/intent-receipts) after execution — pairing the declared intent with the actual outcome.
+
+## Codec
+
+Envelopes are encoded with a compact binary codec:
+
+1. 1-byte type tag
+2. 1-byte VM target
+3. Variable-length intent (length-prefixed)
+4. Variable-length transaction bytes

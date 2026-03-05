@@ -6,24 +6,22 @@ description: How Monmouth provides infrastructure for AI agents
 ## High-Level Architecture
 
 ```
-AI Agent → Wallet SDK → Intent → Monmouth → Settled
+LLM Runtime → Read State → Simulate → Submit Envelope → Monmouth → Verify Receipt
 ```
 
-Monmouth separates concerns:
+Monmouth separates concerns into three layers:
 
-1. **Off-Chain Reasoning**: AI agents connect to LLMs (Claude, GPT, etc.) for reasoning and planning
-2. **Guardrail Enforcement**: The Wallet SDK enforces policies before any on-chain action
-3. **Intent Resolution**: Monmouth resolves intents to optimal execution paths
-4. **Classification & Validation**: Transactions are classified, validated, and scored
-5. **Settlement**: Transactions settle with full audit trail and reputation updates
+1. **Layer A (off-chain)**: LLM runtime, planning loop, tool calling, memory, simulation, signing
+2. **Layer B (on-chain)**: Deterministic execution, state, capability modules, typed endpoints
+3. **Layer C (bridge)**: Policy engine, preflight simulation, attestation hooks, intent receipts
 
 ## Why Off-Chain AI?
 
 On-chain ML isn't feasible at consensus speeds. Instead:
 
-- LLMs handle reasoning, planning, and decision-making
-- Monmouth handles verification and settlement
-- Guardrails ensure agents operate within safe boundaries
+- LLMs handle reasoning, planning, and decision-making off-chain
+- Monmouth handles deterministic execution, policy enforcement, and settlement
+- The chain never runs inference — it verifies outcomes
 
 ## Technical Stack
 
@@ -31,16 +29,17 @@ On-chain ML isn't feasible at consensus speeds. Instead:
 
 Monmouth is built on [Commonware](https://commonware.xyz), a modular blockchain framework:
 
-- **Minimmit Consensus**: 2-round finality with Byzantine fault tolerance. Minimmit achieves 130ms block times and ~250ms finality by reducing the consensus path from 3 rounds (Simplex) to 2. Requires n ≥ 5f+1 validators — a higher honesty threshold that fits Monmouth's permissioned validator set. Launching on Simplex (3f+1) and migrating to Minimmit once it ships in the Commonware runtime.
-- **Deterministic Execution**: All validators execute the same state transitions in the same order.
+- **BFT Simplex Consensus**: Byzantine fault tolerant consensus with 2-second block times
+- **Deterministic Execution**: All validators execute the same state transitions in the same order
 
-### REVM v34
+### Dual-VM Execution
 
-The execution environment is REVM (Rust EVM), providing:
+Two virtual machines run side by side in every block:
 
-- Full Prague EVM compatibility
-- Custom precompile extensions for agent-native operations
-- High-performance Rust implementation
+- **REVM v34**: Full Prague EVM compatibility — deploy any Solidity contract
+- **SVM (Solana VM 3.1.9)**: Native Solana program execution — deploy Solana programs natively
+
+Transactions are routed to the correct VM via the [Transaction Envelope](/docs/modules/envelope) module. The `0x4d` magic byte prefix targets SVM; everything else goes to EVM.
 
 ### QMDB
 
@@ -54,48 +53,42 @@ Storage is powered by QMDB, a memory-mapped database optimized for blockchain st
 
 | Parameter | Value |
 |-----------|-------|
-| Block time | 130ms (target) |
-| Finality | 2-round (~250ms) |
+| Block time | 2s |
+| Chain ID | 7750 |
 | EVM version | Prague |
 | Gas limit | 30M per block |
-| Custom precompiles | 5 (0x1000–0x1002, 0x1003, 0x4200) |
+| Native modules | 12 |
+| RPC endpoints | 52 (26 eth_* + 7 monmouth_* + 6 filters + WebSocket) |
 
-## Core Primitives
+## Twelve Native Modules
 
-### Agent Identity Registry
+Every module is a typed registry with enforced schemas, implemented as Rust crates with `parking_lot::RwLock` for thread-safe concurrent access.
 
-Canonical on-chain identity for every agent. NFT-based (ERC-8004) with delegation, guardian management, and cross-chain verification. See [Agent Identity](/docs/architecture/agent-identity).
+**Core Agent Loop:**
+1. [Capability Registry](/docs/modules/capabilities) — tool catalog
+2. [Transaction Envelope](/docs/modules/envelope) — explicit tx types + VM routing
+3. Simulation / Preview — preflight dry-runs
+4. [Policy Engine](/docs/modules/policy) — spending caps, rate limits, allowlists
+5. [Intent Receipts](/docs/modules/intent-receipts) — declared intent vs. outcome
 
-### Reputation System
-
-On-chain trust scores, behavioral tags, and revocable attestations. See [Reputation System](/docs/architecture/reputation).
-
-### Validation Framework
-
-Request-response capability verification. See [Validation Framework](/docs/architecture/validation).
-
-### Transaction Classification
-
-Automatic intent detection with five classification types and confidence scoring. See [Transaction Classification](/docs/architecture/transaction-classification).
-
-### Intent Resolution
-
-Agents express intents — Monmouth resolves them to optimal execution paths. See [Intent Resolution](/docs/architecture/intent-resolution).
-
-### Custom Precompiles
-
-Five precompiles for agent-native operations: AI Inference, Vector Similarity, Intent Parser, SVM Router, Message Passer. See [Precompiles Overview](/docs/precompiles/overview).
+**Agent Economy:**
+6. [Delegation](/docs/modules/delegation) — scoped session keys
+7. State Observation — structured read queries
+8. [Memory Anchoring](/docs/modules/memory-anchoring) — on-chain commitments
+9. [Coordination](/docs/modules/coordination) — jobs, escrow, settlement
+10. Conditional Subscriptions — trigger-based notifications
+11. [Attestation](/docs/modules/attestation) — cryptographic verification
+12. [SVM Module](/docs/modules/svm) — Solana VM execution
 
 ## Agent Transaction Lifecycle
 
 ```
-1. Agent creates intent (e.g., "swap 1 ETH for USDC")
-2. Wallet SDK validates intent against guardrails and policies
-3. Intent Parser precompile validates and normalizes the intent
-4. Transaction Classification identifies the operation type
-5. Intent Resolution finds optimal execution path
-6. Validation Framework verifies agent capability
-7. Transaction executes
-8. Reputation updates based on outcome
-9. Transaction is finalized in ~250ms (2 rounds)
+1. LLM reads on-chain state via JSON-RPC
+2. LLM simulates the action via eth_call (preflight)
+3. Agent wraps action in a typed envelope with intent declaration
+4. Policy engine validates against spending caps, rate limits, allowlists
+5. Transaction routes to EVM or SVM based on envelope type
+6. Execution produces state changes + intent receipt
+7. Agent reads receipt, compares declared vs. actual outcome
+8. Loop repeats
 ```

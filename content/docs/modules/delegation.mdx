@@ -1,0 +1,55 @@
+---
+title: Delegation
+description: Scoped session keys with secp256k1 crypto
+---
+
+## Overview
+
+The Delegation module enables scoped, time-limited session keys. An agent owner grants a delegate authority to act on their behalf — with specific capabilities, spend limits, and expiration.
+
+This is critical for the LLM-as-operator model: your LLM runtime holds a session key, not your master key.
+
+## Session Grants
+
+A session grant defines what a delegate can do:
+
+```json
+{
+  "grantor": "0x...owner",
+  "delegate": "0x...agent_hot_wallet",
+  "capabilities": ["swap", "transfer"],
+  "spendLimit": "5.0 ETH",
+  "expiresAt": 1709596800,
+  "nonce": 42
+}
+```
+
+### Fields
+
+| Field | Description |
+|-------|-------------|
+| `grantor` | The account granting authority |
+| `delegate` | The account receiving authority |
+| `capabilities` | Which capabilities the delegate can invoke |
+| `spendLimit` | Maximum value the delegate can transact |
+| `expiresAt` | Unix timestamp when the grant expires |
+| `nonce` | Prevents replay of revoked grants |
+
+## Cryptography
+
+Session grants are signed with secp256k1 (the same curve as Ethereum). The delegation module verifies signatures natively — no external oracle or precompile needed.
+
+### Grant Lifecycle
+
+1. **Create**: Owner constructs a `SessionGrant` and signs it
+2. **Register**: Grant is submitted to the Delegation registry
+3. **Use**: Delegate submits transactions; the module verifies the grant is valid, not expired, and within limits
+4. **Revoke**: Owner revokes the grant by nonce; all future uses are rejected
+
+## Why Not Smart Contract Delegation?
+
+Smart contract-based delegation (e.g., ERC-4337 session keys) requires gas for every validation step and adds latency. Monmouth's native delegation:
+
+- Validates at the protocol level before EVM execution
+- Zero gas overhead for grant checks
+- Revocation is instant (no on-chain transaction needed for time-expired grants)

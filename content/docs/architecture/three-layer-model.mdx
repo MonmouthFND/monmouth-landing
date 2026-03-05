@@ -1,0 +1,51 @@
+---
+title: Three-Layer Model
+description: Off-chain intelligence, on-chain execution, bridged by policy
+---
+
+## Overview
+
+Monmouth's architecture separates AI agent operations into three layers. Intelligence lives off-chain. Execution is deterministic on-chain. A policy bridge connects them.
+
+## Layer A — Off-Chain (LLM Runtime)
+
+Everything that requires intelligence happens here:
+
+- **Planning**: LLM reasons about goals, reads state, decides on actions
+- **Tool calling**: LLM invokes capabilities registered on-chain
+- **Memory**: Agent maintains context across sessions (anchored on-chain via Memory Anchoring module)
+- **Simulation**: Preflight dry-runs before committing
+- **Signing**: Transaction construction and cryptographic signing
+
+The LLM runtime can be Claude, GPT, or any model. Monmouth is model-agnostic — it only cares about the signed transactions that arrive.
+
+## Layer B — On-Chain (Execution Substrate)
+
+Everything that requires determinism happens here:
+
+- **State**: Account balances, contract storage, SVM program accounts
+- **Execution**: REVM (EVM) and SVM process transactions deterministically
+- **Modules**: Twelve native registries enforce schemas, policies, and coordination rules
+- **Settlement**: Final state transitions, receipts, and block finality
+
+No inference, no classifiers, no ML. The chain is a pure state machine.
+
+## Layer C — Bridge (Policy + Attestation)
+
+The bridge layer connects off-chain intelligence to on-chain execution:
+
+- **Policy Engine**: Validates every transaction against spending caps, rate limits, and allowlists before execution
+- **Preflight Simulation**: Dry-run via `eth_call` to predict outcomes
+- **Attestation Hooks**: Cryptographic proofs that an off-chain process (TEE, ZK, oracle) vouches for a claim
+- **Intent Receipts**: Record what the agent declared it would do alongside what actually happened
+
+## Why This Separation?
+
+| Concern | Wrong Layer | Right Layer |
+|---------|------------|-------------|
+| "Should I swap ETH for USDC?" | On-chain | Off-chain (LLM decides) |
+| "Is this swap within policy?" | Off-chain | On-chain (Policy module enforces) |
+| "Execute the swap" | Off-chain | On-chain (EVM executes) |
+| "Did the swap match my intent?" | Neither | Bridge (Intent Receipt records) |
+
+The separation is strict: the chain never guesses, and the LLM never settles.

@@ -1,0 +1,73 @@
+---
+title: Capability Registry
+description: Typed tool catalog with schemas, permissions, and rate limits
+---
+
+## Overview
+
+The Capability Registry is a protocol-level catalog of every tool an agent can call on Monmouth. Each capability has:
+
+- **ID**: Unique string identifier (e.g., `"swap"`, `"transfer"`, `"deploy"`)
+- **Schema**: JSON schema defining required inputs and expected outputs
+- **Permissions**: Which agents or roles can invoke it
+- **Rate limits**: Optional per-agent request caps with time windows
+
+## Why Protocol-Level?
+
+On general-purpose chains, tool discovery requires off-chain registries or custom indexing. On Monmouth, any agent can query the capability catalog via JSON-RPC:
+
+```bash
+# List all registered capabilities
+curl -X POST https://rpc.monmouth.io \
+  -d '{"jsonrpc":"2.0","method":"monmouth_listCapabilities","params":[],"id":1}'
+
+# Get a specific capability's schema
+curl -X POST https://rpc.monmouth.io \
+  -d '{"jsonrpc":"2.0","method":"monmouth_getCapabilitySchema","params":["swap"],"id":1}'
+```
+
+## Schema Definition
+
+Each capability defines typed inputs and outputs:
+
+```json
+{
+  "id": "swap",
+  "name": "Token Swap",
+  "description": "Swap one token for another via DEX",
+  "schema": {
+    "input": {
+      "type": "object",
+      "properties": {
+        "fromToken": { "type": "string" },
+        "toToken": { "type": "string" },
+        "amount": { "type": "string" }
+      },
+      "required": ["fromToken", "toToken", "amount"]
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "txHash": { "type": "string" },
+        "amountOut": { "type": "string" }
+      }
+    }
+  },
+  "rateLimit": {
+    "maxRequests": 100,
+    "windowSecs": 60
+  }
+}
+```
+
+## Configuration
+
+Capabilities are registered at node startup via the configuration file. Operators define which capabilities their node advertises.
+
+## RPC Methods
+
+| Method | Description |
+|--------|-------------|
+| `monmouth_listCapabilities` | List all registered capabilities |
+| `monmouth_getCapability` | Get capability details by ID |
+| `monmouth_getCapabilitySchema` | Get the JSON schema for a capability |

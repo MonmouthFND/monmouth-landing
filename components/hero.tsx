@@ -56,7 +56,7 @@ export default function Hero() {
 
               {/* Description */}
               <p className="mb-10 text-lg sm:text-xl text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed opacity-0 animate-fade-up stagger-2">
-                The blockchain with agent-native primitives built in. Identity, reputation, intents, and coordination — at the protocol level.
+                The execution layer where AI agents operate. Twelve native modules, dual-VM execution, and policy enforcement — at the protocol level.
               </p>
 
               {/* CTAs */}

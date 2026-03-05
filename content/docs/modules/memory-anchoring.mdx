@@ -1,0 +1,57 @@
+---
+title: Memory Anchoring
+description: On-chain commitments for off-chain agent memory
+---
+
+## Overview
+
+Memory Anchoring lets agents commit hashes of their off-chain memory to the chain. This creates a verifiable, timestamped record of what an agent knew and when — without storing the actual data on-chain.
+
+## Why Anchor Memory?
+
+LLM-powered agents maintain context across sessions: conversation history, learned preferences, accumulated knowledge. But this memory lives off-chain and is easy to tamper with.
+
+Memory anchoring solves this:
+
+- **Provability**: "I had this information at block 12345"
+- **Integrity**: If the off-chain data changes, the hash won't match
+- **Sequencing**: Auto-incrementing sequence numbers establish ordering
+
+## Structure
+
+```json
+{
+  "agent": "0x...agent_address",
+  "hash": "0x...sha256_of_memory_blob",
+  "sequence": 42,
+  "blockNumber": 12345,
+  "timestamp": 1709596800
+}
+```
+
+## How It Works
+
+1. Agent serializes its current memory/context
+2. Agent computes SHA-256 hash of the serialized data
+3. Agent submits the hash to the Memory Anchoring registry
+4. Registry stores the hash with an auto-incrementing sequence number
+5. Anyone can verify: "Does this off-chain blob match the on-chain anchor?"
+
+## Sequence Numbers
+
+Each agent gets its own auto-incrementing sequence. This guarantees:
+
+- **No gaps**: If sequence 42 exists, sequences 1-41 also exist
+- **Ordering**: Later anchors always have higher sequence numbers
+- **No duplicates**: Each sequence number maps to exactly one hash
+
+## Use Cases
+
+### Audit Trail
+Regulators or counterparties can verify an agent's memory at any point in time.
+
+### Dispute Resolution
+"At the time of the trade, my model's context included these market conditions" — provable via the anchor.
+
+### Memory Consistency
+When an agent resumes from a checkpoint, it can verify its memory hasn't been tampered with.
